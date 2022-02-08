@@ -12,6 +12,7 @@ const User = db.define("user", {
     allowNull: false,
     validate: {
       notEmpty: true,
+      isEmail: true,
     },
   },
   password: {
@@ -32,14 +33,6 @@ const User = db.define("user", {
     allowNull: false,
     validate: {
       notEmpty: true,
-    },
-  },
-  email: {
-    type: STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-      isEmail: true,
     },
   },
   isAdmin: {
