@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
-import { useForm } from "react-hook-form";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 
@@ -28,20 +25,21 @@ export const LoginModal = ({ showModal, setShowModal }) => {
     transform: showModal ? `translateY(0%)` : `translateY(-100%)`,
   });
 
-//   const { register, handleSubmit } = useForm();
+  const modalRef = useRef()
 
-  //i think because local state is being held on this form, it doesn't work
-  //need to move (which will make it look nicer anyway), the login and the register to seperate componenents and import them here.
-  //shouldn't be too hard but i want to get the exit functionality working.
   //todo:
   //click outside functionality
-  //working forms
+  const closeModal = e =>{
+      if(modalRef.current === e.target){
+          setShowModal(false)
+      }
+  }
 
   return (
     <>
       {showModal ? (
         <Container>
-          <Background>
+          <Background ref={modalRef} onClick={closeModal}>
             <animated.div style={animation}>
               <ModalWrapper>
                 <Grid container>
@@ -67,7 +65,6 @@ export const LoginModal = ({ showModal, setShowModal }) => {
                   <ToggleButton value="left">SIGN IN</ToggleButton>
                   <ToggleButton value="right">I'M NEW HERE</ToggleButton>
                 </ToggleButtonGroup>
-
                 {alignment === "left" ? <LoginForm /> : <RegisterForm />}
               </ModalWrapper>
             </animated.div>
@@ -78,7 +75,7 @@ export const LoginModal = ({ showModal, setShowModal }) => {
   );
 };
 
-// {alignment === 'left' ? }
+
 
 const Background = styled.div`
   width: 100%;
@@ -101,9 +98,7 @@ const ModalWrapper = styled.div`
   overflow: hidden;
   border-radius: 10px;
 `;
-// display: grid;
-// grid-template-columns: 1fr;
-// grid-template-rows: auto 1fr auto;
+
 
 const Container = styled.div`
   position: fixed;
