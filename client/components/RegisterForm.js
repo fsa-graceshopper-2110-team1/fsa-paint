@@ -7,7 +7,8 @@ import { useForm } from "react-hook-form";
 
 export const RegisterForm = () => {
 
-  const { register, handleSubmit } = useForm();
+  const { register:register3, handleSubmit:handleSubmit3 } = useForm();
+
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
   };
@@ -15,7 +16,7 @@ export const RegisterForm = () => {
   return (
     <Box
       component="form"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit3(onSubmit)}
       sx={{ marginTop: 5 }}
       key={2}
     >
@@ -26,7 +27,7 @@ export const RegisterForm = () => {
             label="First Name"
             variant="outlined"
             autoFocus
-            {...register("firstName", { required: true })}
+            {...register3("firstName", { required: true })}
             fullWidth
           />
         </Grid>
@@ -35,7 +36,7 @@ export const RegisterForm = () => {
             id="lastName"
             label="Last Name"
             variant="outlined"
-            {...register("lastName", { required: true })}
+            {...register3("lastName", { required: true })}
             fullWidth
           />
         </Grid>
@@ -44,7 +45,7 @@ export const RegisterForm = () => {
             id="email"
             label="Email"
             variant="outlined"
-            {...register("email", { required: true })}
+            {...register3("email", { required: true })}
             fullWidth
           />
         </Grid>
@@ -54,7 +55,7 @@ export const RegisterForm = () => {
             label="Password"
             type="password"
             variant="outlined"
-            {...register("password", { required: true, minLength: 8 })}
+            {...register3("password", { required: true, minLength: 8 })}
             fullWidth
           />
         </Grid>
