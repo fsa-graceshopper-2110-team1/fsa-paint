@@ -2,7 +2,6 @@ import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-//import logo from '../../public/Grace_Paints_logo.jpg'
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id)
@@ -10,7 +9,7 @@ const Navbar = () => {
   return (
     <div>
       <nav>
-        <img src = '../../public/Grace_Paints_logo.jpg'/>
+        <img src = {'https://i.postimg.cc/1X61z5Jh/Grace-Paints-logo.png'}/>
         {isLoggedIn ? (
           <div>
             {/* The navbar will show these links after you log in */}
