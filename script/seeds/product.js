@@ -48,8 +48,9 @@ async function productSeed() {
           name: color.name,
           hexCode: color.hexCode,
           category: color.category,
-          price: getRandomNum(1, 100, 2),
+          price: getRandomNum(40, 90, 2),
           quantity: getRandomNum(1, 100, 0),
+          description: `Enjoy stunning ${color.name} color for years to come with Grace Paints. This premium paint offers exceptional washability and coverage with a formula that hides dark colors, resists water streaking, and helps prevent stains from penetrating. This remarkable paint and primer in one contains anti-microbial agents* that inhibit the growth of mold and mildew on the paint surface and transforms walls with a beautiful finish that speaks for itself.*This product contains agents which inhibit the growth of mold and mildew onthe surface of this paint film.`,
         })
       )
     );

@@ -35,7 +35,6 @@ const Product = db.define("product", {
   },
   category: {
     type: STRING,
-    defaultValue: "other",
   },
 });
 
