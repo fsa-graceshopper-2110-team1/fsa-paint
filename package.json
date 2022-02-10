@@ -1,5 +1,5 @@
 {
-  "name": "grace-paint",
+  "name": "grace_paint",
   "version": "1.0.0",
   "description": "FSA 2110 Team #1 - Grace Shopper - Paint",
   "main": "index.js",
@@ -45,6 +45,7 @@
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
     "esm": "^3.2.25",
+    "file-loader": "^6.2.0",
     "mocha": "^6.2.3",
     "nodemon": "^1.19.4",
     "react": "^17.0.2",
