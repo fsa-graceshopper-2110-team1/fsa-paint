@@ -16,6 +16,7 @@ const App = () => {
       <Button onClick={openModal}>Modal Toggle</Button>
       <LoginModal showModal={showModal} setShowModal={setShowModal}/>
       <Routes />
+      
     </div>
   )
 }

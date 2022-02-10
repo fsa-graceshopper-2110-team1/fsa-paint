@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <div>
       <nav>
-        <img src = {'https://i.postimg.cc/1X61z5Jh/Grace-Paints-logo.png'}/>
+        {/* <img src = {'https://i.postimg.cc/1X61z5Jh/Grace-Paints-logo.png'}/> */}
         {isLoggedIn ? (
           <div>
             {/* The navbar will show these links after you log in */}

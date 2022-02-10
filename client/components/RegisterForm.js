@@ -4,16 +4,29 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        light: "#FFFFFF",
+        main: "#EDF2FB",
+      },
+    },
+  });
+
 
 export const RegisterForm = () => {
 
-  const { register:register3, handleSubmit:handleSubmit3 } = useForm();
+  const { register:register3, handleSubmit:handleSubmit3, formState:{errors} } = useForm();
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <Box
       component="form"
       onSubmit={handleSubmit3(onSubmit)}
@@ -45,7 +58,12 @@ export const RegisterForm = () => {
             id="email"
             label="Email"
             variant="outlined"
-            {...register3("email", { required: true })}
+            {...register3("email", { required: "Required field", pattern:{
+                value:/^[A-Z0-9._%+-]+@[A-Z0-9._%+-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address"
+            } })}
+            error={!!errors?.email}
+            helperText={errors?.email ? errors.email.message : null}
             fullWidth
           />
         </Grid>
@@ -55,7 +73,12 @@ export const RegisterForm = () => {
             label="Password"
             type="password"
             variant="outlined"
-            {...register3("password", { required: true, minLength: 8 })}
+            {...register3("password", { required: "Required field", pattern:{
+                value:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i,
+                message: "Password must have minimum 8 characters, at least one letter and one number"
+            } })}
+            error={!!errors?.password}
+            helperText={errors?.password ? errors.password.message : null}
             fullWidth
           />
         </Grid>
@@ -66,6 +89,6 @@ export const RegisterForm = () => {
         </Grid>
       </Grid>
     </Box>
-
+    </ThemeProvider>
   );
 };
