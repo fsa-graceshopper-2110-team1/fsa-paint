@@ -7,8 +7,10 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  await userSeed(); // seeds users
-  await productSeed();
+  await Promise.all([
+    // userSeed(),
+    productSeed(),
+  ]);
 
   console.log(`seeded successfully`);
 }

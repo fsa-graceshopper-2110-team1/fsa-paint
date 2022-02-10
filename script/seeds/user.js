@@ -25,13 +25,6 @@ async function userSeed() {
   ]);
 
   console.log(`seeded ${users.length} users`);
-
-  //   return {
-  //     users: {
-  //       cody: users[0],
-  //       mary: users[1],
-  //     },
-  //   };
 }
 
 module.exports = userSeed;
