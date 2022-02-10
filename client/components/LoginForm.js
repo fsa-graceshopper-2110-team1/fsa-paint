@@ -16,7 +16,11 @@ const theme = createTheme({
 });
 
 export const LoginForm = () => {
-  const { register: register2, handleSubmit: handleSubmit2 } = useForm();
+  const {
+    register: register2,
+    handleSubmit: handleSubmit2,
+    formState: { errors },
+  } = useForm();
 
   return (
     <ThemeProvider theme={theme}>
@@ -33,7 +37,15 @@ export const LoginForm = () => {
               label="Email"
               variant="outlined"
               autoFocus
-              {...register2("email", { required: true })}
+              {...register2("email", {
+                required: "Required field",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9._%+-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              error={!!errors?.email}
+              helperText={errors?.email ? errors.email.message : null}
               fullWidth
             />
           </Grid>
