@@ -1,7 +1,7 @@
 const db = require("../db");
 const { DECIMAL, ENUM } = db.Sequelize.DataTypes;
 
-const status = ["confirmed", "pending", "failed"];
+const status = ["created", "pending", "confirmed", "compeleted", "failed"];
 
 const Order = db.define("order", {
   total: {
@@ -14,18 +14,21 @@ const Order = db.define("order", {
   },
   status: {
     type: ENUM(status),
-    defaultValue: "pending",
+    defaultValue: "created",
   },
 });
 
+//hooks
+Order.beforeCreate(async (order) => {
+  try {
+    const user = await order.getUser();
+    const cart = await user.getCart();
+    order.total = cart.total;
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 //class methods
-Order.generateOrder = async function (cart) {
-  const order = await Order.create({
-    userId: cart.userId,
-    total: cart.total,
-    status: "pending",
-  });
-  return order;
-};
 
 module.exports = Order;
