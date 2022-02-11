@@ -42,3 +42,15 @@ router.post("/", async (req, res, next) => {
     next(err);
   }
 });
+
+// PUT /api/orders/:id {order}
+router.put("/:id", async (req, res, next) => {
+  try {
+    const order = await Order.findByPk(req.params.id);
+    //updating the entire user to be able to use this route to update any property
+    order.update(req.body);
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
