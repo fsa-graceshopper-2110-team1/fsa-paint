@@ -19,12 +19,3 @@ module.exports = Cart;
 //Class Methods
 
 //Instance Methods
-Cart.prototype.updateTotal = async function (newTotal) {
-  try {
-    await this.update({
-      total: newTotal,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
