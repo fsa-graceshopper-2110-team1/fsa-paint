@@ -55,7 +55,9 @@ export const LoginForm = () => {
               label="Password"
               type="password"
               variant="outlined"
-              {...register2("password", { required: true })}
+              {...register2("password", { required: "Required field" })}
+              error={!!errors?.password}
+              helperText={errors?.password ? errors.password.message : null}
               fullWidth
             />
           </Grid>

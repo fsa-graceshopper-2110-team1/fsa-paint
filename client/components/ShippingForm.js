@@ -58,7 +58,7 @@ export const ShippingForm = () => {
             onSubmit={handleSubmit4(onSubmit)}
             key={3}
           >
-            <h2>Shipping Address</h2>
+            <h2>Shipping Information</h2>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField

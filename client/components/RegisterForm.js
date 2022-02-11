@@ -40,7 +40,9 @@ export const RegisterForm = () => {
             label="First Name"
             variant="outlined"
             autoFocus
-            {...register3("firstName", { required: true })}
+            {...register3("firstName", { required: "Required field" })}
+            error={!!errors?.firstName}
+              helperText={errors?.firstName ? errors.firstName.message : null}
             fullWidth
           />
         </Grid>
@@ -49,7 +51,9 @@ export const RegisterForm = () => {
             id="lastName"
             label="Last Name"
             variant="outlined"
-            {...register3("lastName", { required: true })}
+            {...register3("lastName", { required: "Required field" })}
+            error={!!errors?.lastName}
+              helperText={errors?.lastName ? errors.lastName.message : null}
             fullWidth
           />
         </Grid>
@@ -75,7 +79,7 @@ export const RegisterForm = () => {
             variant="outlined"
             {...register3("password", { required: "Required field", pattern:{
                 value:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i,
-                message: "Password must have minimum 8 characters, at least one letter and one number"
+                message: "Password must have minimum 8 characters, at least one letter and one number. No special characters."
             } })}
             error={!!errors?.password}
             helperText={errors?.password ? errors.password.message : null}
