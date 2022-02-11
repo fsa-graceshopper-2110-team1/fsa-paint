@@ -39,8 +39,7 @@
     "react-spring": "^9.4.2",
     "sequelize": "^6.3.5",
     "stripe": "^8.202.0",
-    "styled-components": "^5.3.3",
-    "use-deep-compare-effect": "^1.8.1"
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
