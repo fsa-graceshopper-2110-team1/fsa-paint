@@ -4,9 +4,10 @@ const cors = require('cors')
 const morgan = require('morgan')
 const createCheckoutSession = require('./api/checkout')
 const app = express()
+
 module.exports = app
 
-require('dotenv').config({path: '../.env'})
+
 
 // logging middleware
 app.use(morgan('dev'))
@@ -22,6 +23,9 @@ app.use('/auth', require('./auth'))
 app.use('/api', require('./api'))
 
 app.get('/', (req, res)=> res.sendFile(path.join(__dirname, '..', 'public/index.html')));
+
+//stripe api checkout
+app.post('/create-checkout-session',createCheckoutSession)
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, '..', 'public')))

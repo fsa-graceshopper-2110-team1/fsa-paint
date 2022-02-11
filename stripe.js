@@ -1,2 +1,3 @@
-const stripeAPI = require('stripe')(process.env.SECRET_KEY);
+const dotenv = require('dotenv').config().parsed
+const stripeAPI = require('stripe')(dotenv.SECRET_KEY);
 module.exports = stripeAPI;

@@ -1,4 +1,5 @@
-const stripeApi = require('../../stripe')
+const stripeAPI = require('../../stripe')
+const dotenv = require('dotenv').config().parsed
 
 async function createCheckoutSession(req,res){
     //this is going to be the heroku URL once we deploy
@@ -12,13 +13,13 @@ async function createCheckoutSession(req,res){
     let session;
 
     try{
-        session = await stripeApi.checkout.sessions.create({
+        session = await stripeAPI.checkout.sessions.create({
             payment_method_types:['card'],
             mode: 'payment',
             line_items,
             customer_email,
-            success_url: `${domainUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url:`${domainUrl}/canceled`,
+            success_url: `${dotenv.WEB_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url:`${dotenv.WEB_APP_URL}/canceled`,
         })
         res.status(200).json({sessionID:session.id,});
     }catch(error){
