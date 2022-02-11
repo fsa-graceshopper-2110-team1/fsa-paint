@@ -1,7 +1,7 @@
 const db = require("../db");
 const { STRING, DECIMAL, INTEGER, TEXT, ENUM } = db.Sequelize.DataTypes;
 
-const CATEGORIES = ["blue", "red", "green", "yellow", "other"];
+// const CATEGORIES = ["blue", "red", "green", "yellow", "other"];
 
 const FINISHES = ["matte", "glossy"];
 
@@ -16,17 +16,17 @@ const Product = db.define("product", {
   },
   hexCode: {
     type: STRING,
-    unique: true,
     allowNull: false,
-  },
-  imageUrl: {
-    type: STRING,
   },
   price: {
     type: DECIMAL,
     allowNull: false,
     validate: {
       notEmpty: true,
+    },
+    get() {
+      const value = this.getDataValue("price");
+      return value === null ? null : parseFloat(value);
     },
   },
   quantity: {
@@ -38,12 +38,7 @@ const Product = db.define("product", {
     type: TEXT,
   },
   category: {
-    type: ENUM(CATEGORIES),
-    defaultValue: "other",
-  },
-  finish: {
-    type: ENUM(FINISHES),
-    allowNull: false,
+    type: STRING,
   },
 });
 
