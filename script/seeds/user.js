@@ -13,7 +13,7 @@ async function userSeed() {
       isAdmin: true,
     }),
     User.create({
-      username: "maryd@hello.com",
+      username: "mary@hello.com",
       password: "123",
       firstName: "Mary",
       lastName: "Doe",
