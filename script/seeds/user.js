@@ -2,10 +2,6 @@ const {
   models: { User },
 } = require("../../server/db");
 
-/**
- * seed - this function clears the database, updates tables to
- *      match the models, and populates the database.
- */
 async function userSeed() {
   // Creating Users
   const users = await Promise.all([
@@ -25,6 +21,8 @@ async function userSeed() {
   ]);
 
   console.log(`seeded ${users.length} users`);
+
+  return users;
 }
 
 module.exports = userSeed;

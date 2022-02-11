@@ -56,6 +56,8 @@ async function productSeed() {
     );
 
     console.log(`seeded ${products.length} products`);
+
+    return products;
   } catch (err) {
     console.log(err);
   }

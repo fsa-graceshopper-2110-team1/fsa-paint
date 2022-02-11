@@ -27,8 +27,8 @@ module.exports = {
   models: {
     User,
     Product,
-    Cart,
     CartItem,
+    Cart,
     Order,
     OrderItem,
   },

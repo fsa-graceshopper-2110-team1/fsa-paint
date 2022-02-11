@@ -24,6 +24,10 @@ const Product = db.define("product", {
     validate: {
       notEmpty: true,
     },
+    get() {
+      const value = this.getDataValue("price");
+      return value === null ? null : parseFloat(value);
+    },
   },
   quantity: {
     type: INTEGER,

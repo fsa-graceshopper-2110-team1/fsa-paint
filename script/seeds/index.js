@@ -1,13 +1,27 @@
 const userSeed = require("./user");
 const productSeed = require("./product");
+const cartSeed = require("./cart");
+const orderSeed = require("./order");
 
-const { db } = require("../../server/db");
+const {
+  db,
+  models: { Cart, Order, OrderItem },
+} = require("../../server/db");
 
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  await Promise.all([userSeed(), productSeed()]);
+  const [users, products] = await Promise.all([userSeed(), productSeed()]);
+
+  const [carts, cartItems] = await cartSeed();
+
+  const [orders, orderItems] = await orderSeed();
+
+  //TESTING CLASS METHODS FOR COVERTING CART TO ORDER
+  // const cart = await Cart.findByPk(1);
+  // const newOrder = await Order.generateOrder(cart);
+  // const newOIs = await OrderItem.generateOrderItems(cart, newOrder);
 
   console.log(`
   
