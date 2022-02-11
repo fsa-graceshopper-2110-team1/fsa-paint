@@ -18,30 +18,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// GET /api/users/:id
-router.get("/:id", async (req, res, next) => {
-  try {
-    const user = await User.findOne({
-      where: { id: req.params.id },
-      // do not include password (even though it's hashed, for extra protection since it's not needed by the FE)
-      attributes: ["id", "username", "firstName", "lastName", "isAdmin"],
-    });
-    res.json(user);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// POST /api/users
-router.post("/", async (req, res, next) => {
-  try {
-    const user = await User.create(req.body);
-    res.json(user);
-  } catch (err) {
-    next(err);
-  }
-});
-
 // PUT /api/users/:id
 router.put("/:id", async (req, res, next) => {
   try {
