@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Cart, CartItem },
+  models: { Cart },
 } = require("../db");
 module.exports = router;
 
@@ -8,7 +8,7 @@ module.exports = router;
 router.get("/", async (req, res, next) => {
   try {
     const carts = await Cart.findAll({ order: ["id"], include: ["cartItems"] });
-    res.json(carts);
+    res.send(carts);
   } catch (err) {
     next(err);
   }
@@ -23,6 +23,21 @@ router.get("/:id", async (req, res, next) => {
       include: ["cartItems"],
     });
     res.json(cart);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// GET /api/carts/user/:id
+router.get("/user/:id", async (req, res, next) => {
+  try {
+    const cart =
+      (await Cart.findOne({
+        where: { userId: req.params.id },
+        order: ["id"],
+        include: ["cartItems"],
+      })) || {};
+    res.send(cart);
   } catch (err) {
     next(err);
   }

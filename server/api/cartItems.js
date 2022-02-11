@@ -16,11 +16,13 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// GET /api/cartItems/:id
-router.get("/:id", async (req, res, next) => {
+// GET /api/cartItems/cart/:id -- all cart items for a cart
+router.get("/cart/:id", async (req, res, next) => {
   try {
-    const cartItem = await CartItem.findByPk(req.params.id);
-    res.json(cartItem);
+    const cartItems = await CartItem.findAll({
+      where: { cartId: req.params.id },
+    });
+    res.send(cartItems);
   } catch (err) {
     next(err);
   }
@@ -30,7 +32,7 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const cartItem = await CartItem.create(req.body);
-    res.json(cartItem);
+    res.send(cartItem);
   } catch (err) {
     next(err);
   }
