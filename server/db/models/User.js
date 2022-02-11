@@ -18,9 +18,6 @@ const User = db.define("user", {
   password: {
     type: STRING,
   },
-  imageUrl: {
-    type: STRING,
-  },
   firstName: {
     type: STRING,
     allowNull: false,

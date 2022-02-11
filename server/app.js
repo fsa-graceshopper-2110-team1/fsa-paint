@@ -1,14 +1,21 @@
 const path = require('path')
 const express = require('express')
+const cors = require('cors')
 const morgan = require('morgan')
+const createCheckoutSession = require('./api/checkout')
 const app = express()
 module.exports = app
+
+require('dotenv').config({path: '../.env'})
 
 // logging middleware
 app.use(morgan('dev'))
 
 // body parsing middleware
 app.use(express.json())
+
+//cors to allow requests from different origins
+app.use(cors({origin:true}))
 
 // auth and api routes
 app.use('/auth', require('./auth'))
