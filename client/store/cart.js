@@ -6,6 +6,7 @@ import axios from "axios";
 const GOT_CART = "GOT_CART";
 const LOGOUT_CART = "LOGOUT_CART";
 const ADDED_TO_CART = "ADDED_TO_CART";
+const REMOVED_ITEM_FROM_CART = "REMOVED_ITEM_FROM_CART";
 
 /**
  * ACTION CREATORS
@@ -21,6 +22,11 @@ export const logoutCart = () => ({
 
 const addedToCart = (cartItem) => ({
   type: ADDED_TO_CART,
+  cartItem,
+});
+
+const removedItemFromCart = (cartItem) => ({
+  type: REMOVED_ITEM_FROM_CART,
   cartItem,
 });
 
@@ -44,6 +50,13 @@ export const addToCart = (cartId, productId) => {
   };
 };
 
+export const removeItemFromCart = (cartItem) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/cartItems/${cartItem.id}`);
+    dispatch(removedItemFromCart(cartItem));
+  };
+};
+
 /**
  * REDUCER
  */
@@ -58,6 +71,12 @@ export default function (state = {}, action) {
         ...state,
         total: state.total + action.cartItem.price,
         cartItems: [...state.cartItems, action.cartItem],
+      };
+    case REMOVED_ITEM_FROM_CART:
+      return {
+        ...state,
+        total: state.total - action.cartItem.price,
+        cartItems: state.cartItems.filter((ci) => ci.id !== action.cartItem.id),
       };
     default:
       return state;

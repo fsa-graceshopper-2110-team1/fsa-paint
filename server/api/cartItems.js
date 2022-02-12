@@ -38,8 +38,20 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// DELETE /api/cartItems/:cartId/:productId
+// DELETE /api/cartItems/:id
 router.delete("/:id", async (req, res, next) => {
+  try {
+    const cartItem = await Cart.findByPk(req.params.id);
+    cartItem.destroy();
+
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// DELETE /api/cartItems/:cartId/:productId
+router.delete("/cartItems/:cartId/:productId", async (req, res, next) => {
   try {
     //deletes all cart items for a product in the cart
     const cartItems = await Cart.findAll({
