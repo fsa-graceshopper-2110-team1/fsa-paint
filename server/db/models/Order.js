@@ -1,16 +1,12 @@
 const db = require("../db");
-const { DECIMAL, ENUM } = db.Sequelize.DataTypes;
+const { INTEGER, ENUM } = db.Sequelize.DataTypes;
 
 const status = ["created", "pending", "confirmed", "compeleted", "failed"];
 
 const Order = db.define("order", {
   total: {
-    type: DECIMAL,
+    type: INTEGER,
     defaultValue: 0,
-    get() {
-      const value = this.getDataValue("total");
-      return value === null ? null : parseFloat(value);
-    },
   },
   status: {
     type: ENUM(status),
