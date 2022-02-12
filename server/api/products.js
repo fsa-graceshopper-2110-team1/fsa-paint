@@ -14,20 +14,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// GET /api/products/categories
-router.get("/categories", async (req, res, next) => {
-  try {
-    let categories = await Product.findAll({
-      order: ["category"],
-      attributes: ["category"],
-    });
-    categories = [...new Set(categories.map((cat) => cat.category))];
-    res.send(categories);
-  } catch (err) {
-    next(err);
-  }
-});
-
 // GET /api/products/:id
 router.get("/:id", async (req, res, next) => {
   try {
