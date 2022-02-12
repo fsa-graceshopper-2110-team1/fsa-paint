@@ -5,6 +5,7 @@ import axios from "axios";
  */
 const GOT_CART = "GOT_CART";
 const LOGOUT_CART = "LOGOUT_CART";
+const CREATED_CART = "CREATED_CART";
 const ADDED_TO_CART = "ADDED_TO_CART";
 const REMOVED_ITEM_FROM_CART = "REMOVED_ITEM_FROM_CART";
 
@@ -18,6 +19,11 @@ const gotCart = (cart) => ({
 
 export const logoutCart = () => ({
   type: LOGOUT_CART,
+});
+
+const createdCart = (cart) => ({
+  type: CREATED_CART,
+  cart,
 });
 
 const addedToCart = (cartItem) => ({
@@ -37,6 +43,13 @@ export const fetchCart = (userId) => {
   return async (dispatch) => {
     const { data: cart } = await axios.get(`/api/carts/user/${userId}`);
     dispatch(gotCart(cart));
+  };
+};
+
+export const createCart = (userId) => {
+  return async (dispatch) => {
+    const { data: cart } = await axios.post(`/api/carts`);
+    dispatch(createdCart(cart));
   };
 };
 
@@ -63,6 +76,8 @@ export const removeItemFromCart = (cartItem) => {
 export default function (state = {}, action) {
   switch (action.type) {
     case GOT_CART:
+      return action.cart;
+    case CREATED_CART:
       return action.cart;
     case LOGOUT_CART:
       return {};
