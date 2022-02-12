@@ -31,10 +31,12 @@ export const Browse = () => {
                   <div style={{ backgroundColor: product.hexCode }}>
                     {product.name}{" "}
                     <NumberFormat
-                      value={product.price}
+                      value={product.price / 100}
                       displayType={"text"}
                       thousandSeparator={true}
                       prefix={"$"}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
                     />
                     /gal
                   </div>

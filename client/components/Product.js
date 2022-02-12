@@ -19,10 +19,12 @@ export const Product = () => {
     <div>
       <h3>{product.name}</h3>
       <NumberFormat
-        value={product.price}
+        value={product.price / 100}
         displayType={"text"}
         thousandSeparator={true}
         prefix={"$"}
+        decimalScale={2}
+        fixedDecimalScale={true}
       />{" "}
       <div
         style={{ backgroundColor: product.hexCode, height: 200, width: 100 }}
