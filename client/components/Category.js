@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 export const Category = () => {
   const { category } = useParams();
   const products = useSelector((state) => state.products).filter(
-    (p) => p.category.toLowerCase() === category
+    (p) => p.category.toLowerCase() === category && p.status === "active"
   );
 
   return (

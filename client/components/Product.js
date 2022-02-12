@@ -17,6 +17,11 @@ export const Product = () => {
 
   return (
     <div>
+      <p>
+        {product.status === "inactive"
+          ? "This product is currently unavailable."
+          : ""}
+      </p>
       <h3>{product.name}</h3>
       <NumberFormat
         value={product.price / 100}
@@ -29,7 +34,10 @@ export const Product = () => {
       <div
         style={{ backgroundColor: product.hexCode, height: 200, width: 100 }}
       ></div>
-      <button onClick={() => dispatch(addToCart(cart.id, product.id))}>
+      <button
+        disabled={product.status === "inactive"}
+        onClick={() => dispatch(addToCart(cart.id, product.id))}
+      >
         Add To Cart
       </button>
     </div>
