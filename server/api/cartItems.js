@@ -28,7 +28,7 @@ router.get("/cart/:id", async (req, res, next) => {
   }
 });
 
-// POST /api/cartItems/ {body: userId, cartId}
+// POST /api/cartItems/ {body: cartId, productId}
 router.post("/", async (req, res, next) => {
   try {
     const cartItem = await CartItem.create(req.body);
