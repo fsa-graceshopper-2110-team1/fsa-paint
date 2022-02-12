@@ -1,13 +1,9 @@
 const db = require("../db");
-const { INTEGER, DECIMAL } = db.Sequelize.DataTypes;
+const { INTEGER } = db.Sequelize.DataTypes;
 
 const CartItem = db.define("cartItem", {
   price: {
-    type: DECIMAL,
-    get() {
-      const value = this.getDataValue("price");
-      return value === null ? null : parseFloat(value);
-    },
+    type: INTEGER,
   },
 });
 

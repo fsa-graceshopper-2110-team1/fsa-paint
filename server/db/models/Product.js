@@ -4,7 +4,6 @@ const { STRING, DECIMAL, INTEGER, TEXT } = db.Sequelize.DataTypes;
 const Product = db.define("product", {
   name: {
     type: STRING,
-    // unique: true,
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -15,14 +14,10 @@ const Product = db.define("product", {
     allowNull: false,
   },
   price: {
-    type: DECIMAL,
+    type: INTEGER,
     allowNull: false,
     validate: {
       notEmpty: true,
-    },
-    get() {
-      const value = this.getDataValue("price");
-      return value === null ? null : parseFloat(value);
     },
   },
   quantity: {

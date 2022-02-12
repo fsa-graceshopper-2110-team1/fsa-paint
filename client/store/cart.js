@@ -5,6 +5,9 @@ import axios from "axios";
  */
 const GOT_CART = "GOT_CART";
 const LOGOUT_CART = "LOGOUT_CART";
+const CREATED_CART = "CREATED_CART";
+const ADDED_TO_CART = "ADDED_TO_CART";
+const REMOVED_ITEM_FROM_CART = "REMOVED_ITEM_FROM_CART";
 
 /**
  * ACTION CREATORS
@@ -18,6 +21,21 @@ export const logoutCart = () => ({
   type: LOGOUT_CART,
 });
 
+const createdCart = (cart) => ({
+  type: CREATED_CART,
+  cart,
+});
+
+const addedToCart = (cartItem) => ({
+  type: ADDED_TO_CART,
+  cartItem,
+});
+
+const removedItemFromCart = (cartItem) => ({
+  type: REMOVED_ITEM_FROM_CART,
+  cartItem,
+});
+
 /**
  * THUNK CREATORS
  */
@@ -28,6 +46,30 @@ export const fetchCart = (userId) => {
   };
 };
 
+export const createCart = (userId) => {
+  return async (dispatch) => {
+    const { data: cart } = await axios.post(`/api/carts`);
+    dispatch(createdCart(cart));
+  };
+};
+
+export const addToCart = (cartId, productId) => {
+  return async (dispatch) => {
+    const { data: cartItem } = await axios.post(`/api/cartItems`, {
+      cartId,
+      productId,
+    });
+    dispatch(addedToCart(cartItem));
+  };
+};
+
+export const removeItemFromCart = (cartItem) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/cartItems/${cartItem.id}`);
+    dispatch(removedItemFromCart(cartItem));
+  };
+};
+
 /**
  * REDUCER
  */
@@ -35,8 +77,22 @@ export default function (state = {}, action) {
   switch (action.type) {
     case GOT_CART:
       return action.cart;
+    case CREATED_CART:
+      return action.cart;
     case LOGOUT_CART:
       return {};
+    case ADDED_TO_CART:
+      return {
+        ...state,
+        total: state.total + action.cartItem.price,
+        cartItems: [...state.cartItems, action.cartItem],
+      };
+    case REMOVED_ITEM_FROM_CART:
+      return {
+        ...state,
+        total: state.total - action.cartItem.price,
+        cartItems: state.cartItems.filter((ci) => ci.id !== action.cartItem.id),
+      };
     default:
       return state;
   }
