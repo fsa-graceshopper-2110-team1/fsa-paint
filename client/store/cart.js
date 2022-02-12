@@ -4,7 +4,7 @@ import axios from "axios";
  * ACTION TYPES
  */
 const GOT_CART = "GOT_CART";
-const GOT_CART_ITEMS = "GOT_CART_ITEMS";
+const LOGOUT_CART = "LOGOUT_CART";
 
 /**
  * ACTION CREATORS
@@ -12,6 +12,10 @@ const GOT_CART_ITEMS = "GOT_CART_ITEMS";
 const gotCart = (cart) => ({
   type: GOT_CART,
   cart,
+});
+
+export const logoutCart = () => ({
+  type: LOGOUT_CART,
 });
 
 /**
@@ -31,6 +35,8 @@ export default function (state = {}, action) {
   switch (action.type) {
     case GOT_CART:
       return action.cart;
+    case LOGOUT_CART:
+      return {};
     default:
       return state;
   }

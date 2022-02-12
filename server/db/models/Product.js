@@ -1,9 +1,5 @@
 const db = require("../db");
-const { STRING, DECIMAL, INTEGER, TEXT, ENUM } = db.Sequelize.DataTypes;
-
-// const CATEGORIES = ["blue", "red", "green", "yellow", "other"];
-
-const FINISHES = ["matte", "glossy"];
+const { STRING, DECIMAL, INTEGER, TEXT } = db.Sequelize.DataTypes;
 
 const Product = db.define("product", {
   name: {
