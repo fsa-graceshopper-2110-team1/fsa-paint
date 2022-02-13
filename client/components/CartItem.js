@@ -41,13 +41,16 @@ export const CartItem = (product) => {
   }, 0);
 
   return (
-    <Grid container spacing={2} component="main">
-      <Grid item xs={3}>
+    <Grid container spacing={3} component="main">
+      <Grid item xs={11}
+            sm={11}
+            md={11}>
         <Box
           sx={{
             borderTop: "1px solid black",
             borderBottom: "0.5px solid black",
-            padding: 2,
+            marginLeft: 10,
+            marginBottom: 2,
           }}
         >
           <Box

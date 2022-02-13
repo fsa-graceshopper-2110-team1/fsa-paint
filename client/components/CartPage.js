@@ -43,34 +43,46 @@ export const CartPage = () => {
     <>
       {cartItems ? (
         <ThemeProvider theme={theme}>
-          <Box
+          <Grid container>
+            {/* <Box
             sx={{
               display: "flex",
               flexDirection: "row",
             }}
-          >
-            <Box
-              sx={{
-                mx: 10,
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <h1>Shopping Cart</h1>
-              {cartItems.length === 0 ? (
-                <div>Your Cart is Empty</div>
-              ) : (
-                <>
+          > */}
+
+              <Grid
+                item
+                xs={12}
+                sm={8}
+                md={8}
+                component={Paper}
+                elevation={6}
+                square
+              >
+                <Box component="h1" sx={{marginLeft:10}}>Shopping Cart</Box>
+                {cartItems.length === 0 ? (
+                  <div>Your Cart is Empty</div>
+                ) : (
+                  <>
                     <Box>
                       {cart.map((item) => (
                         <CartItem {...item} key={item.id} />
                       ))}
                     </Box>
-                </>
-              )}
-            </Box>
-            <CartTotal quantity={quantity} />
-          </Box>
+                  </>
+                )}
+              </Grid>
+            <Grid
+              item
+              xs={6}
+              sm={4}
+              md={4}
+            >
+              <CartTotal quantity={quantity} />
+            </Grid>
+            {/* </Box> */}
+          </Grid>
         </ThemeProvider>
       ) : (
         <h1>Shopping Cart is Empty!</h1>

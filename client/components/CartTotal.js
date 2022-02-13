@@ -12,8 +12,7 @@ export const CartTotal = ({ quantity }) => {
   return (
     <Box
       sx={{
-        width: 300,
-        height: 230,
+        height: 120,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -25,7 +24,7 @@ export const CartTotal = ({ quantity }) => {
       square
     >
       <Box sx={{ display: "flex", alignItems: "center",columnGap:1,justifyContent:"center" }}>
-        <p>{`Subtotal (${quantity} items): `}</p>
+        <p>{`Subtotal (${quantity} items):`}</p>
         <strong>
         <NumberFormat
           value={total / 100}
@@ -37,7 +36,7 @@ export const CartTotal = ({ quantity }) => {
         />
         </strong>
       </Box>
-      <Button variant="contained" size="small">
+      <Button variant="contained" size="small" style={{maxWidth: '200px', maxHeight: '45px', minWidth: '200px', minHeight: '45px'}}>
         <h3>Proceed to Checkout</h3>
       </Button>
     </Box>
