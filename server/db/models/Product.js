@@ -26,6 +26,11 @@ const Product = db.define("product", {
     type: INTEGER,
     allowNull: false,
     defaultValue: 0,
+    validate: {
+      //errors out if an orderItem tries to get placed when it's out of stock
+      //we should catch it on the FE before this hits but this is for backup
+      min: 0,
+    },
   },
   description: {
     type: TEXT,
