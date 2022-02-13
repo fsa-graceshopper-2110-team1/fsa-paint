@@ -45,10 +45,12 @@ export const CartItem = (product) => {
       <Grid item xs={11} sm={11} md={11}>
         <Box
           sx={{
-            borderTop: "1px solid black",
-            borderBottom: "0.5px solid black",
-            marginLeft: 10,
+            borderTop: "3px solid black",
+            borderBottom: "3px solid black",
+            marginLeft: 8,
             marginBottom: 2,
+            display: "flex",
+            alignItems: "center",
           }}
         >
           <Box
@@ -58,35 +60,38 @@ export const CartItem = (product) => {
             component={Paper}
             elevation={3}
             square
-            style={{ backgroundColor: hexCode, height: 200, width: 100 }}
+            style={{ backgroundColor: hexCode, height: 140, width: 100 }}
           ></Box>
-          <Grid item xs={12} sm={8} md={5}>
-            <Box>
-              <h4>{name}</h4>
-              <NumberFormat
-                value={price / 100}
-                displayType={"text"}
-                thousandSeparator={true}
-                prefix={"$"}
-                decimalScale={2}
-                fixedDecimalScale={true}
-              />
-            </Box>
-            <Box>
-              <p>{`Quantity: ${quantity}`}</p>
-            </Box>
-            <Box>
-              <IconButton variant="contained">
-                <AddCircleIcon fontSize="medium" />
-              </IconButton>
+          <Grid item xs={12}>
+            <Box sx={{ marginLeft: 2 }}>
+              <Box component={"h2"} sx={{marginLeft:1}}>{name}</Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box component={"p"} sx={{marginLeft:1}}>{`Gallons: ${quantity}`}</Box>
+                <Box sx={{ marginLeft: "25%" }}>
+                  {"Price:    "}
+                  <NumberFormat
+                    value={price / 100}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                  />
+                </Box>
+              </Box>
+              <Box sx={{ display: "flex" }}>
+                <IconButton variant="contained">
+                  <AddCircleIcon fontSize="medium" />
+                </IconButton>
 
-              <IconButton variant="contained">
-                <RemoveCircleIcon fontSize="medium" />
-              </IconButton>
+                <IconButton variant="contained">
+                  <RemoveCircleIcon fontSize="medium" />
+                </IconButton>
 
-              <IconButton variant="contained">
-                <DeleteIcon fontSize="small" />
-              </IconButton>
+                <IconButton variant="contained" sx={{ marginLeft: "auto" }}>
+                  <DeleteIcon fontSize="medium" />
+                </IconButton>
+              </Box>
             </Box>
           </Grid>
         </Box>

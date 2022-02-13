@@ -54,11 +54,9 @@ export const CartPage = () => {
               <Grid
                 item
                 xs={12}
-                sm={8}
-                md={8}
-                component={Paper}
-                elevation={6}
-                square
+                sm={7}
+                md={7}
+
               >
                 <Box component="h1" sx={{marginLeft:10}}>Shopping Cart</Box>
                 {cartItems.length === 0 ? (
@@ -75,9 +73,11 @@ export const CartPage = () => {
               </Grid>
             <Grid
               item
-              xs={6}
-              sm={4}
+              xs={12}
+              sm={5}
               md={4}
+              xl={2}
+              lg={3}
             >
               <CartTotal quantity={quantity} />
             </Grid>

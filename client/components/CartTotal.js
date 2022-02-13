@@ -5,6 +5,8 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import NumberFormat from "react-number-format";
+import Typography from '@mui/material/Typography';
+
 
 export const CartTotal = ({ quantity }) => {
   const total = useSelector((state) => state.cart.total);
@@ -23,9 +25,9 @@ export const CartTotal = ({ quantity }) => {
       elevation={3}
       square
     >
-      <Box sx={{ display: "flex", alignItems: "center",columnGap:1,justifyContent:"center" }}>
-        <p>{`Subtotal (${quantity} items):`}</p>
-        <strong>
+      <Box sx={{ display: "flex", alignItems: "center",justifyContent:"center" }}>
+        <Box component={"h3"} sx={{marginRight:1}}>{`Subtotal (${quantity} items):`}</Box>
+        <h3>
         <NumberFormat
           value={total / 100}
           displayType={"text"}
@@ -34,7 +36,7 @@ export const CartTotal = ({ quantity }) => {
           decimalScale={2}
           fixedDecimalScale={true}
         />
-        </strong>
+        </h3>
       </Box>
       <Button variant="contained" size="small" style={{maxWidth: '200px', maxHeight: '45px', minWidth: '200px', minHeight: '45px'}}>
         <h3>Proceed to Checkout</h3>
