@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-
 import Navbar from './components/Navbar'
 import Routes from './Routes'
 import Button from '@mui/material/Button'
