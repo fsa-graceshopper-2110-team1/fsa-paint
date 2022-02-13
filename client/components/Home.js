@@ -9,6 +9,7 @@ import {createTheme, ThemeProvider } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 
 export const Home = (props) => {
+  const user = useSelector((state) => state.auth);
   const username = useSelector((state) => state.auth.username)
   const theme = createTheme({
     palette: {
@@ -43,4 +44,3 @@ export const Home = (props) => {
   )
 }
 export default Home
-

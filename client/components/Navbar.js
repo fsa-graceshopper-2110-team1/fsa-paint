@@ -1,6 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {NavLink} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar'
@@ -253,5 +254,29 @@ const Navbar = () => {
     </Menu>
   );
   */
+ /*
+  return (
+    <div>
+      <nav>
+        {isLoggedIn ? (
+          <div>
+            <Link to="/home">Home</Link>
+            <a href="#" onClick={()=> dispatch(logout())}>
+              Logout
+            </a>
+          </div>
+        ) : (
+          <div>
+8            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        )}
+      </nav>
+      <hr />
+    </div>
+  )
+  
+}
+*/
 }
 export default Navbar

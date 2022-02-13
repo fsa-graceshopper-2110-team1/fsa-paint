@@ -1,8 +1,13 @@
 const path = require('path')
 const express = require('express')
+const cors = require('cors')
 const morgan = require('morgan')
+const createCheckoutSession = require('./api/checkout')
 const app = express()
+
 module.exports = app
+
+
 
 // logging middleware
 app.use(morgan('dev'))
@@ -10,11 +15,17 @@ app.use(morgan('dev'))
 // body parsing middleware
 app.use(express.json())
 
+//cors to allow requests from different origins
+app.use(cors({origin:true}))
+
 // auth and api routes
 app.use('/auth', require('./auth'))
 app.use('/api', require('./api'))
 
 app.get('/', (req, res)=> res.sendFile(path.join(__dirname, '..', 'public/index.html')));
+
+//stripe api checkout
+app.post('/create-checkout-session',createCheckoutSession)
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, '..', 'public')))

@@ -1,14 +1,9 @@
 const db = require("../db");
-const { STRING, DECIMAL, INTEGER, TEXT, ENUM } = db.Sequelize.DataTypes;
-
-const CATEGORIES = ["blue", "red", "green", "yellow", "other"];
-
-const FINISHES = ["matte", "glossy"];
+const { STRING, DECIMAL, INTEGER, TEXT } = db.Sequelize.DataTypes;
 
 const Product = db.define("product", {
   name: {
     type: STRING,
-    // unique: true,
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -16,14 +11,10 @@ const Product = db.define("product", {
   },
   hexCode: {
     type: STRING,
-    unique: true,
     allowNull: false,
   },
-  imageUrl: {
-    type: STRING,
-  },
   price: {
-    type: DECIMAL,
+    type: INTEGER,
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -38,12 +29,7 @@ const Product = db.define("product", {
     type: TEXT,
   },
   category: {
-    type: ENUM(CATEGORIES),
-    defaultValue: "other",
-  },
-  finish: {
-    type: ENUM(FINISHES),
-    allowNull: false,
+    type: STRING,
   },
 });
 
