@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 
+
 export const Browse = () => {
   const products = useSelector((state) => state.products)
     .filter((p) => p.status === "active")
