@@ -5,7 +5,7 @@ import { fetchProducts, fetchCart } from "./store";
 import Navbar from "./components/Navbar";
 import Routes from "./Routes";
 import Button from "@mui/material/Button";
-import { LoginModal } from "./components/LoginModal";
+import { LoginModal } from "./components/Auth/LoginModal";
 
 const App = () => {
   const dispatch = useDispatch();
