@@ -9,13 +9,36 @@ a {
 label {
   display: block;
 }
-
+/*
 nav a {
   display: inline-block;
   margin: 1em;
 }
+*/
+header{
+  width:fit-content
+}
+.living_room_image {
+  height: 25rem; 
+}
 
-form div {
+.living_room_image p {
+  color: white;
+  font-size: 4rem;
+  text-align: center;
+  padding-top: 5rem;
+}
+.main_page_content {
+  color: red;
+}
+/* form div {
   margin: 1em;
   display: inline-block;
-}
+} */
+
+/* .login-form{
+  display:flex;
+  
+  justify-content: space-between;
+} */
+
