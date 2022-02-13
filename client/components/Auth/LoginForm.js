@@ -5,6 +5,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { authenticate } from "../../store";
 
 const theme = createTheme({
   palette: {
@@ -16,17 +18,21 @@ const theme = createTheme({
 });
 
 export const LoginForm = () => {
+  const dispatch = useDispatch();
+
   const {
-    register: register2,
-    handleSubmit: handleSubmit2,
+    register,
+    handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const onSubmit = (data) => dispatch(authenticate(data, "login"));
 
   return (
     <ThemeProvider theme={theme}>
       <Box
         component="form"
-        onSubmit={handleSubmit2((data) => alert(JSON.stringify(data)))}
+        onSubmit={handleSubmit(onSubmit)}
         sx={{ marginTop: 5 }}
         key={1}
       >
@@ -37,7 +43,7 @@ export const LoginForm = () => {
               label="Email"
               variant="outlined"
               autoFocus
-              {...register2("email", {
+              {...register("email", {
                 required: "Required field",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9._%+-]+\.[A-Z]{2,}$/i,
@@ -55,7 +61,7 @@ export const LoginForm = () => {
               label="Password"
               type="password"
               variant="outlined"
-              {...register2("password", { required: "Required field" })}
+              {...register("password", { required: "Required field" })}
               error={!!errors?.password}
               helperText={errors?.password ? errors.password.message : null}
               fullWidth
