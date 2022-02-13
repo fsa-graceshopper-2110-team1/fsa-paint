@@ -4,26 +4,6 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
-
-// export const ShippingForm = ()=>{
-//     return(
-//         <Grid
-//           item
-//           xs={false}
-//           sm={4}
-//           md={7}
-//           sx={{
-//             backgroundImage: '../../public/ShippingSidePic.jpg',
-//             backgroundRepeat: 'no-repeat',
-//             backgroundColor: (t) =>
-//               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-//             backgroundSize: 'cover',
-//             backgroundPosition: 'center',
-//           }}
-//         />
-//     )
-// }
-
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";

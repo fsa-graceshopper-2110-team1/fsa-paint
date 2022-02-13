@@ -9,6 +9,12 @@ a {
 label {
   display: block;
 }
+.living_room_image p {
+  color: white;
+  font-size: 4rem;
+  text-align: center;
+  padding-top: 5rem;
+}
 /*
 nav a {
   display: inline-block;

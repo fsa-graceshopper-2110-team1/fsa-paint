@@ -255,6 +255,7 @@ const Navbar = () => {
   );
   */
  /*
+  
   return (
     <div>
       <nav>
@@ -267,7 +268,9 @@ const Navbar = () => {
           </div>
         ) : (
           <div>
-8            <Link to="/login">Login</Link>
+         <Link to="/login">Login</Link>
+            {/* The navbar will show these links before you log in */}
+            <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
         )}
@@ -278,5 +281,6 @@ const Navbar = () => {
   
 }
 */
+
 }
 export default Navbar
