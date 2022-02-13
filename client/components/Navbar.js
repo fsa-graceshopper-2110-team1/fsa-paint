@@ -17,11 +17,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useHistory } from "react-router-dom";
+import PaletteIcon from '@mui/icons-material/Palette';
+
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id)
   const dispatch = useDispatch()
-  const username = useSelector((state) => state.auth.username)
+  const firstname = useSelector((state) => state.auth.firstname)
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -34,7 +36,7 @@ const Navbar = () => {
         },
         secondary: {
           main: '#000000'
-        }
+        },
     }
   })
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -66,7 +68,6 @@ const Navbar = () => {
   }
   function signUpButton() {
     setAnchorEl(null);
-    history.push("/signup");
   }
   function logoutButton() {
     setAnchorEl(null);
@@ -179,24 +180,28 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="primary">
         <Toolbar>
-          <NavLink exact to="/">
+          <NavLink exact to="/home">
             <img src = {'https://i.postimg.cc/1X61z5Jh/Grace-Paints-logo.png'}
                 width="100"
               />
           </NavLink>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" color="inherit" /*onClick={handlePaintMenuOpen} aria-controls={paintMenuId}*/>
+            <NavLink exact to="/browse">
+              <IconButton size="large" color="secondary" /*onClick={handlePaintMenuOpen} aria-controls={paintMenuId}*/>
                 <ImagesearchRollerOutlinedIcon />
             </IconButton>
-            <IconButton
-              size="large"
-              color="inherit"
-            >
-              <Badge badgeContent={3} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            </NavLink>
+            <NavLink exact to="/shipping">
+              <IconButton
+                size="large"
+                color="secondary"
+              >
+                <Badge badgeContent={3} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </NavLink>
             <IconButton
               size="large"
               edge="end"
@@ -204,11 +209,11 @@ const Navbar = () => {
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
-              color="inherit"
+              color="secondary"
             >
               <PersonIcon />
             </IconButton>
-            {isLoggedIn ? <Typography>{username}</Typography> : <Typography></Typography>}
+            {isLoggedIn ? <Typography>{firstname}</Typography> : <Typography></Typography>}
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -217,7 +222,7 @@ const Navbar = () => {
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="inherit"
+              color="secondary"
             >
               <MoreIcon />
             </IconButton>
@@ -269,7 +274,6 @@ const Navbar = () => {
         ) : (
           <div>
          <Link to="/login">Login</Link>
-            {/* The navbar will show these links before you log in */}
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
@@ -281,6 +285,7 @@ const Navbar = () => {
   
 }
 */
+
 
 }
 export default Navbar
