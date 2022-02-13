@@ -1,60 +1,95 @@
 import React from "react";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
-import DeleteIcon from "@material-ui/icons/Delete";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {useSelector, useDispatch} from 'react-redux'
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: "#FFFFFF",
-      main: "#EDF2FB",
-    },
-  },
-});
+import { useSelector, useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import NumberFormat from "react-number-format";
+import Paper from "@mui/material/Paper";
 
 //so when you hit the + sign it adds another product to the cart
 //
 
 export const CartItem = (product) => {
   const { price, productId } = product;
-  const cartItems = useSelector(state => state.cart.cartItems)
-  const allProducts = useSelector(state => state.products)
-  //get the product name using the productId
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const allProducts = useSelector((state) => state.products);
 
-  //get the product imageUrl using the productId
+  //get the product using the productId
+  const paint = allProducts.filter((paint) => {
+    if (paint.id === productId) {
+      return paint;
+    }
+  })[0];
+  //deconstruct name and imageUrl
+  const { name, hexCode } = paint;
+  console.log("this is the paint!!!", paint);
 
-  
+  //get the quantity of each product from cartItems
+  const quantity = cartItems.reduce((accum, elem) => {
+    if (elem.productId === productId) {
+      accum++;
+      return accum;
+    } else {
+      return accum;
+    }
+  }, 0);
+
   return (
-    <div>
-      <Box>
-        <img src={imageUrl} alt="product" />
-      </Box>
-      <Box>
-        <h4>TITLE</h4>
-        <p>{price}</p>
-      </Box>
-      <Box>
-        <p>{`Quantity: QUANTITY`}</p>
-      </Box>
-      <Box>
-        <Button>
-          <AddCircleIcon fontSize="large" />
-        </Button>
-        {quantity > 1 && (
-          <Button>
-            <RemoveCircleIcon fontSize="large" />
-          </Button>
-        )}
-        <Button>
-            <DeleteIcon fontSize="large"/>
-        </Button>
-      </Box>
-    </div>
+    <Grid container spacing={2} component="main">
+      <Grid item xs={3}>
+        <Box
+          sx={{
+            borderTop: "1px solid black",
+            borderBottom: "0.5px solid black",
+            padding: 2,
+          }}
+        >
+          <Box
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={3}
+            square
+            style={{ backgroundColor: hexCode, height: 200, width: 100 }}
+          ></Box>
+          <Grid item xs={12} sm={8} md={5}>
+            <Box>
+              <h4>{name}</h4>
+              <NumberFormat
+                value={price / 100}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+                decimalScale={2}
+                fixedDecimalScale={true}
+              />
+            </Box>
+            <Box>
+              <p>{`Quantity: ${quantity}`}</p>
+            </Box>
+            <Box>
+              <IconButton variant="contained">
+                <AddCircleIcon fontSize="medium" />
+              </IconButton>
+
+              <IconButton variant="contained">
+                <RemoveCircleIcon fontSize="medium" />
+              </IconButton>
+
+              <IconButton variant="contained">
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Box>
+          </Grid>
+        </Box>
+      </Grid>
+    </Grid>
   );
 };

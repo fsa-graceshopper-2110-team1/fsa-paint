@@ -8,6 +8,7 @@ import Browse from "./components/Browse";
 import Category from "./components/Category";
 import Product from "./components/Product";
 import { me } from "./store";
+import { CartPage } from "./components/CartPage";
 
 /**
  * COMPONENT
@@ -29,6 +30,7 @@ class Routes extends Component {
             <Route path="/browse/:category" component={Category} />
             <Route path="/browse" component={Browse} />
             <Route path="/product/:productId" component={Product} />
+            <Route path="/cart" component={CartPage}/>
             <Redirect to="/home" />
           </Switch>
         ) : (

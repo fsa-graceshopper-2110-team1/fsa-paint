@@ -3,41 +3,78 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { CartItem } from "./CartItem";
+import { useSelector } from "react-redux";
+import { CartTotal } from "./CartTotal";
+import Paper from "@mui/material/Paper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CartItem from './CartItem'
-import {useSelector} from 'react-redux'
 
-export const CartPage = ()=>{
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: "#FFFFFF",
+      main: "#EDF2FB",
+    },
+  },
+});
 
-    //CartItems is set up so it allows for duplicates if you add the same item twice
-    //This filter checks if the productId already exists and removes it if it does
-    //Result is a pure cart to map over
-    const cartItems = useSelector(state => state.cart.cartItems)
-    const filteredCartItems = cartItems.reduce((acc, current)=>{
-        const x = acc.find(item => item.productId == current.productId);
-        if(!x){
-            return acc.concat([current]);
+export const CartPage = () => {
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
-        }else{
-            return acc;
-        }
-    })
-    console.log(filteredCartItems)
-    return(
-        <Box>
-            <>
-            <h1>Shopping Cart</h1>
-            {
-                cartItems.length === 0 ? <div>Your Cart is Empty</div> :
+  //counts the number of items in the cart
+  let quantity;
+  cartItems ? (quantity = cartItems.length) : null;
+
+  //CartItems is set up so it allows for duplicates if you add the same item twice
+  //This filter checks if the productId already exists and removes it if it does
+  //Result is a pure cart to map over
+  let cart;
+  cartItems
+    ? (cart = cartItems.filter(
+        (v, i, a) => a.findIndex((t) => t.productId === v.productId) === i
+      ))
+    : null;
+
+  console.log(cartItems);
+  return (
+    //takes a moment to load so this ternary is used to make sure it loaded
+    //should probably put the loading page here
+
+    <>
+      {cartItems ? (
+        <ThemeProvider theme={theme}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <Box
+              sx={{
+                mx: 10,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <h1>Shopping Cart</h1>
+              {cartItems.length === 0 ? (
+                <div>Your Cart is Empty</div>
+              ) : (
                 <>
                     <Box>
-                        <Box>
-                            {filteredCartItems.map(item=> <CartItem {...item} key={item.id}/>)}
-                        </Box>
+                      {cart.map((item) => (
+                        <CartItem {...item} key={item.id} />
+                      ))}
                     </Box>
                 </>
-            }
-            </>
-        </Box>
-    )
-}
+              )}
+            </Box>
+            <CartTotal quantity={quantity} />
+          </Box>
+        </ThemeProvider>
+      ) : (
+        <h1>Shopping Cart is Empty!</h1>
+      )}
+    </>
+  );
+};
