@@ -9,6 +9,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { useSelector, useDispatch } from "react-redux";
 
 const theme = createTheme({
   palette: {
@@ -19,8 +20,85 @@ const theme = createTheme({
   },
 });
 
+// {
+//     "line_items":
+//     [
+//         {
+//             "quantity":1,
+//             "price_data":{
+//                 "currency":"usd",
+//                 "unit_amount":2800,
+//                 "product_data":{
+//                     "name":"Cumulus",
+//                     "description":"Light as air."
+//                 }
+//             }
+//         }
+//     ],
+//     "customer_email": "abdi@gmail.com"
+// }
+
 export const ShippingForm = () => {
   const { register: register4, handleSubmit: handleSubmit4, formState: {errors}} = useForm();
+    const cartItems = useSelector((state)=>state.cart.cartItems)
+    const email = useSelector((state)=>state.auth.username)
+    const allProducts = useSelector((state) => state.products);
+
+      //CartItems is set up so it allows for duplicates if you add the same item twice
+  //This filter checks if the productId already exists and removes it if it does
+  //Result is a pure cart to map over
+    let cart;
+    cartItems
+    ? (cart = cartItems.filter(
+        (v, i, a) => a.findIndex((t) => t.productId === v.productId) === i
+      ))
+    : null;
+
+    let line_items;
+    cart ? 
+    (line_items = cart.map(item=>{
+        return{
+            quantity:cartItems.reduce((accum, elem) => {
+                if (elem.productId === item.productId) {
+                  accum++;
+                  return accum;
+                } else {
+                  return accum;
+                }
+              }, 0),
+            price_data:{
+                currency:'usd',
+                unit_amount: item.price,
+                product_data:{
+                    name:allProducts.filter((paint) => {
+                        if (paint.id === item.productId) {
+                          return paint;
+                        }
+                      })[0].name,
+                    description: allProducts.filter((paint) => {
+                        if (paint.id === item.productId) {
+                          return paint;
+                        }
+                      })[0].description,
+                }
+            }
+        }
+    })): null;
+
+    console.log("THIS IS THE CART OBJECT--->", line_items)
+
+    // const response= await fetchFromAPI('create-checkout-session', {
+    //     body:{line_items, customer_email: email},
+    // });
+
+    // const {sessionId} = response;
+    // const {error} = await stripe.redirectToCheckout({
+    //     sessionId
+    // });
+
+    // if(error){
+    //     console.log(error);
+    // }
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
