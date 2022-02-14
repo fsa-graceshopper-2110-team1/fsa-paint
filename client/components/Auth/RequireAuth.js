@@ -15,8 +15,8 @@ const RequireAuth = ({ children }) => {
 
   //TODO somehow this should wait to set authed only when useSelector has run, otherwise it always redirects to login
   useEffect(() => {
-    authed = products && user.id;
-  }, []);
+    authed = products.length > 0 && user.id;
+  }, [products]);
 
   console.log(authed);
   console.log(products ? true : false);
