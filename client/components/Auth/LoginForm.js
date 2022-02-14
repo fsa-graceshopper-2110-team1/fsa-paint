@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -19,6 +20,8 @@ const theme = createTheme({
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { state } = useLocation();
 
   const authError = useSelector((state) => state.auth.error);
 
@@ -28,7 +31,10 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => dispatch(authenticate(data, "login"));
+  const onSubmit = (data) => {
+    dispatch(authenticate(data, "login"));
+    navigate(state?.path || "/home");
+  };
 
   return (
     <ThemeProvider theme={theme}>
