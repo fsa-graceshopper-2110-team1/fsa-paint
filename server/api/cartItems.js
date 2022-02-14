@@ -42,7 +42,9 @@ router.post("/", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     const cartItem = await CartItem.findByPk(req.params.id);
-    cartItem.destroy();
+    const cart = await cartItem.getCart();
+    await cart.decrement("total", { by: cartItem.price });
+    await cartItem.destroy();
 
     res.sendStatus(204);
   } catch (error) {
@@ -57,7 +59,12 @@ router.delete("/removeProduct/:cartId/:productId", async (req, res, next) => {
     const cartItems = await CartItem.findAll({
       where: { cartId: req.params.cartId, productId: req.params.productId },
     });
-    cartItems.map((cartItem) => cartItem.destroy());
+
+    const totalDelete = cartItems.reduce((acc, ci) => acc + ci.price, 0);
+    const cart = await Cart.findByPk(req.params.cartId);
+    await cart.decrement("total", { by: totalDelete });
+
+    await Promise.all(cartItems.map((cartItem) => cartItem.destroy()));
 
     res.sendStatus(204);
   } catch (error) {
