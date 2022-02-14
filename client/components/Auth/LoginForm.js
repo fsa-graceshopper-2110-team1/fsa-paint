@@ -31,9 +31,11 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    dispatch(authenticate(data, "login"));
-    navigate(state?.path || "/home");
+  const onSubmit = async (data) => {
+    const authed = await dispatch(authenticate(data, "login"));
+    //authed === undefined when authenticate is successful
+    //close modal if auth is successful
+    if (!authed) navigate(state?.path || "/home");
   };
 
   return (

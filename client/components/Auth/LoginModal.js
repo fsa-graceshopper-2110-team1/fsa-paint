@@ -16,6 +16,7 @@ export const LoginModal = ({ showModal }) => {
 
   const navigate = useNavigate();
   const onClose = () => {
+    //TODO: update this to navigate to where they were when the modal opened
     navigate("/");
   };
 
