@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -10,8 +11,13 @@ import IconButton from "@mui/material/IconButton";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 
-export const LoginModal = ({ showModal, setShowModal }) => {
+export const LoginModal = ({ showModal }) => {
   const [alignment, setAlignment] = useState("login");
+
+  const navigate = useNavigate();
+  const onClose = () => {
+    navigate("/");
+  };
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -31,10 +37,10 @@ export const LoginModal = ({ showModal, setShowModal }) => {
   //click outside functionality
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
-      setShowModal(false);
+      showModal = false;
+      onClose();
     }
   };
-
   return (
     <>
       {showModal ? (
@@ -51,7 +57,12 @@ export const LoginModal = ({ showModal, setShowModal }) => {
                     </p>
                   </Grid>
                   <Grid item xs={1.5}>
-                    <IconButton onClick={() => setShowModal((prev) => !prev)}>
+                    <IconButton
+                      onClick={() => {
+                        showModal = false;
+                        onClose();
+                      }}
+                    >
                       <CloseIcon />
                     </IconButton>
                   </Grid>
