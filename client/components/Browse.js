@@ -3,16 +3,19 @@ import { useSelector } from "react-redux";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 
+
 export const Browse = () => {
-  const products = useSelector((state) => state.products).sort(function (a, b) {
-    if (a.hexCode > b.hexCode) {
-      return -1;
-    }
-    if (a.hexCode < b.hexCode) {
-      return 1;
-    }
-    return 0;
-  });
+  const products = useSelector((state) => state.products)
+    .filter((p) => p.status === "active")
+    .sort(function (a, b) {
+      if (a.hexCode > b.hexCode) {
+        return -1;
+      }
+      if (a.hexCode < b.hexCode) {
+        return 1;
+      }
+      return 0;
+    });
 
   const categories = [...new Set(products.map((product) => product.category))];
 

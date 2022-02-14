@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -10,8 +11,13 @@ import IconButton from "@mui/material/IconButton";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 
-export const LoginModal = ({ showModal, setShowModal }) => {
-  const [alignment, setAlignment] = useState("left");
+export const LoginModal = ({ showModal }) => {
+  const [alignment, setAlignment] = useState("login");
+
+  const navigate = useNavigate();
+  const onClose = () => {
+    navigate("/");
+  };
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -25,16 +31,16 @@ export const LoginModal = ({ showModal, setShowModal }) => {
     transform: showModal ? `translateY(0%)` : `translateY(-100%)`,
   });
 
-  const modalRef = useRef()
+  const modalRef = useRef();
 
   //todo:
   //click outside functionality
-  const closeModal = e =>{
-      if(modalRef.current === e.target){
-          setShowModal(false)
-      }
-  }
-
+  const closeModal = (e) => {
+    if (modalRef.current === e.target) {
+      showModal = false;
+      onClose();
+    }
+  };
   return (
     <>
       {showModal ? (
@@ -45,13 +51,18 @@ export const LoginModal = ({ showModal, setShowModal }) => {
                 <Grid container>
                   <Grid item xs={10.5}>
                     <p>
-                      {alignment === "left"
+                      {alignment === "login"
                         ? "Welcome Back!"
                         : "Nice to Meet You!"}
                     </p>
                   </Grid>
                   <Grid item xs={1.5}>
-                    <IconButton onClick={() => setShowModal((prev) => !prev)}>
+                    <IconButton
+                      onClick={() => {
+                        showModal = false;
+                        onClose();
+                      }}
+                    >
                       <CloseIcon />
                     </IconButton>
                   </Grid>
@@ -62,10 +73,10 @@ export const LoginModal = ({ showModal, setShowModal }) => {
                   color="primary"
                   onChange={handleAlignment}
                 >
-                  <ToggleButton value="left">SIGN IN</ToggleButton>
-                  <ToggleButton value="right">I'M NEW HERE</ToggleButton>
+                  <ToggleButton value="login">SIGN IN</ToggleButton>
+                  <ToggleButton value="signup">I'M NEW HERE</ToggleButton>
                 </ToggleButtonGroup>
-                {alignment === "left" ? <LoginForm /> : <RegisterForm />}
+                {alignment === "login" ? <LoginForm /> : <RegisterForm />}
               </ModalWrapper>
             </animated.div>
           </Background>
@@ -74,8 +85,6 @@ export const LoginModal = ({ showModal, setShowModal }) => {
     </>
   );
 };
-
-
 
 const Background = styled.div`
   width: 100%;
@@ -98,7 +107,6 @@ const ModalWrapper = styled.div`
   overflow: hidden;
   border-radius: 10px;
 `;
-
 
 const Container = styled.div`
   position: fixed;

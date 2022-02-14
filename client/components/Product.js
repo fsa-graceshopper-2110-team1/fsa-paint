@@ -182,7 +182,6 @@ export const Product = () => {
               </p>
             </Card>
         </Grid>
-
       </Grid>
     </div>
     </ThemeProvider >

@@ -1,44 +1,41 @@
-import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {NavLink} from 'react-router-dom'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar'
-import {createTheme, ThemeProvider } from '@mui/material/styles'
-import IconButton from '@mui/material/IconButton';
-import PersonIcon from '@mui/icons-material/Person';
-import Box from '@mui/material/Box';
-import Badge from '@mui/material/Badge'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Typography from '@mui/material/Typography';
-import ImagesearchRollerOutlinedIcon from '@mui/icons-material/ImagesearchRollerOutlined';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import { useHistory } from "react-router-dom";
-import PaletteIcon from '@mui/icons-material/Palette';
-
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../store";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import PersonIcon from "@mui/icons-material/Person";
+import Box from "@mui/material/Box";
+import Badge from "@mui/material/Badge";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Typography from "@mui/material/Typography";
+import ImagesearchRollerOutlinedIcon from "@mui/icons-material/ImagesearchRollerOutlined";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import PaletteIcon from "@mui/icons-material/Palette";
 
 const Navbar = () => {
-  const isLoggedIn = useSelector((state) => !!state.auth.id)
-  const dispatch = useDispatch()
-  const firstname = useSelector((state) => state.auth.firstname)
+  const isLoggedIn = useSelector((state) => !!state.auth.id);
+  const dispatch = useDispatch();
+  const firstname = useSelector((state) => state.auth.firstname);
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
 
   const theme = createTheme({
     palette: {
-        primary: {
-            light: '#ffffff',
-            main: '#edf2fb'
-        },
-        secondary: {
-          main: '#000000'
-        },
-    }
-  })
+      primary: {
+        light: "#ffffff",
+        main: "#edf2fb",
+      },
+      secondary: {
+        main: "#000000",
+      },
+    },
+  });
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -56,7 +53,7 @@ const Navbar = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -64,15 +61,15 @@ const Navbar = () => {
   };
   function loginButton() {
     setAnchorEl(null);
-    history.push("/login");
+    navigate("/login");
   }
   function signUpButton() {
     setAnchorEl(null);
   }
   function logoutButton() {
     setAnchorEl(null);
-    dispatch(logout())
-    history.push("/")
+    dispatch(logout());
+    navigate("/");
   }
   function profileButton() {
     setAnchorEl(null);
@@ -82,23 +79,23 @@ const Navbar = () => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderNonLoggedInMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-    >  
+    >
       <MenuItem onClick={loginButton}>Log In</MenuItem>
       <MenuItem onClick={signUpButton}>Sign Up</MenuItem>
       <MenuItem onClick={logoutButton}>Profile</MenuItem>
@@ -109,51 +106,48 @@ const Navbar = () => {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-    >  
+    >
       <MenuItem onClick={logoutButton}>Profile</MenuItem>
       <MenuItem onClick={profileButton}>Log Out</MenuItem>
     </Menu>
   );
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  
+  const mobileMenuId = "primary-search-account-menu-mobile";
+
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-          <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                <ImagesearchRollerOutlinedIcon />
-          </IconButton>
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <ImagesearchRollerOutlinedIcon />
+        </IconButton>
         <p>Paint</p>
       </MenuItem>
       <MenuItem>
-        <IconButton
-          size="large"
-          color="inherit"
-        >
+        <IconButton size="large" color="inherit">
           <Badge badgeContent={3} color="error">
             <ShoppingCartIcon />
           </Badge>
@@ -177,61 +171,66 @@ const Navbar = () => {
 
   return (
     <ThemeProvider theme={theme}>
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="primary">
-        <Toolbar>
-          <NavLink exact to="/home">
-            <img src = {'https://i.postimg.cc/1X61z5Jh/Grace-Paints-logo.png'}
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <Link to="home">
+              <img
+                src={"https://i.postimg.cc/1X61z5Jh/Grace-Paints-logo.png"}
                 width="100"
               />
-          </NavLink>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <NavLink exact to="/browse">
-              <IconButton size="large" color="secondary" /*onClick={handlePaintMenuOpen} aria-controls={paintMenuId}*/>
-                <ImagesearchRollerOutlinedIcon />
-            </IconButton>
-            </NavLink>
-            <NavLink exact to="/shipping">
+            </Link>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Link to="browse">
+                <IconButton
+                  size="large"
+                  color="secondary" /*onClick={handlePaintMenuOpen} aria-controls={paintMenuId}*/
+                >
+                  <ImagesearchRollerOutlinedIcon />
+                </IconButton>
+              </Link>
+              <Link to="shipping">
+                <IconButton size="large" color="secondary">
+                  <Badge badgeContent={3} color="error">
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
+              </Link>
               <IconButton
                 size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
                 color="secondary"
               >
-                <Badge badgeContent={3} color="error">
-                  <ShoppingCartIcon />
-                </Badge>
+                <PersonIcon />
               </IconButton>
-            </NavLink>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="secondary"
-            >
-              <PersonIcon />
-            </IconButton>
-            {isLoggedIn ? <Typography>{firstname}</Typography> : <Typography></Typography>}
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="secondary"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar> 
-      {renderNonLoggedInMenu}
-      {renderMobileMenu}
-    </Box>
+              {isLoggedIn ? (
+                <Typography>{firstname}</Typography>
+              ) : (
+                <Typography></Typography>
+              )}
+            </Box>
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="secondary"
+              >
+                <MoreIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        {renderNonLoggedInMenu}
+        {renderMobileMenu}
+      </Box>
     </ThemeProvider>
   );
   //{renderPaintMenu}
@@ -259,7 +258,7 @@ const Navbar = () => {
     </Menu>
   );
   */
- /*
+  /*
   
   return (
     <div>
@@ -285,7 +284,5 @@ const Navbar = () => {
   
 }
 */
-
-
-}
-export default Navbar
+};
+export default Navbar;
