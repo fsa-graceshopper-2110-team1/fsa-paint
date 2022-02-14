@@ -5,6 +5,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { authenticate } from "../../store";
 
 const theme = createTheme({
   palette: {
@@ -15,29 +17,55 @@ const theme = createTheme({
   },
 });
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
+  const dispatch = useDispatch();
+
   const {
-    register: register2,
-    handleSubmit: handleSubmit2,
+    register,
+    handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const onSubmit = (data) => dispatch(authenticate(data, "signup"));
 
   return (
     <ThemeProvider theme={theme}>
       <Box
         component="form"
-        onSubmit={handleSubmit2((data) => alert(JSON.stringify(data)))}
+        onSubmit={handleSubmit(onSubmit)}
         sx={{ marginTop: 5 }}
-        key={1}
+        key={2}
       >
         <Grid container spacing={3}>
+          <Grid item xs={6} sm={6}>
+            <TextField
+              id="firstName"
+              label="First Name"
+              variant="outlined"
+              autoFocus
+              {...register("firstName", { required: "Required field" })}
+              error={!!errors?.firstName}
+              helperText={errors?.firstName ? errors.firstName.message : null}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <TextField
+              id="lastName"
+              label="Last Name"
+              variant="outlined"
+              {...register("lastName", { required: "Required field" })}
+              error={!!errors?.lastName}
+              helperText={errors?.lastName ? errors.lastName.message : null}
+              fullWidth
+            />
+          </Grid>
           <Grid item xs={12} sm={12}>
             <TextField
               id="email"
               label="Email"
               variant="outlined"
-              autoFocus
-              {...register2("email", {
+              {...register("email", {
                 required: "Required field",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9._%+-]+\.[A-Z]{2,}$/i,
@@ -55,7 +83,14 @@ export const LoginForm = () => {
               label="Password"
               type="password"
               variant="outlined"
-              {...register2("password", { required: "Required field" })}
+              {...register("password", {
+                required: "Required field",
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i,
+                  message:
+                    "Password must have minimum 8 characters, at least one letter and one number. No special characters.",
+                },
+              })}
               error={!!errors?.password}
               helperText={errors?.password ? errors.password.message : null}
               fullWidth
