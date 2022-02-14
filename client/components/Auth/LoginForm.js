@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../../store";
 
 const theme = createTheme({
@@ -19,6 +19,8 @@ const theme = createTheme({
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
+
+  const authError = useSelector((state) => state.auth.error);
 
   const {
     register,
@@ -71,6 +73,11 @@ export const LoginForm = () => {
             <Button type="submit" fullWidth variant="contained" color="primary">
               Submit
             </Button>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            {authError && authError.response && (
+              <div> {authError.response.data} </div>
+            )}
           </Grid>
         </Grid>
       </Box>
