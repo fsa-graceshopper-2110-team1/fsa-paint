@@ -8,8 +8,9 @@ import Browse from "./components/Browse";
 import Category from "./components/Category";
 import Product from "./components/Product";
 import { me } from "./store";
-import { CartPage } from "./components/CartPage";
+import { CartPage } from "./components/cart/CartPage";
 import RequireAuth from "./components/Auth/RequireAuth";
+
 
 /**
  * COMPONENT
