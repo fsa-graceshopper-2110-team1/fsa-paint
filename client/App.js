@@ -10,7 +10,7 @@ import { ShippingForm } from "./components/ShippingForm";
 import Browse from "./components/Browse";
 import Category from "./components/Category";
 import Product from "./components/Product";
-import { CartPage } from "./components/CartPage";
+import { CartPage } from "./components/Cart/CartPage";
 import RequireAuth from "./components/Auth/RequireAuth";
 import Navbar from "./components/Navbar";
 import { LoginModal } from "./components/Auth/LoginModal";
