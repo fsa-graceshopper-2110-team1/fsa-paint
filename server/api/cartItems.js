@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { CartItem },
+  models: { CartItem, Cart },
 } = require("../db");
 module.exports = router;
 
@@ -41,8 +41,10 @@ router.post("/", async (req, res, next) => {
 // DELETE /api/cartItems/:id
 router.delete("/:id", async (req, res, next) => {
   try {
-    const cartItem = await Cart.findByPk(req.params.id);
-    cartItem.destroy();
+    const cartItem = await CartItem.findByPk(req.params.id);
+    const cart = await cartItem.getCart();
+    await cart.decrement("total", { by: cartItem.price });
+    await cartItem.destroy();
 
     res.sendStatus(204);
   } catch (error) {
@@ -50,20 +52,22 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-// DELETE /api/cartItems/product/:cartId/:productId
-router.delete(
-  "/cartItems/removeProduct/:cartId/:productId",
-  async (req, res, next) => {
-    try {
-      //deletes all cart items for a product in the cart
-      const cartItems = await Cart.findAll({
-        where: { cartId: req.params.cartId, productId: req.params.productId },
-      });
-      cartItems.map((cartItem) => cartItem.destroy());
+// DELETE /api/cartItems/removeProduct/:cartId/:productId
+router.delete("/removeProduct/:cartId/:productId", async (req, res, next) => {
+  try {
+    //deletes all cart items for a product in the cart
+    const cartItems = await CartItem.findAll({
+      where: { cartId: req.params.cartId, productId: req.params.productId },
+    });
 
-      res.sendStatus(204);
-    } catch (error) {
-      next(error);
-    }
+    const totalDelete = cartItems.reduce((acc, ci) => acc + ci.price, 0);
+    const cart = await Cart.findByPk(req.params.cartId);
+    await cart.decrement("total", { by: totalDelete });
+
+    await Promise.all(cartItems.map((cartItem) => cartItem.destroy()));
+
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
   }
-);
+});

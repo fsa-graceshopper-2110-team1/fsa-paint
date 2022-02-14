@@ -11,9 +11,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import NumberFormat from "react-number-format";
 import Paper from "@mui/material/Paper";
-import { addToCart,removeItemFromCart, removeProductFromCart} from "../../store";
-
-
+import {
+  addToCart,
+  removeItemFromCart,
+  removeProductFromCart,
+} from "../../store";
 
 //so when you hit the + sign it adds another product to the cart
 //
@@ -21,7 +23,7 @@ import { addToCart,removeItemFromCart, removeProductFromCart} from "../../store"
 export const CartItem = (product) => {
   const { price, productId } = product;
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const cartId = useSelector((state)=> state.cart.id);
+  const cartId = useSelector((state) => state.cart.id);
   const allProducts = useSelector((state) => state.products);
 
   const dispatch = useDispatch();
@@ -33,10 +35,10 @@ export const CartItem = (product) => {
     }
   })[0];
   //deconstruct name and imageUrl
-  const { name, hexCode, quantity} = paint;
-console.log('inventory works', product)
+  const { name, hexCode, quantity } = paint;
+
   //get the quantity of each product from cartItems
-  const gallons= cartItems.reduce((accum, elem) => {
+  const gallons = cartItems.reduce((accum, elem) => {
     if (elem.productId === productId) {
       accum++;
       return accum;
@@ -69,9 +71,14 @@ console.log('inventory works', product)
           ></Box>
           <Grid item xs={12}>
             <Box sx={{ marginLeft: 2 }}>
-              <Box component={"h2"} sx={{marginLeft:1}}>{name}</Box>
+              <Box component={"h2"} sx={{ marginLeft: 1 }}>
+                {name}
+              </Box>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Box component={"p"} sx={{marginLeft:1}}>{`Gallons: ${gallons}`}</Box>
+                <Box
+                  component={"p"}
+                  sx={{ marginLeft: 1 }}
+                >{`Gallons: ${gallons}`}</Box>
                 <Box sx={{ marginLeft: "25%" }}>
                   {"Price:    "}
                   <NumberFormat
@@ -85,15 +92,29 @@ console.log('inventory works', product)
                 </Box>
               </Box>
               <Box sx={{ display: "flex" }}>
-                <IconButton disabled={quantity === gallons} variant="contained" onClick={() => dispatch(addToCart(cartId, productId))}>
+                <IconButton
+                  disabled={quantity === gallons}
+                  variant="contained"
+                  onClick={() => dispatch(addToCart(cartId, productId))}
+                >
                   <AddCircleIcon fontSize="medium" />
                 </IconButton>
 
-                <IconButton variant="contained" disabled={quantity===1} onClick={()=>dispatch(removeItemFromCart(product))}>
+                <IconButton
+                  variant="contained"
+                  disabled={quantity === 1}
+                  onClick={() => dispatch(removeItemFromCart(product))}
+                >
                   <RemoveCircleIcon fontSize="medium" />
                 </IconButton>
 
-                <IconButton variant="contained" sx={{ marginLeft: "auto" }} onClick={() => dispatch(removeProductFromCart(cartId, productId))}>
+                <IconButton
+                  variant="contained"
+                  sx={{ marginLeft: "auto" }}
+                  onClick={() =>
+                    dispatch(removeProductFromCart(cartId, productId))
+                  }
+                >
                   <DeleteIcon fontSize="medium" />
                 </IconButton>
               </Box>
@@ -104,7 +125,6 @@ console.log('inventory works', product)
     </Grid>
   );
 };
-
 
 //click call your add based on the productId
 //add gets disabled if inventory is exceeded
