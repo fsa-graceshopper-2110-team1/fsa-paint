@@ -35,7 +35,7 @@ export const CartPage = () => {
       ))
     : null;
 
-  console.log(cartItems);
+
   return (
     //takes a moment to load so this ternary is used to make sure it loaded
     //should probably put the loading page here
@@ -44,13 +44,6 @@ export const CartPage = () => {
       {cartItems ? (
         <ThemeProvider theme={theme}>
           <Grid container>
-            {/* <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-            }}
-          > */}
-
               <Grid
                 item
                 xs={12}
@@ -81,7 +74,7 @@ export const CartPage = () => {
             >
               <CartTotal quantity={quantity} />
             </Grid>
-            {/* </Box> */}
+ 
           </Grid>
         </ThemeProvider>
       ) : (
