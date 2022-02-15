@@ -55,9 +55,9 @@ const App = () => {
           <Route
             path="shipping"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <ShippingForm />
-              </RequireAuth>
+              /* </RequireAuth> */
             }
           />
         </Routes>
