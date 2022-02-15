@@ -35,7 +35,6 @@ export const RegisterForm = () => {
     const authed = await dispatch(authenticate(data, "signup"));
     //authed === undefined when authenticate is successful
     //close modal if auth is successful
-    console.log(authed);
     if (!authed) navigate(state?.path || "/home");
   };
 
