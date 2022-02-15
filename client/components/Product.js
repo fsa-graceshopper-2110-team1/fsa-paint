@@ -26,8 +26,6 @@ export const Product = () => {
 
   const cart = useSelector((state) => state.cart);
   const hexcode = product.hexCode
-  console.log(typeof hexcode)
-  console.log(hexcode)
   const dispatch = useDispatch();
 
   const theme = createTheme({
@@ -47,7 +45,7 @@ export const Product = () => {
   return (
     <ThemeProvider theme={theme}>
     <div>
-      <Grid container component="main" sx={{ height: "80vh", m:1 }}>
+      <Grid container component="main" sx={{ height: "70vh", m:1 }}>
         <CssBaseline />
         <Grid
           item
@@ -55,15 +53,18 @@ export const Product = () => {
           sm={2}
           md={4}
           sx={{
-            backgroundColor: 'blue',
+            backgroundColor: hexcode,
             border: '1px solid',
-            borderColor: 'gray',
+            borderColor: 'light gray',
+            height: "90vh",
+            display: "flex", 
+            alignItems: "center",
           }}
         />
         <Grid item xs={12} sm={8} md={8} >
           <Box
             sx={{
-              my: 8,
+              //my: 8,
               mx: 4,
               display: "flex",
               flexDirection: "column",
@@ -110,11 +111,7 @@ export const Product = () => {
           </Box>
         </Grid>
       </Grid>
-      <Grid container sx={{ height: "30vh", backgroundColor: 'white' }}>
-            <Grid item>
-
-            </Grid>
-      </Grid>
+      <Grid container sx={{ height: "30vh", backgroundColor: 'white' }} />
       <Grid container component="secondary" sx={{ height: "40vh", backgroundColor: 'primary.light', mx:"auto" }}>
           <Grid item 
             sx={{
@@ -158,8 +155,9 @@ export const Product = () => {
             </p>
           </Grid>
       </Grid>
+      <Grid container sx={{ height: "20vh", backgroundColor: 'white', mx: "auto" }} />
       <Grid container component="reviews" sx={{ height: "50vh", backgroundColor: 'white', mx:"auto" }}>
-        <Grid item sx={{mx:"auto"}}>
+        <Grid item textAlign="center"  sx={{mx:"auto"}}>
             <h2 sx={{mx:"auto"}}>Reviews</h2>
             <Grid item sx={{mx:"auto"}}>
               <StarRateIcon fontSize="medium" />
@@ -169,6 +167,8 @@ export const Product = () => {
               <StarOutlineIcon fontSize="medium" />
             </Grid>
             <p sx={{mx:"auto"}}>2 Reviews</p>
+        </Grid>
+        <Grid item>
             <Card sx={{mx:"auto", m:2}}>
               <h5>Nancy</h5>
               <StarRateIcon fontSize="small" />
