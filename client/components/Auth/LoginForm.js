@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -18,10 +18,9 @@ const theme = createTheme({
   },
 });
 
-export const LoginForm = () => {
+export const LoginForm = ({ path }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { state } = useLocation();
 
   const authError = useSelector((state) => state.auth.error);
 
@@ -35,7 +34,7 @@ export const LoginForm = () => {
     const authed = await dispatch(authenticate(data, "login"));
     //authed === undefined when authenticate is successful
     //close modal if auth is successful
-    if (!authed) navigate(state?.path || "/home");
+    if (!authed) navigate(path || "/home");
   };
 
   return (

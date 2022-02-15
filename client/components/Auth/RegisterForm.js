@@ -18,10 +18,9 @@ const theme = createTheme({
   },
 });
 
-export const RegisterForm = () => {
+export const RegisterForm = ({ path }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { state } = useLocation();
 
   const authError = useSelector((state) => state.auth.error);
 
@@ -35,7 +34,7 @@ export const RegisterForm = () => {
     const authed = await dispatch(authenticate(data, "signup"));
     //authed === undefined when authenticate is successful
     //close modal if auth is successful
-    if (!authed) navigate(state?.path || "/home");
+    if (!authed) navigate(path || "/home");
   };
 
   return (
