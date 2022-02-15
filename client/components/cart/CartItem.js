@@ -29,13 +29,11 @@ export const CartItem = (product) => {
   const dispatch = useDispatch();
 
   //get the product using the productId
-  const paint = allProducts.filter((paint) => {
-    if (paint.id === productId) {
-      return paint;
-    }
-  })[0];
+  const paint = allProducts.find((paint) => paint.id === productId) || {};
   //deconstruct name and imageUrl
-  const { name, hexCode, quantity } = paint;
+  const name = paint.name || "";
+  const hexCode = paint.name || "";
+  const quantity = paint.quantity || 0;
 
   //get the quantity of each product from cartItems
   const gallons = cartItems.reduce((accum, elem) => {

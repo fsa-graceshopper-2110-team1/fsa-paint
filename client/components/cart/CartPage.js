@@ -55,7 +55,7 @@ export const CartPage = () => {
                 <>
                   <Box>
                     {cart.map((item) => (
-                      <CartItem {...item} key={item.id} />
+                      <CartItem {...item} key={item.productId} />
                     ))}
                   </Box>
                 </>
