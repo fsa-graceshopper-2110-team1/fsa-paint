@@ -9,6 +9,7 @@ const CREATED_CART = "CREATED_CART";
 const ADDED_TO_CART = "ADDED_TO_CART";
 const REMOVED_ITEM_FROM_CART = "REMOVED_ITEM_FROM_CART";
 const REMOVE_PRODUCT_FROM_CART = "REMOVE_PRODUCT_FROM_CART";
+const ADD_LOCALSTORAGE_TO_CART = "ADD_LOCALSTORAGE_TO_CART";
 
 /**
  * ACTION CREATORS
@@ -40,6 +41,11 @@ const removedItemFromCart = (cartItem) => ({
 const removedProductFromCart = (productId) => ({
   type: REMOVE_PRODUCT_FROM_CART,
   productId,
+});
+
+export const addLocalStorageToCart = (localCart) => ({
+  type: ADD_LOCALSTORAGE_TO_CART,
+  localCart,
 });
 
 /**
@@ -119,6 +125,8 @@ export default function (state = {}, action) {
           (ci) => ci.productId !== action.productId
         ),
       };
+    case ADD_LOCALSTORAGE_TO_CART:
+      return action.localCart;
     default:
       return state;
   }
