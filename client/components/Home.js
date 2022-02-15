@@ -49,7 +49,7 @@ export const Home = (props) => {
             className="living_room_image"
           >
             <CardContent>
-              <Typography component="p">Paint Your World</Typography>
+              <Typography component="p">Color Your World</Typography>
               <Box textAlign="center">
                 <Button variant="outlined" color="primary">
                   Shop
