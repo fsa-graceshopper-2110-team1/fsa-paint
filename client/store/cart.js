@@ -65,6 +65,8 @@ export const createCart = (userId) => {
   };
 };
 
+//TODO: accept userId instead of cartId so it works with localCart as well
+//TODO: add logic to create a cart first if one doesnt exist yet (easier once we switch to userId param)
 export const addToCart = (cartId, productId) => {
   return async (dispatch) => {
     const { data: cartItem } = await axios.post(`/api/cartItems`, {
