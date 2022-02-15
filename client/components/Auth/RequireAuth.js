@@ -7,20 +7,17 @@ const RequireAuth = ({ children }) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
-  // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
+  const [auth, setAuth] = useState({ auth: "not fetched" });
+
   const user = useSelector((state) => state.auth);
 
-  let auth;
-  useEffect(() => {
-    dispatch(me());
-    auth = true;
+  useEffect(async () => {
+    await dispatch(me());
+    setAuth(user);
   }, [JSON.stringify(user)]);
 
-  console.log(user);
-
-  return auth === undefined ? (
-    "loading"
+  return auth.auth === "not fetched" ? (
+    "Loading access credentials..."
   ) : user.id ? (
     children
   ) : (
