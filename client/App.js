@@ -15,6 +15,7 @@ import { CartPage } from "./components/Cart/CartPage";
 import Navbar from "./components/Navbar";
 import { LoginModal } from "./components/Auth/LoginModal";
 import { NavbarTwo } from "./components/NavbarTwo";
+import { MyAccount } from "./components/MyAccount";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const App = () => {
           </Route>
           <Route path="product/:productId" element={<Product />} />
           <Route path="cart" element={<CartPage />} />
+          <Route path='my-account' element={<MyAccount/>}/>
           <Route
             path="shipping"
             element={

@@ -163,9 +163,11 @@ export const NavbarTwo = () => {
                       transformOrigin={{ horizontal: "right", vertical: "top" }}
                       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                     >
+                        <Link to="my-account">
                       <MenuItem>
                         <Avatar /> My account
                       </MenuItem>
+                      </Link>
                       <MenuItem>
                         <Avatar /> My orders
                       </MenuItem>
