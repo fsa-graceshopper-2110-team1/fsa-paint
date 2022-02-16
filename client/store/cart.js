@@ -9,6 +9,7 @@ const CREATED_CART = "CREATED_CART";
 const ADDED_TO_CART = "ADDED_TO_CART";
 const REMOVED_ITEM_FROM_CART = "REMOVED_ITEM_FROM_CART";
 const REMOVE_PRODUCT_FROM_CART = "REMOVE_PRODUCT_FROM_CART";
+const ADD_LOCALSTORAGE_TO_CART = "ADD_LOCALSTORAGE_TO_CART";
 
 /**
  * ACTION CREATORS
@@ -42,6 +43,11 @@ const removedProductFromCart = (productId) => ({
   productId,
 });
 
+export const addLocalStorageToCart = (localCart) => ({
+  type: ADD_LOCALSTORAGE_TO_CART,
+  localCart,
+});
+
 /**
  * THUNK CREATORS
  */
@@ -59,6 +65,8 @@ export const createCart = (userId) => {
   };
 };
 
+//TODO: accept userId instead of cartId so it works with localCart as well
+//TODO: add logic to create a cart first if one doesnt exist yet (easier once we switch to userId param)
 export const addToCart = (cartId, productId) => {
   return async (dispatch) => {
     const { data: cartItem } = await axios.post(`/api/cartItems`, {
@@ -119,6 +127,8 @@ export default function (state = {}, action) {
           (ci) => ci.productId !== action.productId
         ),
       };
+    case ADD_LOCALSTORAGE_TO_CART:
+      return action.localCart;
     default:
       return state;
   }

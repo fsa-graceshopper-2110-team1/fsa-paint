@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -12,11 +12,18 @@ import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 
 export const LoginModal = ({ showModal }) => {
-  const [alignment, setAlignment] = useState("login");
-
+  const { state } = useLocation();
   const navigate = useNavigate();
+  const [alignment, setAlignment] = useState("login");
+  const [path, setPath] = useState("");
+
+  useEffect(() => {
+    if (state) setPath(state.path);
+  });
+
   const onClose = () => {
-    navigate("/");
+    //TODO: update this to navigate to where they were when the modal opened
+    navigate(path || "/home");
   };
 
   const handleAlignment = (event, newAlignment) => {
@@ -76,7 +83,11 @@ export const LoginModal = ({ showModal }) => {
                   <ToggleButton value="login">SIGN IN</ToggleButton>
                   <ToggleButton value="signup">I'M NEW HERE</ToggleButton>
                 </ToggleButtonGroup>
-                {alignment === "login" ? <LoginForm /> : <RegisterForm />}
+                {alignment === "login" ? (
+                  <LoginForm path={path} />
+                ) : (
+                  <RegisterForm path={path} />
+                )}
               </ModalWrapper>
             </animated.div>
           </Background>

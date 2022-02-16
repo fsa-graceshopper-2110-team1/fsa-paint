@@ -9,6 +9,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { useSelector, useDispatch } from "react-redux";
+import { useStripe } from "@stripe/react-stripe-js";
 
 const theme = createTheme({
   palette: {
@@ -19,11 +21,86 @@ const theme = createTheme({
   },
 });
 
-export const ShippingForm = () => {
-  const { register: register4, handleSubmit: handleSubmit4, formState: {errors}} = useForm();
+async function fetchFromAPI(endpoint, opts){
+    const {method, body} = {method: "POST", body: null, ...opts}
+    console.log('THIS IS BODY', body)
 
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+    const res = await fetch(`http://localhost:8080/${endpoint}`, {
+        method,
+        body: JSON.stringify(body),
+        headers:{
+            "Content-Type": 'application/json',
+        },
+    })
+
+    return res.json();
+}
+
+export const ShippingForm = () => {
+  const {
+    register: register4,
+    handleSubmit: handleSubmit4,
+    formState: { errors },
+  } = useForm();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const email = useSelector((state) => state.auth.email);
+  const allProducts = useSelector((state) => state.products);
+  const stripe = useStripe();
+
+  //CartItems is set up so it allows for duplicates if you add the same item twice
+  //This filter checks if the productId already exists and removes it if it does
+  //Result is a pure cart to map over
+  let cart;
+  cartItems
+    ? (cart = cartItems.filter(
+        (v, i, a) => a.findIndex((t) => t.productId === v.productId) === i
+      ))
+    : null;
+
+  let line_items;
+  cart
+    ? (line_items = cart.map((item) => {
+        return {
+          quantity: cartItems.reduce((accum, elem) => {
+            if (elem.productId === item.productId) {
+              accum++;
+              return accum;
+            } else {
+              return accum;
+            }
+          }, 0),
+          price_data: {
+            currency: "usd",
+            unit_amount: item.price,
+            product_data: {
+              name: allProducts.filter((paint) => {
+                if (paint.id === item.productId) {
+                  return paint;
+                }
+              })[0].name,
+            },
+          },
+        };
+      }))
+    : null;
+
+
+
+  const onSubmit = async () => {
+
+    console.log(line_items, email)
+    const response = await fetchFromAPI('create-checkout-session', {
+        body:{line_items, customer_email: email},
+    });
+    
+
+    const {sessionID} = response;
+    const {error} = await stripe.redirectToCheckout({sessionId:sessionID}
+    );
+
+    if(error){
+        console.log(error);
+    }
   };
 
   return (
@@ -129,13 +206,15 @@ export const ShippingForm = () => {
                 <TextField
                   required
                   id="zip"
-                  {...register4("zip", { required: "Required field",
-                pattern:{
-                    value:/^[0-9]{5}(?:-[0-9]{4})?$/i,
-                    message: "Invalid Zip Code"
-                } })}
-                error={!!errors?.zip}
-                helperText={errors?.zip ? errors.zip.message : null}
+                  {...register4("zip", {
+                    required: "Required field",
+                    pattern: {
+                      value: /^[0-9]{5}(?:-[0-9]{4})?$/i,
+                      message: "Invalid Zip Code",
+                    },
+                  })}
+                  error={!!errors?.zip}
+                  helperText={errors?.zip ? errors.zip.message : null}
                   label="Zip / Postal code"
                   fullWidth
                   autoComplete="shipping postal-code"
