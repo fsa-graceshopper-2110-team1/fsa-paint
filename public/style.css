@@ -38,3 +38,35 @@ header{
   
   justify-content: space-between;
 } */
+
+.arrow {
+  position: absolute;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.arrow svg {
+  transition: color 300ms;
+}
+
+.next {
+  right: 0%;
+  top: 50%;
+}
+.arrow svg:hover {
+  color: white;
+}
+.prev {
+  left: 0%;
+  top: 50%;
+}
+
+.paintchipname {
+  color: black;
+  position: absolute;
+  bottom: 0;
+}
+
+.colortitle {
+  color: black;
+}
