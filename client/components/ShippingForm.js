@@ -21,6 +21,7 @@ const theme = createTheme({
   },
 });
 
+//STRIPE API FETCH FUNCTION
 async function fetchFromAPI(endpoint, opts){
     const {method, body} = {method: "POST", body: null, ...opts}
     console.log('THIS IS BODY', body)
@@ -56,7 +57,8 @@ export const ShippingForm = () => {
         (v, i, a) => a.findIndex((t) => t.productId === v.productId) === i
       ))
     : null;
-
+  
+    //STRIPE API OBJECT GENERATOR
   let line_items;
   cart
     ? (line_items = cart.map((item) => {
@@ -84,16 +86,13 @@ export const ShippingForm = () => {
       }))
     : null;
 
-
-
+  //SUBMIT BUTTON FOR SHIPPING FORM THAT SENDS STRIPE THE OBJECT
   const onSubmit = async () => {
 
-    console.log(line_items, email)
     const response = await fetchFromAPI('create-checkout-session', {
         body:{line_items, customer_email: email},
     });
     
-
     const {sessionID} = response;
     const {error} = await stripe.redirectToCheckout({sessionId:sessionID}
     );
