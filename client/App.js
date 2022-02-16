@@ -14,6 +14,7 @@ import Product from "./components/Product";
 import { CartPage } from "./components/Cart/CartPage";
 import Navbar from "./components/Navbar";
 import { LoginModal } from "./components/Auth/LoginModal";
+import { NavbarTwo } from "./components/NavbarTwo";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const App = () => {
         2. remove "/" from Links
       */}
       <BrowserRouter>
-        <Navbar />
+        <NavbarTwo />
         <Routes>
           <Route path="/" element={<Home />}>
             <Route path="login" element={<LoginModal showModal={true} />} />

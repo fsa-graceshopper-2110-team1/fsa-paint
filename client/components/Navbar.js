@@ -21,9 +21,8 @@ const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const dispatch = useDispatch();
   const firstname = useSelector((state) => state.auth.firstname);
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
+ 
+
 
   const theme = createTheme({
     palette: {
@@ -36,6 +35,7 @@ const Navbar = () => {
       },
     },
   });
+  //dropdown
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -80,6 +80,7 @@ const Navbar = () => {
   };
 
   const menuId = "primary-search-account-menu";
+  //
   const renderNonLoggedInMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -102,6 +103,7 @@ const Navbar = () => {
       <MenuItem onClick={profileButton}>Log Out</MenuItem>
     </Menu>
   );
+  //switching from logged in to not
   const renderLoggedInMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -124,6 +126,8 @@ const Navbar = () => {
   );
   const mobileMenuId = "primary-search-account-menu-mobile";
 
+
+  //for the three dots
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
