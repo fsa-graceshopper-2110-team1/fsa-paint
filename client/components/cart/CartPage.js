@@ -39,27 +39,30 @@ export const CartPage = () => {
   //This set looks for unique products
   const productsInCart = [
     ...new Set(cartItems.map((cartItem) => cartItem.productId)),
-  ].sort((a, b) => a.productId - b.productId);
+  ];
 
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    //get the product using the productId
+    //get the product info and consolidate into one object
     setCart(
-      productsInCart.map((p) => {
-        const product = products.find((product) => product.id === p) || {};
-        return {
-          productId: p,
-          name: product.name,
-          hexCode: product.hexCode,
-          quantity: product.quantity,
-          price: product.price,
-          gallons: gallons[p],
-        };
-      })
+      productsInCart
+        .map((p) => {
+          const product = products.find((product) => product.id === p) || {};
+          return {
+            productId: p,
+            name: product.name,
+            hexCode: product.hexCode,
+            quantity: product.quantity,
+            price: product.price,
+            gallons: gallons[p],
+          };
+        })
+        .sort((a, b) => a.productId - b.productId)
     );
   }, [JSON.stringify(userCart)]);
 
+  //get total cost and quantity of the cart
   const [total, quantity] = cart.reduce(
     (acc, product) => {
       const total = acc[0] + product.gallons * product.price;
@@ -85,7 +88,7 @@ export const CartPage = () => {
                   {cart.map((product) => (
                     <CartItem
                       {...product}
-                      cartId={userCart.Id}
+                      cartId={userCart.id}
                       key={product.productId}
                     />
                   ))}

@@ -80,7 +80,9 @@ export const CartItem = (props) => {
                 <IconButton
                   variant="contained"
                   disabled={quantity === 1}
-                  onClick={() => dispatch(removeItemFromCart(product))}
+                  onClick={() =>
+                    dispatch(removeItemFromCart(cartId, productId))
+                  }
                 >
                   <RemoveCircleIcon fontSize="medium" />
                 </IconButton>
