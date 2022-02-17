@@ -8,9 +8,7 @@ import Paper from "@mui/material/Paper";
 import NumberFormat from "react-number-format";
 import Typography from "@mui/material/Typography";
 
-export const CartTotal = ({ quantity }) => {
-  const total = useSelector((state) => state.cart.total);
-
+export const CartTotal = ({ total, quantity }) => {
   return (
     <Box
       sx={{

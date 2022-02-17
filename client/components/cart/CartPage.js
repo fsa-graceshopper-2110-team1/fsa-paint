@@ -60,6 +60,15 @@ export const CartPage = () => {
     );
   }, [products]);
 
+  const [total, quantity] = cart.reduce(
+    (acc, product) => {
+      const total = acc[0] + product.gallons * product.price;
+      const quantity = acc[1] + product.gallons;
+      return [total, quantity];
+    },
+    [0, 0]
+  );
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -85,7 +94,7 @@ export const CartPage = () => {
             )}
           </Grid>
           <Grid item xs={12} sm={5} md={4} xl={2} lg={3}>
-            <CartTotal quantity={cartItems.length} />
+            <CartTotal total={total} quantity={quantity} />
           </Grid>
         </Grid>
       </ThemeProvider>
