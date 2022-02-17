@@ -52,12 +52,11 @@ const App = () => {
             <Route path="login" element={<LoginModal showModal={true} />} />
           </Route>
           <Route path="home" element={<Home />} />
-          <Route path="browse" element={<Browse />}>
-            <Route path=":category" element={<Category />} />
-          </Route>
+          <Route path="browse/:category" element={<Category />} />
+          <Route path="browse" element={<Browse />} />
           <Route path="product/:productId" element={<Product />} />
           <Route path="cart" element={<CartPage />} />
-          <Route path='my-account' element={<MyAccount/>}/>
+          <Route path="my-account" element={<MyAccount />} />
           <Route
             path="shipping"
             element={
