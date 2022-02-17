@@ -31,26 +31,14 @@ const App = () => {
 
   useEffect(async () => {
     const user = await dispatch(me());
-    // fetch user's cart if available. If not, cart will remain an empty object until first item added to cart
-    // if (user?.auth.id) {
-    //   const cart = await dispatch(fetchCart(user.auth.id));
-    //   if (!cart.cart.id) {
-    //     console.log("tried to create cart");
-    //     dispatch(createCart(user.auth.id));
-    //   }
-    // } else {
-    //   //if user not signed in, look for local storage
-    //   const localCart = window.localStorage.getItem("cart");
-    //   dispatch(addLocalStorageToCart(JSON.parse(localCart)));
-    // }
   }, []);
 
   useEffect(async () => {
-    // fetch user's cart if available. If not, cart will remain an empty object until first item added to cart
     if (user?.id) {
+      //try to fetch cart
       const cart = await dispatch(fetchCart(user.id));
+      //if cart not found, create a cart
       if (!cart.cart.id) {
-        console.log("creating cart...");
         dispatch(createCart(user.id));
       }
     } else {
