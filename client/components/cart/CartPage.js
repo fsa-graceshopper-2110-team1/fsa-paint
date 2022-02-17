@@ -58,7 +58,7 @@ export const CartPage = () => {
         };
       })
     );
-  }, [products]);
+  }, [JSON.stringify(userCart)]);
 
   const [total, quantity] = cart.reduce(
     (acc, product) => {
