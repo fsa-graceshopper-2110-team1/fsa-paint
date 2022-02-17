@@ -51,16 +51,17 @@ export const addLocalStorageToCart = (localCart) => ({
 /**
  * THUNK CREATORS
  */
+
 export const fetchCart = (userId) => {
   return async (dispatch) => {
     const { data: cart } = await axios.get(`/api/carts/user/${userId}`);
-    dispatch(gotCart(cart));
+    return dispatch(gotCart(cart));
   };
 };
 
 export const createCart = (userId) => {
   return async (dispatch) => {
-    const { data: cart } = await axios.post(`/api/carts`);
+    const { data: cart } = await axios.post(`/api/carts`, { userId });
     dispatch(createdCart(cart));
   };
 };
@@ -77,9 +78,11 @@ export const addToCart = (cartId, productId) => {
   };
 };
 
-export const removeItemFromCart = (cartItem) => {
+export const removeItemFromCart = (cartId, productId) => {
   return async (dispatch) => {
-    await axios.delete(`/api/cartItems/${cartItem.id}`);
+    const { data: cartItem } = await axios.delete(
+      `/api/cartItems/removeOne/${cartId}/${productId}`
+    );
     dispatch(removedItemFromCart(cartItem));
   };
 };

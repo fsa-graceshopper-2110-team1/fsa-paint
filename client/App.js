@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 
-import { me, fetchProducts, fetchCart, addLocalStorageToCart } from "./store";
+import {
+  me,
+  fetchProducts,
+  fetchCart,
+  createCart,
+  addLocalStorageToCart,
+} from "./store";
 
 import RequireAuth from "./components/Auth/RequireAuth";
 import Home from "./components/Home";
@@ -21,12 +27,20 @@ const App = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart);
 
   useEffect(async () => {
-    await dispatch(me());
-    // fetch user's cart if available. If not, cart will remain an empty object until first item added to cart
-    if (user.id) {
-      dispatch(fetchCart(user.id));
+    const user = await dispatch(me());
+  }, []);
+
+  useEffect(async () => {
+    if (user?.id) {
+      //try to fetch cart
+      const cart = await dispatch(fetchCart(user.id));
+      //if cart not found, create a cart
+      if (!cart.cart.id) {
+        dispatch(createCart(user.id));
+      }
     } else {
       //if user not signed in, look for local storage
       const localCart = window.localStorage.getItem("cart");

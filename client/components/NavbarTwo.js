@@ -17,8 +17,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Badge from "@mui/material/Badge";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { LoginModal } from "./Auth/LoginModal";
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
 
 const theme = createTheme({
   palette: {
@@ -44,8 +44,9 @@ const theme = createTheme({
 export const NavbarTwo = () => {
   //CART ITEM COUNT AND AUTH VERIFICATION
   const cartItems = useSelector((state) => state.cart);
-  let cart
-  cartItems ? cart = cartItems.cartItems : null;
+  let cart;
+  cartItems ? (cart = cartItems.cartItems) : null;
+
   const auth = useSelector((state) => state.auth);
   let totalItemsInCart;
   cart ? (totalItemsInCart = cart.length) : null;
@@ -110,19 +111,17 @@ export const NavbarTwo = () => {
                     <IconButton
                       size="large"
                       edge="end"
-                      color='inherit'
+                      color="inherit"
                       aria-controls={open ? "account-menu" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? "true" : undefined}
-                        onClick={handleClick}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={handleClick}
                     >
                       <AccountCircle />
                       <Typography
                         variant="h6"
                         component="div"
-                        
                         sx={{ marginLeft: 0.5 }}
-                        
                       >
                         {name}
                       </Typography>
@@ -164,10 +163,10 @@ export const NavbarTwo = () => {
                       transformOrigin={{ horizontal: "right", vertical: "top" }}
                       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                     >
-                        <Link to="my-account">
-                      <MenuItem>
-                        <Avatar /> My account
-                      </MenuItem>
+                      <Link to="my-account">
+                        <MenuItem>
+                          <Avatar /> My account
+                        </MenuItem>
                       </Link>
                       <MenuItem>
                         <Avatar /> My orders
