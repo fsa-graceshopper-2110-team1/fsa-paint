@@ -38,8 +38,8 @@ async function productSeed() {
     await importHtmlColors(colors);
     console.log(`CSV read! ${colors.length} records`);
 
-    function getRandomNum(min, max, dec) {
-      return (Math.random() * (max - min) + min).toFixed(dec); //The maximum is exclusive and the minimum is inclusive
+    function getRandomNum(min, max, dec, times) {
+      return (Math.random() * (max - min) + min).toFixed(dec) * times; //The maximum is exclusive and the minimum is inclusive
     }
 
     const products = await Promise.all(
@@ -48,8 +48,8 @@ async function productSeed() {
           name: color.name,
           hexCode: color.hexCode,
           category: color.category,
-          price: getRandomNum(4000, 9000, 0),
-          quantity: getRandomNum(1, 100, 0),
+          price: getRandomNum(40, 90, 0, 100),
+          quantity: getRandomNum(1, 100, 0, 1),
           description: `Enjoy stunning ${color.name} color for years to come with Grace Paints. This premium paint offers exceptional washability and coverage with a formula that hides dark colors, resists water streaking, and helps prevent stains from penetrating. This remarkable paint and primer in one contains anti-microbial agents* that inhibit the growth of mold and mildew on the paint surface and transforms walls with a beautiful finish that speaks for itself.*This product contains agents which inhibit the growth of mold and mildew onthe surface of this paint film.`,
         })
       )
