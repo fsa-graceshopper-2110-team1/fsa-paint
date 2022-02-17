@@ -43,7 +43,7 @@ export const ShippingForm = () => {
     handleSubmit: handleSubmit4,
     formState: { errors },
   } = useForm();
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartItems = useSelector((state) => state.cart?.cartItems);
   const email = useSelector((state) => state.auth.email);
   const allProducts = useSelector((state) => state.products);
   const stripe = useStripe();
