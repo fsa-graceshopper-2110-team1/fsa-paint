@@ -46,6 +46,7 @@ export const NavbarTwo = () => {
   const cartItems = useSelector((state) => state.cart);
   let cart;
   cartItems ? (cart = cartItems.cartItems) : null;
+
   const auth = useSelector((state) => state.auth);
   let totalItemsInCart;
   cart ? (totalItemsInCart = cart.length) : null;
@@ -54,7 +55,6 @@ export const NavbarTwo = () => {
   //MODAL
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
-    console.log("THIS IS CLICKING AT LEAST!");
     setShowModal((prev) => !prev);
   };
 
