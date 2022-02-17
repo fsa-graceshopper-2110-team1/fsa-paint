@@ -43,7 +43,10 @@ const theme = createTheme({
 
 export const NavbarTwo = () => {
   //CART ITEM COUNT AND AUTH VERIFICATION
-  const cart = useSelector((state) => state.cart.cartItems);
+  const cartItems = useSelector((state) => state.cart);
+  let cart
+  console.log(cartItems)
+  cartItems ? cart = cartItems.cartItems : null;
   const auth = useSelector((state) => state.auth);
   let totalItemsInCart;
   cart ? (totalItemsInCart = cart.length) : null;

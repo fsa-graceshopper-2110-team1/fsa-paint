@@ -112,7 +112,7 @@ export const Product = () => {
         </Grid>
       </Grid>
       <Grid container sx={{ height: "30vh", backgroundColor: 'white' }} />
-      <Grid container component="secondary" sx={{ height: "40vh", backgroundColor: 'primary.light', mx:"auto" }}>
+      <Grid container sx={{ height: "40vh", backgroundColor: 'primary.light', mx:"auto" }}>
           <Grid item 
             sx={{
               backgroundColor: 'primary.light',
@@ -156,7 +156,7 @@ export const Product = () => {
           </Grid>
       </Grid>
       <Grid container sx={{ height: "20vh", backgroundColor: 'white', mx: "auto" }} />
-      <Grid container component="reviews" sx={{ height: "50vh", backgroundColor: 'white', mx:"auto" }}>
+      <Grid container sx={{ height: "50vh", backgroundColor: 'white', mx:"auto" }}>
         <Grid item textAlign="center"  sx={{mx:"auto"}}>
             <h2 sx={{mx:"auto"}}>Reviews</h2>
             <Grid item sx={{mx:"auto"}}>
