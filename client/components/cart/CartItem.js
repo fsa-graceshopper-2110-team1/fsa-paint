@@ -20,30 +20,9 @@ import {
 //so when you hit the + sign it adds another product to the cart
 //
 
-export const CartItem = (product) => {
-  const { price, productId } = product;
-  const cartItems = useSelector((state) => state.cart.cartItems);
-  const cartId = useSelector((state) => state.cart.id);
-  const allProducts = useSelector((state) => state.products);
-
+export const CartItem = (props) => {
   const dispatch = useDispatch();
-
-  //get the product using the productId
-  const paint = allProducts.find((paint) => paint.id === productId) || {};
-  //deconstruct name and imageUrl
-  const name = paint.name || "";
-  const hexCode = paint.name || "";
-  const quantity = paint.quantity || 0;
-
-  //get the quantity of each product from cartItems
-  const gallons = cartItems.reduce((accum, elem) => {
-    if (elem.productId === productId) {
-      accum++;
-      return accum;
-    } else {
-      return accum;
-    }
-  }, 0);
+  const { cartId, productId, hexCode, name, gallons, price, quantity } = props;
 
   return (
     <Grid container spacing={3} component="main">
