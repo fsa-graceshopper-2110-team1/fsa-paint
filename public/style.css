@@ -70,3 +70,9 @@ header{
 .colortitle {
   color: black;
 }
+
+.indiv_color {
+  background: rgba(255,255,255,0.5);
+  padding: 10px;
+  text-align:justify; 
+}
