@@ -70,10 +70,20 @@ export const createCart = (userId) => {
 //TODO: add logic to create a cart first if one doesnt exist yet (easier once we switch to userId param)
 export const addToCart = (cartId, productId) => {
   return async (dispatch) => {
-    const { data: cartItem } = await axios.post(`/api/cartItems`, {
-      cartId,
-      productId,
-    });
+    if (cartId === -1) {
+      const localCart = localStorage.getItem("cart");
+      const cartItem = { productId };
+      const localCartCopy = {
+        ...localCart,
+        cartItems: [...localCart.cartItems, carItem],
+      };
+      localStorage.setItem("cart", localCartCopy);
+    } else {
+      const { data: cartItem } = await axios.post(`/api/cartItems`, {
+        cartId,
+        productId,
+      });
+    }
     dispatch(addedToCart(cartItem));
   };
 };
@@ -108,24 +118,24 @@ export default function (state = {}, action) {
     case ADDED_TO_CART:
       return {
         ...state,
-        total: state.total + action.cartItem.price,
+        // total: state.total + action.cartItem.price,
         cartItems: [...state.cartItems, action.cartItem],
       };
     case REMOVED_ITEM_FROM_CART:
       return {
         ...state,
-        total: state.total - action.cartItem.price,
+        // total: state.total - action.cartItem.price,
         cartItems: state.cartItems.filter((ci) => ci.id !== action.cartItem.id),
       };
     case REMOVE_PRODUCT_FROM_CART:
       return {
         ...state,
-        total:
-          state.total -
-          state.cartItems.filter((ci) => ci.productId === action.productId)
-            .length *
-            state.cartItems.filter((ci) => ci.productId === action.productId)[0]
-              .price,
+        // total:
+        //   state.total -
+        //   state.cartItems.filter((ci) => ci.productId === action.productId)
+        //     .length *
+        //     state.cartItems.filter((ci) => ci.productId === action.productId)[0]
+        //       .price,
         cartItems: state.cartItems.filter(
           (ci) => ci.productId !== action.productId
         ),

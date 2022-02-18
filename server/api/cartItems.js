@@ -45,8 +45,8 @@ router.delete("/removeOne/:cartId/:productId", async (req, res, next) => {
     const cartItem = await CartItem.findOne({
       where: { cartId: req.params.cartId, productId: req.params.productId },
     });
-    const cart = await cartItem.getCart();
-    await cart.decrement("total", { by: cartItem.price });
+    // const cart = await cartItem.getCart();
+    // await cart.decrement("total", { by: cartItem.price });
     await cartItem.destroy();
 
     res.send(cartItem);
@@ -63,9 +63,9 @@ router.delete("/removeProduct/:cartId/:productId", async (req, res, next) => {
       where: { cartId: req.params.cartId, productId: req.params.productId },
     });
 
-    const totalDelete = cartItems.reduce((acc, ci) => acc + ci.price, 0);
-    const cart = await Cart.findByPk(req.params.cartId);
-    await cart.decrement("total", { by: totalDelete });
+    // const totalDelete = cartItems.reduce((acc, ci) => acc + ci.price, 0);
+    // const cart = await Cart.findByPk(req.params.cartId);
+    // await cart.decrement("total", { by: totalDelete });
 
     await Promise.all(cartItems.map((cartItem) => cartItem.destroy()));
 

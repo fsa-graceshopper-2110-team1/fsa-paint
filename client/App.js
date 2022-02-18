@@ -44,6 +44,11 @@ const App = () => {
     } else {
       //if user not signed in, look for local storage
       const localCart = window.localStorage.getItem("cart");
+      if (!localCart) {
+        //if not local storage cart, create a cart in storage
+        const localCart = JSON.stringify({ cartId: -1, cartItems: [] });
+        localStorage.setItem("cart", localCart);
+      }
       dispatch(addLocalStorageToCart(JSON.parse(localCart)));
     }
   }, [JSON.stringify(user)]);

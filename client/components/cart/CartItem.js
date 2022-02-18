@@ -24,6 +24,8 @@ export const CartItem = (props) => {
   const dispatch = useDispatch();
   const { cartId, productId, hexCode, name, gallons, price, quantity } = props;
 
+  console.log(cartId);
+
   return (
     <Grid container spacing={3} component="main">
       <Grid item xs={11} sm={11} md={11}>
