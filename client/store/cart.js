@@ -60,7 +60,20 @@ export const addLocalStorageToCart = (localCart) => ({
 
 export const fetchCart = (userId) => {
   return async (dispatch) => {
-    const { data: cart } = await axios.get(`/api/carts/user/${userId}`);
+    const localCart = JSON.parse(localStorage.getItem("cart"));
+    let { data: cart } = await axios.get(`/api/carts/user/${userId}`);
+    if (!cart.id) {
+      cart = await dispatch(createCart(userId));
+    }
+    if (cart.id && localCart) {
+      await Promise.all(
+        localCart.cartItems.map((ci) => {
+          return dispatch(addToCart(cart.id, ci.productId));
+        })
+      );
+      localStorage.removeItem("cart");
+      cart = (await axios.get(`/api/carts/user/${userId}`)).data;
+    }
     return dispatch(gotCart(cart));
   };
 };
@@ -69,11 +82,10 @@ export const createCart = (userId) => {
   return async (dispatch) => {
     const { data: cart } = await axios.post(`/api/carts`, { userId });
     dispatch(createdCart(cart));
+    return cart;
   };
 };
 
-//TODO: accept userId instead of cartId so it works with localCart as well
-//TODO: add logic to create a cart first if one doesnt exist yet (easier once we switch to userId param)
 export const addToCart = (cartId, productId) => {
   return async (dispatch) => {
     let cartItem = {};
@@ -86,10 +98,12 @@ export const addToCart = (cartId, productId) => {
       });
       localStorage.setItem("cart", localCartCopy);
     } else {
-      const { data: cartItem } = await axios.post(`/api/cartItems`, {
-        cartId,
-        productId,
-      });
+      cartItem = (
+        await axios.post(`/api/cartItems`, {
+          cartId,
+          productId,
+        })
+      ).data;
     }
     dispatch(addedToCart(cartItem));
   };
@@ -149,7 +163,10 @@ export default function (state = {}, action) {
     case GOT_CART:
       return action.cart;
     case CREATED_CART:
-      return action.cart;
+      return {
+        ...action.cart,
+        cartItems: [],
+      };
     case LOGOUT_CART:
       return {};
     case ADDED_TO_CART:
