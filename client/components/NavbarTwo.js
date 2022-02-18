@@ -77,30 +77,40 @@ export const NavbarTwo = () => {
               <Link to="home">
                 <Box
                   component={"img"}
-                  src={"https://i.postimg.cc/1X61z5Jh/Grace-Paints-logo.png"}
+                  src={"https://i.postimg.cc/dQpc1HbS/grace-paint.png"}
                   sx={{
-                    height: 140,
-                    width: 140,
-                    marginTop: 2,
+                    height: 70,
+                    width: 130,
+                    marginTop: 0.2,
                     marginLeft: -2.5,
                   }}
                 />
               </Link>
-              <Box sx={{ flexGrow: 1 }} />
-              <Box
+              
+              
+                <Link to="browse">
+                  <IconButton size="large" color="secondary">
+                    <Typography
+                        variant="h6"
+                        component="div"
+                        sx={{ marginLeft: 2.5, marginRight:1 }}
+                      >
+                        Paints
+                      </Typography>
+                      <ImagesearchRollerIcon/>
+                  </IconButton>
+                </Link>
+                <Box sx={{ flexGrow: 1 }} />
+                <Box
                 sx={{
                   display: { xs: "none", sm: "flex", md: "flex" },
                   marginRight: 5,
                   alignItems: "center",
                 }}
               >
-                <Link to="browse">
-                  <IconButton size="large" color="inherit">
-                    <ImagesearchRollerIcon />
-                  </IconButton>
-                </Link>
+                
                 <Link to="cart">
-                  <IconButton size="large" color="inherit">
+                  <IconButton size="large" color="secondary">
                     <Badge badgeContent={totalItemsInCart} color="error">
                       <ShoppingCartIcon />
                     </Badge>
@@ -111,7 +121,7 @@ export const NavbarTwo = () => {
                     <IconButton
                       size="large"
                       edge="end"
-                      color="inherit"
+                      color='secondary'
                       aria-controls={open ? "account-menu" : undefined}
                       aria-haspopup="true"
                       aria-expanded={open ? "true" : undefined}
@@ -185,7 +195,7 @@ export const NavbarTwo = () => {
                     size="large"
                     edge="end"
                     onClick={openModal}
-                    color="inherit"
+                    color="secondary"
                   >
                     <AccountCircleIcon />
                   </IconButton>
