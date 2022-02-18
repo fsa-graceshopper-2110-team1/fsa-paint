@@ -128,7 +128,7 @@ export const Browse = () => {
                   .map((product) => (
                     <Box
                       sx={{ display: "flex", marginLeft: 10, marginRight: 20 }}
-                      component={"div"}
+                      component={"div"} key={product.id}
                     >
                       <Link to={`/product/${product.id}`} key={product.id}>
                         <Box
