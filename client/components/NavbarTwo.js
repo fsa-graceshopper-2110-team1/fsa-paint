@@ -79,17 +79,17 @@ export const NavbarTwo = () => {
                   component={"img"}
                   src={"https://i.postimg.cc/dQpc1HbS/grace-paint.png"}
                   sx={{
-                    height: 70,
-                    width: 130,
-                    marginTop: 0.2,
-                    marginLeft: -2.5,
+                    height: 60,
+                    width: 120,
+                    marginTop: 0.5,
+                    marginLeft: 7,
                   }}
                 />
               </Link>
               
               
                 <Link to="browse">
-                  <IconButton size="large" color="secondary">
+                  <IconButton size="large" color="secondary" sx={{borderRadius: 2}}>
                     <Typography
                         variant="h6"
                         component="div"
@@ -126,6 +126,7 @@ export const NavbarTwo = () => {
                       aria-haspopup="true"
                       aria-expanded={open ? "true" : undefined}
                       onClick={handleClick}
+                      sx={{borderRadius: 2}}
                     >
                       <AccountCircle />
                       <Typography

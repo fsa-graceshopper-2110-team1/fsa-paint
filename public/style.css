@@ -40,7 +40,7 @@ header{
 } */
 
 .arrow {
-  position: absolute;
+  position:relative;
   cursor: pointer;
   z-index: 10;
 }
@@ -50,16 +50,33 @@ header{
 }
 
 .next {
-  right: 0%;
-  top: 50%;
-  margin-right: 1rem;
+  position:absolute;
+  left: 265px;
+  top: -42px;
+  width: 30px;
+  margin-right: 30px;
+  border-radius: 80px;
+  width:25px;
+  height:auto;
+  text-align:center;
+  display:flex;
+  justify-content: flex-end
 }
 .arrow svg:hover {
   color: white;
 }
 .prev {
-  left: 0%;
-  top: 50%;
+  position:absolute;
+  left: 232px;
+  top: -42px;
+  width: 15px;
+  border-radius: 100px;
+  text-align:center;
+  display:inline-block;
+  width:25px;
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .paintchipname {
