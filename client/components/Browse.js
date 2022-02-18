@@ -10,6 +10,8 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Card from '@mui/material/Card'
+import Paper from "@mui/material/Paper";
+
 
 export const Browse = () => {
   const products = useSelector((state) => state.products)
@@ -24,6 +26,7 @@ export const Browse = () => {
       return 0;
     });
   const categories = [...new Set(products.map((product) => product.category))];
+
   const NextArrow = ({ onClick }) => {
     return (
       <div className="arrow next" onClick={onClick}>
@@ -41,17 +44,47 @@ export const Browse = () => {
   };  
  
   const settings = {
-    dots: true,
-    infinite: true,
+    infinite: false,
     lazyLoad: true,
     speed: 300,
-    slidesToShow: 6,
-    centerMode: true,
-    centerPadding: 0,
+    slidesToShow: 8,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    height: 4
-    //beforeChange: (current, next) => setImageIndex(next),
+    height: 2,
+    responsive: [
+
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 1,
+          infinite: true,
+        }
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   };
 
   const theme = createTheme({
@@ -61,33 +94,46 @@ export const Browse = () => {
           main: '#edf2fb'
         },
         secondary: {
-          light: '#ffffff',
           main: '#000000'
-          
         },
     }
   })
-
+  // component={Paper} elevation={6}
   return (
     <ThemeProvider theme={theme}>
     <div>
       {categories.map((cat) => {
         return (
-          <div key={cat}>
-            <h3 >
-              <Link to={`/browse/${cat.toLowerCase()}`} className="colortitle">The {cat}s</Link>
-            </h3>
+          <Box  key={cat}>
+            <Box component={"div"} sx={{height:1}}/>
+            <Box component={"h3"} sx={{display:"flex", alignItems: "flex-end", marginLeft: 10, marginTop: 1, height:40}}>
+              <Link to={`/browse/${cat.toLowerCase()}`} className="colortitle">The {cat.toUpperCase()}S</Link>
+            </Box>
+            
             <Slider {...settings}>
               {products.filter((p) => p.category === cat)
                 .map((product) => (
+                  <Box sx={{display:"flex", marginLeft:10, marginRight:20}} component={"div"}>
                   <Link to={`/product/${product.id}`} key={product.id}>
-                    <Box sx={{height: "60vh", backgroundColor: product.hexCode, textAlign: 'left'}}>
-                      <p className='paintchipname'>{product.name}{" "}</p>
+                    <Box 
+                    component={Paper}
+                    elevation={4}
+                    square
+                    sx={{height: 250, width: 160, backgroundColor: product.hexCode, textAlign: 'left'}}>
                     </Box>
+                    <Box component={'h4'} sx={{display: "flex", alignItems: "center"}}>
+                      <Typography color="secondary" >
+                        <b>
+                      {product.name}
+                      </b>
+                      </Typography>
+                      </Box>
                   </Link>
+                  </Box>
                 ))}
             </Slider>
-          </div>
+            
+          </Box>
         );
       })}
     </div>
