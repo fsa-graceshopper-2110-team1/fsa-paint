@@ -1,5 +1,5 @@
 import axios from "axios";
-import history from "../history";
+import { useNavigate } from "react-router-dom";
 
 const TOKEN = "token";
 
@@ -40,8 +40,8 @@ export const authenticate = (data, method) => async (dispatch) => {
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
-  //todo update this since we're not using /login OR create login route in router
-  history.push("/login");
+  const navigate = useNavigate();
+  navigate("/home");
   return {
     type: SET_AUTH,
     auth: {},

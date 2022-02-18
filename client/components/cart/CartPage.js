@@ -60,7 +60,7 @@ export const CartPage = () => {
         })
         .sort((a, b) => a.productId - b.productId)
     );
-  }, [JSON.stringify(userCart)]);
+  }, [cartItems, products]);
 
   //get total cost and quantity of the cart
   const [total, quantity] = cart.reduce(
