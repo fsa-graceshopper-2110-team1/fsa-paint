@@ -46,7 +46,7 @@ const App = () => {
       const localCart = window.localStorage.getItem("cart");
       if (!localCart) {
         //if not local storage cart, create a cart in storage
-        const localCart = JSON.stringify({ cartId: -1, cartItems: [] });
+        const localCart = JSON.stringify({ id: -1, cartItems: [] });
         localStorage.setItem("cart", localCart);
       }
       dispatch(addLocalStorageToCart(JSON.parse(localCart)));

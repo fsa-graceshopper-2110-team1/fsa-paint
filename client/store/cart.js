@@ -8,7 +8,8 @@ const LOGOUT_CART = "LOGOUT_CART";
 const CREATED_CART = "CREATED_CART";
 const ADDED_TO_CART = "ADDED_TO_CART";
 const REMOVED_ITEM_FROM_CART = "REMOVED_ITEM_FROM_CART";
-const REMOVE_PRODUCT_FROM_CART = "REMOVE_PRODUCT_FROM_CART";
+const REMOVED_PRODUCT_FROM_CART = "REMOVED_PRODUCT_FROM_CART";
+const REMOVED_LOCAL_ITEM_FROM_CART = "REMOVED_LOCAL_ITEM_FROM_CART";
 const ADD_LOCALSTORAGE_TO_CART = "ADD_LOCALSTORAGE_TO_CART";
 
 /**
@@ -39,8 +40,13 @@ const removedItemFromCart = (cartItem) => ({
 });
 
 const removedProductFromCart = (productId) => ({
-  type: REMOVE_PRODUCT_FROM_CART,
+  type: REMOVED_PRODUCT_FROM_CART,
   productId,
+});
+
+const removedLocalItemFromCart = (localCart) => ({
+  type: REMOVED_LOCAL_ITEM_FROM_CART,
+  localCart,
 });
 
 export const addLocalStorageToCart = (localCart) => ({
@@ -70,13 +76,14 @@ export const createCart = (userId) => {
 //TODO: add logic to create a cart first if one doesnt exist yet (easier once we switch to userId param)
 export const addToCart = (cartId, productId) => {
   return async (dispatch) => {
+    let cartItem = {};
     if (cartId === -1) {
-      const localCart = localStorage.getItem("cart");
-      const cartItem = { productId };
-      const localCartCopy = {
+      const localCart = JSON.parse(localStorage.getItem("cart"));
+      cartItem = { productId };
+      const localCartCopy = JSON.stringify({
         ...localCart,
-        cartItems: [...localCart.cartItems, carItem],
-      };
+        cartItems: [...localCart.cartItems, cartItem],
+      });
       localStorage.setItem("cart", localCartCopy);
     } else {
       const { data: cartItem } = await axios.post(`/api/cartItems`, {
@@ -90,16 +97,46 @@ export const addToCart = (cartId, productId) => {
 
 export const removeItemFromCart = (cartId, productId) => {
   return async (dispatch) => {
-    const { data: cartItem } = await axios.delete(
-      `/api/cartItems/removeOne/${cartId}/${productId}`
-    );
-    dispatch(removedItemFromCart(cartItem));
+    let cartItem = {};
+    if (cartId === -1) {
+      const localCart = JSON.parse(localStorage.getItem("cart"));
+      cartItem = { productId };
+      const remainingProdCartItems = [...localCart.cartItems].filter(
+        (ci) => ci.productId === productId
+      );
+      remainingProdCartItems.pop();
+      const localCartCopy = {
+        ...localCart,
+        cartItems: [
+          ...localCart.cartItems.filter((ci) => ci.productId !== productId),
+          ...remainingProdCartItems,
+        ],
+      };
+      localStorage.setItem("cart", JSON.stringify(localCartCopy));
+      dispatch(removedLocalItemFromCart(localCartCopy));
+    } else {
+      const { data: cartItem } = await axios.delete(
+        `/api/cartItems/removeOne/${cartId}/${productId}`
+      );
+      dispatch(removedItemFromCart(cartItem));
+    }
   };
 };
 
 export const removeProductFromCart = (cartId, productId) => {
   return async (dispatch) => {
-    await axios.delete(`/api/cartItems/removeProduct/${cartId}/${productId}`);
+    if (cartId === -1) {
+      const localCart = JSON.parse(localStorage.getItem("cart"));
+      const localCartCopy = {
+        ...localCart,
+        cartItems: localCart.cartItems.filter(
+          (ci) => ci.productId !== productId
+        ),
+      };
+      localStorage.setItem("cart", JSON.stringify(localCartCopy));
+    } else {
+      await axios.delete(`/api/cartItems/removeProduct/${cartId}/${productId}`);
+    }
     dispatch(removedProductFromCart(productId));
   };
 };
@@ -118,24 +155,18 @@ export default function (state = {}, action) {
     case ADDED_TO_CART:
       return {
         ...state,
-        // total: state.total + action.cartItem.price,
         cartItems: [...state.cartItems, action.cartItem],
       };
     case REMOVED_ITEM_FROM_CART:
       return {
         ...state,
-        // total: state.total - action.cartItem.price,
         cartItems: state.cartItems.filter((ci) => ci.id !== action.cartItem.id),
       };
-    case REMOVE_PRODUCT_FROM_CART:
+    case REMOVED_LOCAL_ITEM_FROM_CART:
+      return action.localCart;
+    case REMOVED_PRODUCT_FROM_CART:
       return {
         ...state,
-        // total:
-        //   state.total -
-        //   state.cartItems.filter((ci) => ci.productId === action.productId)
-        //     .length *
-        //     state.cartItems.filter((ci) => ci.productId === action.productId)[0]
-        //       .price,
         cartItems: state.cartItems.filter(
           (ci) => ci.productId !== action.productId
         ),
