@@ -22,7 +22,6 @@ export const Category = () => {
     case 'white':
       photo = 'https://i.postimg.cc/vBVwC6Wc/White.jpg'
     case 'yellow':
-      console.log('hell yellow')
       photo = 'https://i.postimg.cc/52MnbQLZ/Yellow.jpg'
       break;
     case 'brown':
