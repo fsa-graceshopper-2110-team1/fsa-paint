@@ -79,7 +79,7 @@ export const NavbarTwo = () => {
                   src={"https://i.postimg.cc/dQpc1HbS/grace-paint.png"}
                   sx={{
                     height: 70,
-                    width: 120,
+                    width: 130,
                     marginTop: 0.2,
                     marginLeft: -2.5,
                   }}
