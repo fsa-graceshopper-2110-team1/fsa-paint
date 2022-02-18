@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -19,56 +19,88 @@ const theme = createTheme({
 });
 
 export const CartPage = () => {
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const userCart = useSelector((state) => state.cart);
+  const products = useSelector((state) => state.products) || [];
+  const cartItems = userCart?.cartItems || [];
 
-  //counts the number of items in the cart
-  let quantity;
-  cartItems ? (quantity = cartItems.length) : null;
+  //calculate how many of each product are in cart
+  const gallons = cartItems
+    .map((ci) => ci.productId)
+    .reduce((acc, prodId) => {
+      if (prodId in acc) {
+        acc[prodId]++;
+      } else {
+        acc[prodId] = 1;
+      }
+      return acc;
+    }, {});
 
   //CartItems is set up so it allows for duplicates if you add the same item twice
-  //This filter checks if the productId already exists and removes it if it does
-  //Result is a pure cart to map over
-  let cart;
-  cartItems
-    ? (cart = cartItems
-        .filter(
-          (v, i, a) => a.findIndex((t) => t.productId === v.productId) === i
-        )
-        .sort((a, b) => a.productId - b.productId))
-    : null;
+  //This set looks for unique products
+  const productsInCart = [
+    ...new Set(cartItems.map((cartItem) => cartItem.productId)),
+  ];
+
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    //get the product info and consolidate into one object
+    setCart(
+      productsInCart
+        .map((p) => {
+          const product = products.find((product) => product.id === p) || {};
+          return {
+            productId: p,
+            name: product.name,
+            hexCode: product.hexCode,
+            quantity: product.quantity,
+            price: product.price,
+            gallons: gallons[p],
+          };
+        })
+        .sort((a, b) => a.productId - b.productId)
+    );
+  }, [cartItems, products]);
+
+  //get total cost and quantity of the cart
+  const [total, quantity] = cart.reduce(
+    (acc, product) => {
+      const total = acc[0] + product.gallons * product.price;
+      const quantity = acc[1] + product.gallons;
+      return [total, quantity];
+    },
+    [0, 0]
+  );
 
   return (
-    //takes a moment to load so this ternary is used to make sure it loaded
-    //should probably put the loading page here
-
     <>
-      {cartItems ? (
-        <ThemeProvider theme={theme}>
-          <Grid container>
-            <Grid item xs={12} sm={7} md={7}>
-              <Box component="h1" sx={{ marginLeft: 10 }}>
-                Shopping Cart
-              </Box>
-              {cartItems.length === 0 ? (
-                <div>Your Cart is Empty</div>
-              ) : (
-                <>
-                  <Box>
-                    {cart.map((item) => (
-                      <CartItem {...item} key={item.productId} />
-                    ))}
-                  </Box>
-                </>
-              )}
-            </Grid>
-            <Grid item xs={12} sm={5} md={4} xl={2} lg={3}>
-              <CartTotal quantity={quantity} />
-            </Grid>
+      <ThemeProvider theme={theme}>
+        <Grid container>
+          <Grid item xs={12} sm={7} md={7}>
+            <Box component="h1" sx={{ marginLeft: 10 }}>
+              Shopping Cart
+            </Box>
+            {cartItems.length === 0 ? (
+              <div>Your Cart is Empty</div>
+            ) : (
+              <>
+                <Box>
+                  {cart.map((product) => (
+                    <CartItem
+                      {...product}
+                      cartId={userCart.id}
+                      key={product.productId}
+                    />
+                  ))}
+                </Box>
+              </>
+            )}
           </Grid>
-        </ThemeProvider>
-      ) : (
-        <h1>Shopping Cart is Empty!</h1>
-      )}
+          <Grid item xs={12} sm={5} md={4} xl={2} lg={3}>
+            <CartTotal total={total} quantity={quantity} />
+          </Grid>
+        </Grid>
+      </ThemeProvider>
     </>
   );
 };

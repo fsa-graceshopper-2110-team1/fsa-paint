@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 
-import { me, fetchProducts, fetchCart, addLocalStorageToCart } from "./store";
+import {
+  me,
+  fetchProducts,
+  fetchCart,
+  createCart,
+  addLocalStorageToCart,
+} from "./store";
 
 import RequireAuth from "./components/Auth/RequireAuth";
 import Home from "./components/Home";
@@ -21,15 +27,24 @@ const App = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart);
 
   useEffect(async () => {
-    await dispatch(me());
-    // fetch user's cart if available. If not, cart will remain an empty object until first item added to cart
-    if (user.id) {
-      dispatch(fetchCart(user.id));
+    const user = await dispatch(me());
+  }, []);
+
+  useEffect(async () => {
+    if (user?.id) {
+      //try to fetch cart & creates new cart if one is not found
+      const cart = await dispatch(fetchCart(user.id));
     } else {
       //if user not signed in, look for local storage
       const localCart = window.localStorage.getItem("cart");
+      if (!localCart) {
+        //if no local storage cart, create a cart in storage
+        const localCart = JSON.stringify({ id: -1, cartItems: [] });
+        localStorage.setItem("cart", localCart);
+      }
       dispatch(addLocalStorageToCart(JSON.parse(localCart)));
     }
   }, [JSON.stringify(user)]);
@@ -52,12 +67,11 @@ const App = () => {
             <Route path="login" element={<LoginModal showModal={true} />} />
           </Route>
           <Route path="home" element={<Home />} />
-          <Route path="browse" element={<Browse />}>
-            <Route path=":category" element={<Category />} />
-          </Route>
+          <Route path="browse/:category" element={<Category />} />
+          <Route path="browse" element={<Browse />} />
           <Route path="product/:productId" element={<Product />} />
           <Route path="cart" element={<CartPage />} />
-          <Route path='my-account' element={<MyAccount/>}/>
+          <Route path="my-account" element={<MyAccount />} />
           <Route
             path="shipping"
             element={

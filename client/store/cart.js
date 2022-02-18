@@ -8,7 +8,8 @@ const LOGOUT_CART = "LOGOUT_CART";
 const CREATED_CART = "CREATED_CART";
 const ADDED_TO_CART = "ADDED_TO_CART";
 const REMOVED_ITEM_FROM_CART = "REMOVED_ITEM_FROM_CART";
-const REMOVE_PRODUCT_FROM_CART = "REMOVE_PRODUCT_FROM_CART";
+const REMOVED_PRODUCT_FROM_CART = "REMOVED_PRODUCT_FROM_CART";
+const REMOVED_LOCAL_ITEM_FROM_CART = "REMOVED_LOCAL_ITEM_FROM_CART";
 const ADD_LOCALSTORAGE_TO_CART = "ADD_LOCALSTORAGE_TO_CART";
 
 /**
@@ -39,8 +40,13 @@ const removedItemFromCart = (cartItem) => ({
 });
 
 const removedProductFromCart = (productId) => ({
-  type: REMOVE_PRODUCT_FROM_CART,
+  type: REMOVED_PRODUCT_FROM_CART,
   productId,
+});
+
+const removedLocalItemFromCart = (localCart) => ({
+  type: REMOVED_LOCAL_ITEM_FROM_CART,
+  localCart,
 });
 
 export const addLocalStorageToCart = (localCart) => ({
@@ -51,42 +57,100 @@ export const addLocalStorageToCart = (localCart) => ({
 /**
  * THUNK CREATORS
  */
+
 export const fetchCart = (userId) => {
   return async (dispatch) => {
-    const { data: cart } = await axios.get(`/api/carts/user/${userId}`);
-    dispatch(gotCart(cart));
+    const localCart = JSON.parse(localStorage.getItem("cart"));
+    let { data: cart } = await axios.get(`/api/carts/user/${userId}`);
+    if (!cart.id) {
+      cart = await dispatch(createCart(userId));
+    }
+    if (cart.id && localCart) {
+      await Promise.all(
+        localCart.cartItems.map((ci) => {
+          return dispatch(addToCart(cart.id, ci.productId));
+        })
+      );
+      localStorage.removeItem("cart");
+      cart = (await axios.get(`/api/carts/user/${userId}`)).data;
+    }
+    return dispatch(gotCart(cart));
   };
 };
 
 export const createCart = (userId) => {
   return async (dispatch) => {
-    const { data: cart } = await axios.post(`/api/carts`);
+    const { data: cart } = await axios.post(`/api/carts`, { userId });
     dispatch(createdCart(cart));
+    return cart;
   };
 };
 
-//TODO: accept userId instead of cartId so it works with localCart as well
-//TODO: add logic to create a cart first if one doesnt exist yet (easier once we switch to userId param)
 export const addToCart = (cartId, productId) => {
   return async (dispatch) => {
-    const { data: cartItem } = await axios.post(`/api/cartItems`, {
-      cartId,
-      productId,
-    });
+    let cartItem = {};
+    if (cartId === -1) {
+      const localCart = JSON.parse(localStorage.getItem("cart"));
+      cartItem = { productId };
+      const localCartCopy = JSON.stringify({
+        ...localCart,
+        cartItems: [...localCart.cartItems, cartItem],
+      });
+      localStorage.setItem("cart", localCartCopy);
+    } else {
+      cartItem = (
+        await axios.post(`/api/cartItems`, {
+          cartId,
+          productId,
+        })
+      ).data;
+    }
     dispatch(addedToCart(cartItem));
   };
 };
 
-export const removeItemFromCart = (cartItem) => {
+export const removeItemFromCart = (cartId, productId) => {
   return async (dispatch) => {
-    await axios.delete(`/api/cartItems/${cartItem.id}`);
-    dispatch(removedItemFromCart(cartItem));
+    let cartItem = {};
+    if (cartId === -1) {
+      const localCart = JSON.parse(localStorage.getItem("cart"));
+      cartItem = { productId };
+      const remainingProdCartItems = [...localCart.cartItems].filter(
+        (ci) => ci.productId === productId
+      );
+      remainingProdCartItems.pop();
+      const localCartCopy = {
+        ...localCart,
+        cartItems: [
+          ...localCart.cartItems.filter((ci) => ci.productId !== productId),
+          ...remainingProdCartItems,
+        ],
+      };
+      localStorage.setItem("cart", JSON.stringify(localCartCopy));
+      dispatch(removedLocalItemFromCart(localCartCopy));
+    } else {
+      const { data: cartItem } = await axios.delete(
+        `/api/cartItems/removeOne/${cartId}/${productId}`
+      );
+      dispatch(removedItemFromCart(cartItem));
+    }
   };
 };
 
 export const removeProductFromCart = (cartId, productId) => {
   return async (dispatch) => {
-    await axios.delete(`/api/cartItems/removeProduct/${cartId}/${productId}`);
+    if (cartId === -1) {
+      const localCart = JSON.parse(localStorage.getItem("cart"));
+      const localCartCopy = {
+        ...localCart,
+        cartItems: localCart.cartItems.filter(
+          (ci) => ci.productId !== productId
+        ),
+      };
+      localStorage.setItem("cart", JSON.stringify(localCartCopy));
+    } else {
+      await axios.delete(`/api/cartItems/removeProduct/${cartId}/${productId}`);
+    }
     dispatch(removedProductFromCart(productId));
   };
 };
@@ -99,30 +163,27 @@ export default function (state = {}, action) {
     case GOT_CART:
       return action.cart;
     case CREATED_CART:
-      return action.cart;
+      return {
+        ...action.cart,
+        cartItems: [],
+      };
     case LOGOUT_CART:
       return {};
     case ADDED_TO_CART:
       return {
         ...state,
-        total: state.total + action.cartItem.price,
         cartItems: [...state.cartItems, action.cartItem],
       };
     case REMOVED_ITEM_FROM_CART:
       return {
         ...state,
-        total: state.total - action.cartItem.price,
         cartItems: state.cartItems.filter((ci) => ci.id !== action.cartItem.id),
       };
-    case REMOVE_PRODUCT_FROM_CART:
+    case REMOVED_LOCAL_ITEM_FROM_CART:
+      return action.localCart;
+    case REMOVED_PRODUCT_FROM_CART:
       return {
         ...state,
-        total:
-          state.total -
-          state.cartItems.filter((ci) => ci.productId === action.productId)
-            .length *
-            state.cartItems.filter((ci) => ci.productId === action.productId)[0]
-              .price,
         cartItems: state.cartItems.filter(
           (ci) => ci.productId !== action.productId
         ),
