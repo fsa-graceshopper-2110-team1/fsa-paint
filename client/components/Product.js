@@ -102,22 +102,20 @@ export const Product = () => {
                     <IconButton
                       variant="contained"
                       onClick={() => {
-                        setCount(count+1)
-                        console.log('added')
+                        setCount(count-1)
                       }}
                     >
-                      <AddCircleIcon fontSize="medium" />
+                      <RemoveCircleIcon fontSize="medium" />
                     </IconButton>
                     {count}
                     <IconButton
                       variant="contained"
                       onClick={() =>{
-                        setCount(count-1)
-                        console.log('subtracted')
+                        setCount(count+1)
                       }
                       }
                     >
-                      <RemoveCircleIcon fontSize="medium" />
+                      <AddCircleIcon fontSize="medium" />
                     </IconButton>
                     </Box>
                     
