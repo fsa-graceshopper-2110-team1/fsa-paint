@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -42,14 +42,11 @@ const theme = createTheme({
 });
 
 export const NavbarTwo = () => {
-  //CART ITEM COUNT AND AUTH VERIFICATION
-  const cartItems = useSelector((state) => state.cart);
-  let cart;
-  cartItems ? (cart = cartItems.cartItems) : null;
+  //CART ITEM COUNT
+  const cart = useSelector((state) => state.cart);
 
+  //AUTH VERIFICATION
   const auth = useSelector((state) => state.auth);
-  let totalItemsInCart;
-  cart ? (totalItemsInCart = cart.length) : null;
   const name = auth.firstName;
 
   //MODAL
@@ -86,32 +83,34 @@ export const NavbarTwo = () => {
                   }}
                 />
               </Link>
-              
-              
-                <Link to="browse">
-                  <IconButton size="large" color="secondary" sx={{borderRadius: 2}}>
-                    <Typography
-                        variant="h6"
-                        component="div"
-                        sx={{ marginLeft: 2.5, marginRight:1 }}
-                      >
-                        Paints
-                      </Typography>
-                      <ImagesearchRollerIcon/>
-                  </IconButton>
-                </Link>
-                <Box sx={{ flexGrow: 1 }} />
-                <Box
+
+              <Link to="browse">
+                <IconButton
+                  size="large"
+                  color="secondary"
+                  sx={{ borderRadius: 2 }}
+                >
+                  <Typography
+                    variant="h6"
+                    component="div"
+                    sx={{ marginLeft: 2.5, marginRight: 1 }}
+                  >
+                    Paints
+                  </Typography>
+                  <ImagesearchRollerIcon />
+                </IconButton>
+              </Link>
+              <Box sx={{ flexGrow: 1 }} />
+              <Box
                 sx={{
                   display: { xs: "none", sm: "flex", md: "flex" },
                   marginRight: 5,
                   alignItems: "center",
                 }}
               >
-                
                 <Link to="cart">
                   <IconButton size="large" color="secondary">
-                    <Badge badgeContent={totalItemsInCart} color="error">
+                    <Badge badgeContent={cart?.cartItems?.length} color="error">
                       <ShoppingCartIcon />
                     </Badge>
                   </IconButton>
@@ -121,12 +120,12 @@ export const NavbarTwo = () => {
                     <IconButton
                       size="large"
                       edge="end"
-                      color='secondary'
+                      color="secondary"
                       aria-controls={open ? "account-menu" : undefined}
                       aria-haspopup="true"
                       aria-expanded={open ? "true" : undefined}
                       onClick={handleClick}
-                      sx={{borderRadius: 2}}
+                      sx={{ borderRadius: 2 }}
                     >
                       <AccountCircle />
                       <Typography
