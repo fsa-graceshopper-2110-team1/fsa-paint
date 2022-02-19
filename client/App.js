@@ -39,10 +39,10 @@ const App = () => {
       const cart = await dispatch(fetchCart(user.id));
     } else {
       //if user not signed in, look for local storage
-      const localCart = window.localStorage.getItem("cart");
+      let localCart = window.localStorage.getItem("cart");
       if (!localCart) {
         //if no local storage cart, create a cart in storage
-        const localCart = JSON.stringify({ id: -1, cartItems: [] });
+        localCart = JSON.stringify({ id: -1, cartItems: [] });
         localStorage.setItem("cart", localCart);
       }
       dispatch(addLocalStorageToCart(JSON.parse(localCart)));
