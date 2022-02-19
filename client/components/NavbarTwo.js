@@ -19,6 +19,8 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import { LoginModal } from "./Auth/LoginModal";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
+import BrushIcon from "@mui/icons-material/Brush";
 
 const theme = createTheme({
   palette: {
@@ -68,6 +70,28 @@ export const NavbarTwo = () => {
     setAnchorEl(null);
   };
 
+  //DROPDOWN MENU FOR PRODUCTS
+  const [anchorEl2, setAnchorEl2] = useState(null);
+  const open2 = Boolean(anchorEl2);
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
+  const products = useSelector((state) => state.products)
+    .filter((p) => p.status === "active")
+    .sort(function (a, b) {
+      if (a.hexCode > b.hexCode) {
+        return -1;
+      }
+      if (a.hexCode < b.hexCode) {
+        return 1;
+      }
+      return 0;
+    });
+  const categories = [...new Set(products.map((product) => product.category))];
+
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -82,59 +106,143 @@ export const NavbarTwo = () => {
                     height: 60,
                     width: 120,
                     marginTop: 0.5,
-                    marginLeft: 7,
+                    marginLeft: 3,
                   }}
                 />
               </Link>
-              
-              
+
+              <IconButton
+                size="large"
+                color="secondary"
+                sx={{ borderRadius: 2 }}
+                aria-controls={open2 ? "account-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open2 ? "true" : undefined}
+                onClick={handleClick2}
+              >
+                <Typography
+                  variant="p"
+                  component="div"
+                  sx={{
+                    fontSize: "16px",
+                    marginLeft: 1,
+                    marginRight: 1,
+                    fontFamily: "raleway",
+                    letterSpacing: "0.1rem",
+                  }}
+                >
+                  PRODUCTS
+                </Typography>
+              </IconButton>
+
+              <Menu
+                anchorEl={anchorEl2}
+                id="account-menu"
+                open={open2}
+                onClose={handleClose2}
+                onClick={handleClose2}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1.5,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    "&:before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
+                  },
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
                 <Link to="browse">
-                  <IconButton size="large" color="secondary" sx={{borderRadius: 2}}>
+                  <MenuItem>
+                    <ColorLensIcon sx={{ color: "black" }} />
                     <Typography
-                        variant="h6"
-                        component="div"
-                        sx={{ marginLeft: 2.5, marginRight:1 }}
-                      >
-                        Paints
-                      </Typography>
-                      <ImagesearchRollerIcon/>
-                  </IconButton>
+                      sx={{
+                        fontFamily: "raleway",
+                        color: "black",
+                        marginLeft: 0.5,
+                      }}
+                    >
+                      Browse All
+                    </Typography>
+                  </MenuItem>
                 </Link>
-                <Box sx={{ flexGrow: 1 }} />
-                <Box
+                <Divider />
+                <div>
+                  {categories.map((cat) => {
+                    return (
+                      <Link
+                        to={`/browse/${cat.toLowerCase()}`}
+                        key={cat}
+                        color="secondary"
+                      >
+                        <MenuItem>
+                          <BrushIcon sx={{ color: "black" }} />
+                          <Typography
+                            sx={{
+                              fontFamily: "raleway",
+                              marginLeft: 0.5,
+                              color: "black",
+                            }}
+                          >
+                            {cat}s
+                          </Typography>
+                        </MenuItem>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </Menu>
+              <Box sx={{ flexGrow: 1 }} />
+              <Box
                 sx={{
                   display: { xs: "none", sm: "flex", md: "flex" },
-                  marginRight: 5,
+                  marginRight: 2,
                   alignItems: "center",
                 }}
               >
-                
-                <Link to="cart">
-                  <IconButton size="large" color="secondary">
-                    <Badge badgeContent={totalItemsInCart} color="error">
-                      <ShoppingCartIcon />
-                    </Badge>
-                  </IconButton>
-                </Link>
                 {name ? (
                   <>
                     <IconButton
                       size="large"
                       edge="end"
-                      color='secondary'
+                      color="secondary"
                       aria-controls={open ? "account-menu" : undefined}
                       aria-haspopup="true"
                       aria-expanded={open ? "true" : undefined}
                       onClick={handleClick}
-                      sx={{borderRadius: 2}}
+                      sx={{ borderRadius: 2 }}
                     >
                       <AccountCircle />
                       <Typography
                         variant="h6"
                         component="div"
-                        sx={{ marginLeft: 0.5 }}
+                        sx={{
+                          marginLeft: 0.5,
+                          fontSize: "15px",
+                          fontFamily: "raleway",
+                          letterSpacing: "0.1rem",
+                        }}
                       >
-                        {name}
+                        {name.toUpperCase()}
                       </Typography>
                     </IconButton>
 
@@ -176,18 +284,44 @@ export const NavbarTwo = () => {
                     >
                       <Link to="my-account">
                         <MenuItem>
-                          <Avatar /> My account
+                          <Avatar />
+                          <Typography
+                            sx={{
+                              fontFamily: "raleway",
+                              marginLeft: 0.5,
+                              color: "black",
+                            }}
+                          >
+                            My account
+                          </Typography>
                         </MenuItem>
                       </Link>
                       <MenuItem>
-                        <Avatar /> My orders
+                        <Avatar />
+                        <Typography
+                          sx={{
+                            fontFamily: "raleway",
+                            marginLeft: 0.5,
+                            color: "black",
+                          }}
+                        >
+                          My orders
+                        </Typography>
                       </MenuItem>
                       <Divider />
                       <MenuItem>
                         <ListItemIcon>
                           <Logout fontSize="small" />
                         </ListItemIcon>
-                        Logout
+                        <Typography
+                          sx={{
+                            fontFamily: "raleway",
+                            marginLeft: 0.5,
+                            color: "black",
+                          }}
+                        >
+                          Logout
+                        </Typography>
                       </MenuItem>
                     </Menu>
                   </>
@@ -201,6 +335,13 @@ export const NavbarTwo = () => {
                     <AccountCircleIcon />
                   </IconButton>
                 )}
+                <Link to="cart">
+                  <IconButton size="large" color="secondary">
+                    <Badge badgeContent={totalItemsInCart} color="error">
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </IconButton>
+                </Link>
               </Box>
             </Toolbar>
           </AppBar>

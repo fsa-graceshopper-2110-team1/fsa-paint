@@ -73,7 +73,11 @@ export const ShippingForm = () => {
           }, 0),
           price_data: {
             currency: "usd",
-            unit_amount: item.price,
+            unit_amount: allProducts.filter((paint) => {
+                if (paint.id === item.productId) {
+                  return paint;
+                }
+              })[0].price,
             product_data: {
               name: allProducts.filter((paint) => {
                 if (paint.id === item.productId) {
@@ -94,6 +98,7 @@ export const ShippingForm = () => {
     });
     
     const {sessionID} = response;
+    console.log("This is session ID",sessionID)
     const {error} = await stripe.redirectToCheckout({sessionId:sessionID}
     );
 
