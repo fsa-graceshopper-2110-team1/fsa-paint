@@ -34,11 +34,11 @@ router.get("/:id", async (req, res, next) => {
 // POST /api/orders {body: userId}
 router.post("/", async (req, res, next) => {
   try {
-    // creating an order includes a hook that copies all cart info into the order; only userId needed;
-    const order = await Order.create({ userId: req.body.userId });
     const cart = await Cart.findOne({ where: { userId: req.body.userId } });
+    let order = await Order.create({ userId: req.body.userId });
     // creating an order also generates order items for all cart items
-    await OrderItem.generateOrderItems(cart, order);
+    // adding each orderitem also updates the total price
+    const orderItems = await OrderItem.generateOrderItems(cart, order);
     res.json(order);
   } catch (err) {
     next(err);
