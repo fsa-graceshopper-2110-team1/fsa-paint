@@ -22,14 +22,6 @@ export const Home = (props) => {
   const user = useSelector((state) => state.auth);
   const products = useSelector((state) => state.products);
 
-  // useEffect(() => {
-  //   //using products as a proxy for whether state has already been loaded
-  //   //show modal if state has loaded and user is not logged in
-  //   if (!user.id && products.length > 0) {
-  //     navigate("/login");
-  //   }
-  // }, [products]);
-
   const theme = createTheme({
     palette: {
       primary: {

@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import { LoginForm } from "./LoginForm";
 import { RegisterForm } from "./RegisterForm";
 
-export const LoginModal = ({ showModal }) => {
+export const LoginModal = ({ showModal, setShowModal }) => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [alignment, setAlignment] = useState("login");
@@ -20,11 +20,6 @@ export const LoginModal = ({ showModal }) => {
   useEffect(() => {
     if (state) setPath(state.path);
   });
-
-  const onClose = () => {
-    //TODO: update this to navigate to where they were when the modal opened
-    navigate(path || "/home");
-  };
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
@@ -40,12 +35,10 @@ export const LoginModal = ({ showModal }) => {
 
   const modalRef = useRef();
 
-  //todo:
-  //click outside functionality
+  //click outside close functionality
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
-      showModal = false;
-      onClose();
+      setShowModal(false);
     }
   };
   return (
@@ -64,12 +57,7 @@ export const LoginModal = ({ showModal }) => {
                     </p>
                   </Grid>
                   <Grid item xs={1.5}>
-                    <IconButton
-                      onClick={() => {
-                        showModal = false;
-                        onClose();
-                      }}
-                    >
+                    <IconButton onClick={() => setShowModal((prev) => !prev)}>
                       <CloseIcon />
                     </IconButton>
                   </Grid>

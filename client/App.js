@@ -54,17 +54,24 @@ const App = () => {
     dispatch(fetchProducts());
   }, []);
 
+  //Modal state for login modal in /login route
+  const [showModal, setShowModal] = useState(true);
+  const openModal = () => {
+    setShowModal((prev) => !prev);
+  };
+
   return (
     <div>
-      {/* TODO (REACT-ROUTER V6): 
-        1. useHistory to useNavigate and changing the history.push or history.replace
-        2. remove "/" from Links
-      */}
       <BrowserRouter>
         <NavbarTwo />
         <Routes>
           <Route path="/" element={<Home />}>
-            <Route path="login" element={<LoginModal showModal={true} />} />
+            <Route
+              path="login"
+              element={
+                <LoginModal showModal={showModal} setShowModal={setShowModal} />
+              }
+            />
           </Route>
           <Route path="home" element={<Home />} />
           <Route path="browse/:category" element={<Category />} />
