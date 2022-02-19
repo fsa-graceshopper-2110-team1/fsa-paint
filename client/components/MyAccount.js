@@ -28,7 +28,6 @@ export const MyAccount = ()=>{
         lastName: profile.lastName,
         email: profile.email,
     }
-    console.log(profile)
     const {
         register: register5,
         handleSubmit: handleSubmit5,
