@@ -15,6 +15,7 @@ label {
   text-align: center;
   padding-top: 5rem;
 }
+
 .indiv_color_box{
   text-align: center;
   padding-top: 4rem;
@@ -99,6 +100,12 @@ header{
 }
 
 .indiv_color {
+  background: rgba(255,255,255,0.5);
+  padding: 10px;
+  text-align:justify; 
+}
+
+.best_paint {
   background: rgba(255,255,255,0.5);
   padding: 10px;
   text-align:justify; 
