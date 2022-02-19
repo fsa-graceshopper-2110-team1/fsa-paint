@@ -22,25 +22,25 @@ const theme = createTheme({
 export const CartPage = () => {
   const userCart = useSelector((state) => state.cart);
   const products = useSelector((state) => state.products) || [];
-  const cartItems = userCart?.cartItems || [];
+  const cartItems = userCart?.cartItems;
 
   //calculate how many of each product are in cart
-  const gallons = cartItems
-    .map((ci) => ci.productId)
-    .reduce((acc, prodId) => {
-      if (prodId in acc) {
-        acc[prodId]++;
-      } else {
-        acc[prodId] = 1;
-      }
-      return acc;
-    }, {});
+  const gallons =
+    cartItems
+      ?.map((ci) => ci.productId)
+      .reduce((acc, prodId) => {
+        if (prodId in acc) {
+          acc[prodId]++;
+        } else {
+          acc[prodId] = 1;
+        }
+        return acc;
+      }, {}) || 0;
 
   //CartItems is set up so it allows for duplicates if you add the same item twice
   //This set looks for unique products
-  const productsInCart = [
-    ...new Set(cartItems.map((cartItem) => cartItem.productId)),
-  ];
+  const productsInCart =
+    [...new Set(cartItems?.map((cartItem) => cartItem.productId))] || [];
 
   const [cart, setCart] = useState([]);
 
@@ -81,7 +81,7 @@ export const CartPage = () => {
             <Box component="h1" sx={{ marginLeft: 10 }}>
               Shopping Cart
             </Box>
-            {cartItems.length === 0 ? (
+            {cartItems?.length === 0 || !cartItems ? (
               <div>Your Cart is Empty</div>
             ) : (
               <>
