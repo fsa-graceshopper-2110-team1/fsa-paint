@@ -1,5 +1,6 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
+import {useState} from "react"
 import NumberFormat from "react-number-format";
 import { useParams } from "react-router-dom";
 import { addToCart } from "../store";
@@ -19,6 +20,7 @@ import LandscapeIcon from "@mui/icons-material/Landscape";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+
 
 export const Product = () => {
   const { productId } = useParams();
@@ -43,7 +45,7 @@ export const Product = () => {
       },
     },
   });
-  let cartNums = 1; 
+  const[count,setCount] = useState(1)
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -100,22 +102,20 @@ export const Product = () => {
                     <IconButton
                       variant="contained"
                       onClick={() => {
-                        cartNums++
-                        console.log(cartNums)
+                        setCount(count-1)
                       }}
                     >
-                      <AddCircleIcon fontSize="medium" />
+                      <RemoveCircleIcon fontSize="medium" />
                     </IconButton>
-                      {cartNums}
+                    {count}
                     <IconButton
                       variant="contained"
                       onClick={() =>{
-                        cartNums--
-                        console.log(cartNums)
+                        setCount(count+1)
                       }
                       }
                     >
-                      <RemoveCircleIcon fontSize="medium" />
+                      <AddCircleIcon fontSize="medium" />
                     </IconButton>
                     </Box>
                     

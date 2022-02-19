@@ -15,6 +15,7 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import Paper from '@mui/material/Paper'
 
 export const Category = () => {
   const { category } = useParams();
@@ -160,22 +161,40 @@ export const Category = () => {
             lg={2.4}
             >
           <Link to={`/product/${product.id}`} key={product.id}>
-            <Card sx={{height:'40vh', backgroundColor: product.hexCode,textAlign: 'left'}}>
-              <Box style={{ backgroundColor: product.hexCode, textAlign: 'left' }} key={product.id}>
-                <p className='paintchipname2'>{product.name}{" "}
-                <NumberFormat
-                  value={product.price / 100}
-                  displayType={"text"}
-                  thousandSeparator={true}
-                  prefix={"$"}
-                  decimalScale={2}
-                  fixedDecimalScale={true}
-                />
-                /gal
-                </p>
-              </Box>
-          </Card>
-        </Link>
+            <Box
+              component={Paper}
+              elevation={4}
+              square
+              sx={{
+                height: 250,
+                width: 160,
+                backgroundColor: product.hexCode,
+                textAlign: "left",
+              }}
+          ></Box>
+          </Link>
+          <Box
+            component={"h4"}
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              flexDirection: "column",
+            }}
+          >
+            <Typography color="secondary" size="large">
+              <b>{product.name}</b>
+            </Typography>
+            <Typography color="secondary" sx={{marginTop: 0.4}}>
+              <NumberFormat
+                value={product.price / 100}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+                decimalScale={2}
+                fixedDecimalScale={true}
+              />
+            </Typography>
+          </Box>
         </Grid>
       ))}
     </Grid >
