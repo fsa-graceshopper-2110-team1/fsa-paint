@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { CartItem } from "./CartItem";
-import { useSelector } from "react-redux";
 import { CartTotal } from "./CartTotal";
 import Paper from "@mui/material/Paper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -21,25 +22,25 @@ const theme = createTheme({
 export const CartPage = () => {
   const userCart = useSelector((state) => state.cart);
   const products = useSelector((state) => state.products) || [];
-  const cartItems = userCart?.cartItems || [];
+  const cartItems = userCart?.cartItems;
 
   //calculate how many of each product are in cart
-  const gallons = cartItems
-    .map((ci) => ci.productId)
-    .reduce((acc, prodId) => {
-      if (prodId in acc) {
-        acc[prodId]++;
-      } else {
-        acc[prodId] = 1;
-      }
-      return acc;
-    }, {});
+  const gallons =
+    cartItems
+      ?.map((ci) => ci.productId)
+      .reduce((acc, prodId) => {
+        if (prodId in acc) {
+          acc[prodId]++;
+        } else {
+          acc[prodId] = 1;
+        }
+        return acc;
+      }, {}) || 0;
 
   //CartItems is set up so it allows for duplicates if you add the same item twice
   //This set looks for unique products
-  const productsInCart = [
-    ...new Set(cartItems.map((cartItem) => cartItem.productId)),
-  ];
+  const productsInCart =
+    [...new Set(cartItems?.map((cartItem) => cartItem.productId))] || [];
 
   const [cart, setCart] = useState([]);
 
@@ -80,7 +81,7 @@ export const CartPage = () => {
             <Box component="h1" sx={{ marginLeft: 10 }}>
               Shopping Cart
             </Box>
-            {cartItems.length === 0 ? (
+            {cartItems?.length === 0 || !cartItems ? (
               <div>Your Cart is Empty</div>
             ) : (
               <>
@@ -97,10 +98,15 @@ export const CartPage = () => {
             )}
           </Grid>
           <Grid item xs={12} sm={5} md={4} xl={2} lg={3}>
-            <CartTotal total={total} quantity={quantity} />
+            <CartTotal
+              total={total}
+              quantity={quantity}
+              isLoggedIn={!!userCart?.userId}
+            />
           </Grid>
         </Grid>
       </ThemeProvider>
+      <Outlet />
     </>
   );
 };
