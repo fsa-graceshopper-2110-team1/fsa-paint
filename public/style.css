@@ -68,7 +68,7 @@ header{
   justify-content: flex-end
 }
 .arrow svg:hover {
-  color: white;
+  color: rgb(199, 199, 199);
 }
 .prev {
   position:absolute;

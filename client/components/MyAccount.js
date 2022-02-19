@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import CssBaseline from "@mui/material/CssBaseline";
+import { useSelector } from "react-redux";
+
 
 const theme = createTheme({
     palette: {
@@ -17,13 +19,21 @@ const theme = createTheme({
     },
   });
 
-
+//increment the number of things 
 export const MyAccount = ()=>{
+    const profile = useSelector((state) => state.auth);
+
+    const preloadedValues = {
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        email: profile.email,
+    }
+    console.log(profile)
     const {
         register: register5,
         handleSubmit: handleSubmit5,
         formState: { errors },
-      } = useForm();
+      } = useForm({defaultValues:preloadedValues});
     
     return(
         <ThemeProvider theme={theme}>
@@ -36,8 +46,7 @@ export const MyAccount = ()=>{
           md={7}
           sx={{
             backgroundImage:
-              "url(https://i.postimg.cc/15gp3ZSw-/Cozy-Dining-Space-MYSTERIOUS-676x751.jpg)",
-
+              "url(https://i.postimg.cc/SQ6r3RmN/Paintbrushes.jpg)",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -58,11 +67,12 @@ export const MyAccount = ()=>{
             key={4}
           >
             <h2>Account Information</h2>
-            <Grid container spacing={3}>
+            {profile ? 
+                <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   autoFocus
+                  name="firstName"
                   {...register5("firstName", { required: true })}
                   id="firstName"
                   label="First name"
@@ -73,7 +83,6 @@ export const MyAccount = ()=>{
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="lastName"
                   {...register5("lastName", { required: true })}
                   label="Last name"
@@ -84,7 +93,6 @@ export const MyAccount = ()=>{
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   id="email"
                   {...register5("email", { required: true })}
                   label="Email"
@@ -95,7 +103,6 @@ export const MyAccount = ()=>{
               </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
-                  required
                   id="password"
                   {...register5("password", { required: true })}
                   label="Password"
@@ -114,7 +121,7 @@ export const MyAccount = ()=>{
                   Update Information
                 </Button>
               </Grid>
-            </Grid>
+              </Grid> : null}
           </Box>
         </Grid>
       </Grid>
