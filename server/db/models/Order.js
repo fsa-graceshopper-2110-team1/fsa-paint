@@ -1,5 +1,5 @@
 const db = require("../db");
-const { INTEGER, ENUM } = db.Sequelize.DataTypes;
+const { INTEGER, ENUM, TEXT } = db.Sequelize.DataTypes;
 
 const status = ["created", "pending", "confirmed", "compeleted", "failed"];
 
@@ -11,6 +11,9 @@ const Order = db.define("order", {
   status: {
     type: ENUM(status),
     defaultValue: "created",
+  },
+  shippingAddress: {
+    type: TEXT,
   },
 });
 
