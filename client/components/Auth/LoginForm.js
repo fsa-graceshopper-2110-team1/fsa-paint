@@ -18,9 +18,10 @@ const theme = createTheme({
   },
 });
 
-export const LoginForm = ({ path }) => {
+export const LoginForm = ({ path, setShowModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const authError = useSelector((state) => state.auth.error);
 
@@ -34,7 +35,10 @@ export const LoginForm = ({ path }) => {
     const authed = await dispatch(authenticate(data, "login"));
     //authed === undefined when authenticate is successful
     //close modal if auth is successful
-    if (!authed) navigate(path || "/home");
+    if (!authed) {
+      navigate(path || location.pathname);
+      setShowModal(false);
+    }
   };
 
   return (

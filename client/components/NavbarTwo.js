@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../store";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,9 +15,7 @@ import ImagesearchRollerIcon from "@mui/icons-material/ImagesearchRoller";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Logout from "@mui/icons-material/Logout";
-import { Link, useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useSelector, useDispatch } from "react-redux";
 import Badge from "@mui/material/Badge";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { LoginModal } from "./Auth/LoginModal";
@@ -44,15 +46,14 @@ const theme = createTheme({
 });
 
 export const NavbarTwo = () => {
-  //CART ITEM COUNT AND AUTH VERIFICATION
-  const cartItems = useSelector((state) => state.cart);
-  let cart;
-  cartItems ? (cart = cartItems.cartItems) : null;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const auth = useSelector((state) => state.auth);
-  let totalItemsInCart;
-  cart ? (totalItemsInCart = cart.length) : null;
-  const name = auth.firstName;
+  //CART ITEM COUNT
+  const cart = useSelector((state) => state.cart);
+
+  //AUTH VERIFICATION
+  const user = useSelector((state) => state.auth);
 
   //MODAL
   const [showModal, setShowModal] = useState(false);
@@ -110,7 +111,6 @@ export const NavbarTwo = () => {
                   }}
                 />
               </Link>
-
               <IconButton
                 size="large"
                 color="secondary"
@@ -219,7 +219,7 @@ export const NavbarTwo = () => {
                   alignItems: "center",
                 }}
               >
-                {name ? (
+                {user.firstName ? (
                   <>
                     <IconButton
                       size="large"
@@ -242,7 +242,7 @@ export const NavbarTwo = () => {
                           letterSpacing: "0.1rem",
                         }}
                       >
-                        {name.toUpperCase()}
+                        {user.firstName.toUpperCase()}
                       </Typography>
                     </IconButton>
 
@@ -309,7 +309,12 @@ export const NavbarTwo = () => {
                         </Typography>
                       </MenuItem>
                       <Divider />
-                      <MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          dispatch(logout());
+                          navigate("/home");
+                        }}
+                      >
                         <ListItemIcon>
                           <Logout fontSize="small" />
                         </ListItemIcon>
@@ -337,7 +342,7 @@ export const NavbarTwo = () => {
                 )}
                 <Link to="cart">
                   <IconButton size="large" color="secondary">
-                    <Badge badgeContent={totalItemsInCart} color="error">
+                    <Badge badgeContent={cart?.cartItems?.length} color="error">
                       <ShoppingCartIcon />
                     </Badge>
                   </IconButton>

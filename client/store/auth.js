@@ -38,14 +38,9 @@ export const authenticate = (data, method) => async (dispatch) => {
   }
 };
 
-export const logout = () => {
+export const logout = () => (dispatch) => {
+  dispatch(setAuth({}));
   window.localStorage.removeItem(TOKEN);
-  const navigate = useNavigate();
-  navigate("/home");
-  return {
-    type: SET_AUTH,
-    auth: {},
-  };
 };
 
 /**
