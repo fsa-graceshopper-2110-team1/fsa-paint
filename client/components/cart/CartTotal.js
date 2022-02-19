@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { createOrder } from "../../store";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -9,7 +10,9 @@ import NumberFormat from "react-number-format";
 import Typography from "@mui/material/Typography";
 import { LoginModal } from "../Auth/LoginModal";
 
-export const CartTotal = ({ total, quantity, isLoggedIn }) => {
+export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
+  const dispatch = useDispatch();
+
   return (
     <Box
       sx={{
@@ -42,22 +45,35 @@ export const CartTotal = ({ total, quantity, isLoggedIn }) => {
           />
         </h3>
       </Box>
-      <Button
-        variant="contained"
-        size="small"
-        style={{
-          maxWidth: "200px",
-          maxHeight: "45px",
-          minWidth: "200px",
-          minHeight: "45px",
-        }}
-        disabled={quantity === 0}
-      >
-        {isLoggedIn ? (
+      {isLoggedIn ? (
+        <Button
+          variant="contained"
+          size="small"
+          style={{
+            maxWidth: "200px",
+            maxHeight: "45px",
+            minWidth: "200px",
+            minHeight: "45px",
+          }}
+          disabled={quantity === 0}
+          onClick={() => dispatch(createOrder(cartId, userId))}
+        >
           <Link to={`/shipping`} style={{ color: "black" }}>
             <h3>Proceed to Checkout</h3>
           </Link>
-        ) : (
+        </Button>
+      ) : (
+        <Button
+          variant="contained"
+          size="small"
+          style={{
+            maxWidth: "200px",
+            maxHeight: "45px",
+            minWidth: "200px",
+            minHeight: "45px",
+          }}
+          disabled={quantity === 0}
+        >
           <Link
             to={`/cart/login`}
             state={{ path: location.pathname }}
@@ -65,8 +81,8 @@ export const CartTotal = ({ total, quantity, isLoggedIn }) => {
           >
             <h3>Login to Checkout</h3>
           </Link>
-        )}
-      </Button>
+        </Button>
+      )}
     </Box>
   );
 };

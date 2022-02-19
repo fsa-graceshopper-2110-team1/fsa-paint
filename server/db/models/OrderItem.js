@@ -14,6 +14,7 @@ OrderItem.beforeCreate(async (orderItem) => {
   try {
     const product = await orderItem.getProduct();
     product.quantity = product.quantity - 1;
+    orderItem.update({ price: product.price });
   } catch (err) {
     console.log(err);
   }
@@ -21,16 +22,21 @@ OrderItem.beforeCreate(async (orderItem) => {
 
 //class methods
 OrderItem.generateOrderItems = async function (cart, order) {
-  const items = await cart.getCartItems();
+  let items = await cart.getCartItems();
+
   const orderItems = await Promise.all(
-    items.map((item) =>
-      OrderItem.create({
+    items.map((item) => {
+      return OrderItem.create({
         orderId: order.id,
         productId: item.productId,
-        price: item.price,
-      })
-    )
+      });
+    })
   );
+
+  //update order total with sum order item prices
+  const oiTotal = orderItems.reduce((acc, oi) => acc + oi.price, 0);
+  order = await order.update({ total: oiTotal });
+
   return orderItems;
 };
 

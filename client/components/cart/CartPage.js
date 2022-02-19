@@ -102,6 +102,8 @@ export const CartPage = () => {
               total={total}
               quantity={quantity}
               isLoggedIn={!!userCart?.userId}
+              cartId={userCart?.id}
+              userId={userCart?.userId}
             />
           </Grid>
         </Grid>
