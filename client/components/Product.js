@@ -16,6 +16,9 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import ImagesearchRollerOutlinedIcon from "@mui/icons-material/ImagesearchRollerOutlined";
 import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
 import LandscapeIcon from "@mui/icons-material/Landscape";
+import IconButton from "@mui/material/IconButton";
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 export const Product = () => {
   const { productId } = useParams();
@@ -40,7 +43,7 @@ export const Product = () => {
       },
     },
   });
-
+  let cartNums = 1; 
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -92,21 +95,46 @@ export const Product = () => {
                 <Grid item xs={12}>
                   <p>{product.description}</p>
                 </Grid>
-                <Grid item xs={12} sm={12}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={() => dispatch(addToCart(cart.id, product.id))}
-                  >
-                    Add to cart
-                  </Button>
-                </Grid>
+                <Grid item>
+                    <Box>
+                    <IconButton
+                      variant="contained"
+                      onClick={() => {
+                        cartNums++
+                        console.log(cartNums)
+                      }}
+                    >
+                      <AddCircleIcon fontSize="medium" />
+                    </IconButton>
+                      {cartNums}
+                    <IconButton
+                      variant="contained"
+                      onClick={() =>{
+                        cartNums--
+                        console.log(cartNums)
+                      }
+                      }
+                    >
+                      <RemoveCircleIcon fontSize="medium" />
+                    </IconButton>
+                    </Box>
+                    
+                  </Grid>
+                  <Grid item xs={12} sm={12} sx={{justifyItems:"center"}}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      onClick={() => dispatch(addToCart(cart.id, product.id))}
+                    >
+                      Add to cart
+                    </Button>
+                  </Grid>
               </Grid>
             </Box>
           </Grid>
         </Grid>
-        <Grid container sx={{ height: "30vh", backgroundColor: "white" }} />
+        <Grid container sx={{ height: "60vh", backgroundColor: "white" }} />
         <Grid
           container
           sx={{ height: "40vh", backgroundColor: "primary.light", mx: "auto" }}
