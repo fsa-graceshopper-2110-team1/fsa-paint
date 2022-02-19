@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { CartItem } from "./CartItem";
-import { useSelector } from "react-redux";
 import { CartTotal } from "./CartTotal";
 import Paper from "@mui/material/Paper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -97,10 +98,15 @@ export const CartPage = () => {
             )}
           </Grid>
           <Grid item xs={12} sm={5} md={4} xl={2} lg={3}>
-            <CartTotal total={total} quantity={quantity} />
+            <CartTotal
+              total={total}
+              quantity={quantity}
+              isLoggedIn={!!userCart?.userId}
+            />
           </Grid>
         </Grid>
       </ThemeProvider>
+      <Outlet />
     </>
   );
 };

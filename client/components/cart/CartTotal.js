@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -7,8 +7,9 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import NumberFormat from "react-number-format";
 import Typography from "@mui/material/Typography";
+import { LoginModal } from "../Auth/LoginModal";
 
-export const CartTotal = ({ total, quantity }) => {
+export const CartTotal = ({ total, quantity, isLoggedIn }) => {
   return (
     <Box
       sx={{
@@ -51,9 +52,15 @@ export const CartTotal = ({ total, quantity }) => {
           minHeight: "45px",
         }}
       >
-        <Link to={`/checkout`}>
-          <h3>Proceed to Checkout</h3>
-        </Link>
+        {isLoggedIn ? (
+          <Link to={`/shipping`}>
+            <h3>Proceed to Checkout</h3>
+          </Link>
+        ) : (
+          <Link to={`/cart/login`} state={{ path: location.pathname }}>
+            <h3>Login to Checkout</h3>
+          </Link>
+        )}
       </Button>
     </Box>
   );

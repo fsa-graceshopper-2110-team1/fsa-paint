@@ -39,6 +39,7 @@ export const LoginModal = ({ showModal, setShowModal }) => {
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
+      if (path) navigate(path);
     }
   };
   return (
@@ -57,7 +58,14 @@ export const LoginModal = ({ showModal, setShowModal }) => {
                     </p>
                   </Grid>
                   <Grid item xs={1.5}>
-                    <IconButton onClick={() => setShowModal((prev) => !prev)}>
+                    <IconButton
+                      onClick={() => {
+                        setShowModal((prev) => !prev);
+                        if (path) {
+                          navigate(path);
+                        }
+                      }}
+                    >
                       <CloseIcon />
                     </IconButton>
                   </Grid>
@@ -72,9 +80,17 @@ export const LoginModal = ({ showModal, setShowModal }) => {
                   <ToggleButton value="signup">I'M NEW HERE</ToggleButton>
                 </ToggleButtonGroup>
                 {alignment === "login" ? (
-                  <LoginForm path={path} />
+                  <LoginForm
+                    path={path}
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                  />
                 ) : (
-                  <RegisterForm path={path} />
+                  <RegisterForm
+                    path={path}
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                  />
                 )}
               </ModalWrapper>
             </animated.div>

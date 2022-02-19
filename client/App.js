@@ -77,7 +77,14 @@ const App = () => {
           <Route path="browse/:category" element={<Category />} />
           <Route path="browse" element={<Browse />} />
           <Route path="product/:productId" element={<Product />} />
-          <Route path="cart" element={<CartPage />} />
+          <Route path="cart" element={<CartPage />}>
+            <Route
+              path="login"
+              element={
+                <LoginModal showModal={showModal} setShowModal={setShowModal} />
+              }
+            />
+          </Route>
           <Route path="my-account" element={<MyAccount />} />
           <Route
             path="shipping"
