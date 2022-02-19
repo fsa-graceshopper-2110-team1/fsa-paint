@@ -41,12 +41,12 @@ export const createOrder = (userId, cartId) => {
 /**
  * REDUCER
  */
-export default function (state = [], action) {
+export default function (state = { all: [], current: {} }, action) {
   switch (action.type) {
     case GOT_USER_ORDERS:
-      return action.orders;
+      return { ...state, all: action.orders };
     case CREATED_ORDER:
-      return [...state, action.order];
+      return { ...state, current: action.order };
     default:
       return state;
   }
