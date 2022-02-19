@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../store";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -42,6 +44,9 @@ const theme = createTheme({
 });
 
 export const NavbarTwo = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   //CART ITEM COUNT
   const cart = useSelector((state) => state.cart);
 
@@ -181,7 +186,12 @@ export const NavbarTwo = () => {
                         <Avatar /> My orders
                       </MenuItem>
                       <Divider />
-                      <MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          dispatch(logout());
+                          navigate("/home");
+                        }}
+                      >
                         <ListItemIcon>
                           <Logout fontSize="small" />
                         </ListItemIcon>
