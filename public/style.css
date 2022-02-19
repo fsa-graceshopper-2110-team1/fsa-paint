@@ -15,6 +15,10 @@ label {
   text-align: center;
   padding-top: 5rem;
 }
+.indiv_color_box{
+  text-align: center;
+  padding-top: 4rem;
+}
 /*
 nav a {
   display: inline-block;
@@ -64,6 +68,11 @@ header{
 .paintchipname {
   color: black;
   position: absolute;
+  bottom: 0;
+}
+
+.paintchipname2 {
+  color: black;
   bottom: 0;
 }
 
