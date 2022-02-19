@@ -46,8 +46,7 @@ export const NavbarTwo = () => {
   const cart = useSelector((state) => state.cart);
 
   //AUTH VERIFICATION
-  const auth = useSelector((state) => state.auth);
-  const name = auth.firstName;
+  const user = useSelector((state) => state.auth);
 
   //MODAL
   const [showModal, setShowModal] = useState(false);
@@ -115,7 +114,7 @@ export const NavbarTwo = () => {
                     </Badge>
                   </IconButton>
                 </Link>
-                {name ? (
+                {user.firstName ? (
                   <>
                     <IconButton
                       size="large"
@@ -133,7 +132,7 @@ export const NavbarTwo = () => {
                         component="div"
                         sx={{ marginLeft: 0.5 }}
                       >
-                        {name}
+                        {user.firstName}
                       </Typography>
                     </IconButton>
 
