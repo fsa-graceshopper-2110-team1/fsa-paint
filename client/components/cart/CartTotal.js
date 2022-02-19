@@ -51,13 +51,18 @@ export const CartTotal = ({ total, quantity, isLoggedIn }) => {
           minWidth: "200px",
           minHeight: "45px",
         }}
+        disabled={quantity === 0}
       >
         {isLoggedIn ? (
-          <Link to={`/shipping`}>
+          <Link to={`/shipping`} style={{ color: "black" }}>
             <h3>Proceed to Checkout</h3>
           </Link>
         ) : (
-          <Link to={`/cart/login`} state={{ path: location.pathname }}>
+          <Link
+            to={`/cart/login`}
+            state={{ path: location.pathname }}
+            style={{ color: "black" }}
+          >
             <h3>Login to Checkout</h3>
           </Link>
         )}
