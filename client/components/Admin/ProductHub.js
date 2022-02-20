@@ -22,23 +22,26 @@ const ProductHub = () => {
 
   const handleCellEditCommit = async (params) => {
     try {
-      // Dispatch product update
-      const response = await dispatch(
-        updateProduct({
-          id: params.id,
-          [params.field]: params.value,
-        })
-      );
+      const currentRow = rows.find((row) => row.id === params.id);
+      if (currentRow[params.field] !== params.value) {
+        // Dispatch product update
+        const response = await dispatch(
+          updateProduct({
+            id: params.id,
+            [params.field]: params.value,
+          })
+        );
 
-      setSnackbar({
-        children: "Product successfully saved",
-        severity: "success",
-      });
-      setRows((prev) =>
-        prev.map((row) =>
-          row.id === params.id ? { ...row, ...response } : row
-        )
-      );
+        setSnackbar({
+          children: "Product successfully saved",
+          severity: "success",
+        });
+        setRows((prev) =>
+          prev.map((row) =>
+            row.id === params.id ? { ...row, ...response } : row
+          )
+        );
+      }
     } catch (error) {
       console.log(error);
       setSnackbar({
