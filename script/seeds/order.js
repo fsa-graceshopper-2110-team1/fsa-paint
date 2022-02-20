@@ -5,7 +5,7 @@ const {
 const axios = require("axios");
 
 async function orderSeed() {
-  const orders = await Promise.all([
+  let orders = await Promise.all([
     Order.create({
       userId: 1,
     }),

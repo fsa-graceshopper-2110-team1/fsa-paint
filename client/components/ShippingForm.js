@@ -22,19 +22,18 @@ const theme = createTheme({
 });
 
 //STRIPE API FETCH FUNCTION
-async function fetchFromAPI(endpoint, opts){
-    const {method, body} = {method: "POST", body: null, ...opts}
-    console.log('THIS IS BODY', body)
+async function fetchFromAPI(endpoint, opts) {
+  const { method, body } = { method: "POST", body: null, ...opts };
 
-    const res = await fetch(`http://localhost:8080/${endpoint}`, {
-        method,
-        body: JSON.stringify(body),
-        headers:{
-            "Content-Type": 'application/json',
-        },
-    })
+  const res = await fetch(`http://localhost:8080/${endpoint}`, {
+    method,
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    return res.json();
+  return res.json();
 }
 
 export const ShippingForm = () => {
@@ -57,8 +56,8 @@ export const ShippingForm = () => {
         (v, i, a) => a.findIndex((t) => t.productId === v.productId) === i
       ))
     : null;
-  
-    //STRIPE API OBJECT GENERATOR
+
+  //STRIPE API OBJECT GENERATOR
   let line_items;
   cart
     ? (line_items = cart.map((item) => {
@@ -74,10 +73,10 @@ export const ShippingForm = () => {
           price_data: {
             currency: "usd",
             unit_amount: allProducts.filter((paint) => {
-                if (paint.id === item.productId) {
-                  return paint;
-                }
-              })[0].price,
+              if (paint.id === item.productId) {
+                return paint;
+              }
+            })[0].price,
             product_data: {
               name: allProducts.filter((paint) => {
                 if (paint.id === item.productId) {
@@ -92,18 +91,16 @@ export const ShippingForm = () => {
 
   //SUBMIT BUTTON FOR SHIPPING FORM THAT SENDS STRIPE THE OBJECT
   const onSubmit = async () => {
-
-    const response = await fetchFromAPI('create-checkout-session', {
-        body:{line_items, customer_email: email},
+    const response = await fetchFromAPI("create-checkout-session", {
+      body: { line_items, customer_email: email },
     });
-    
-    const {sessionID} = response;
-    console.log("This is session ID",sessionID)
-    const {error} = await stripe.redirectToCheckout({sessionId:sessionID}
-    );
 
-    if(error){
-        console.log(error);
+    const { sessionID } = response;
+    console.log("This is session ID", sessionID);
+    const { error } = await stripe.redirectToCheckout({ sessionId: sessionID });
+
+    if (error) {
+      console.log(error);
     }
   };
 
