@@ -20,6 +20,7 @@ label {
   text-align: center;
   padding-top: 4rem;
 }
+
 /*
 nav a {
   display: inline-block;
@@ -110,3 +111,17 @@ header{
   padding: 10px;
   text-align:justify; 
 }
+.go {
+  position: absolute;
+  z-index: 10;
+}
+.go_after {
+  right: 0%;
+  top: 50%;
+}
+
+.go_last{
+  left: 0%;
+  top: 50%;
+}
+
