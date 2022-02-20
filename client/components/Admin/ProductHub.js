@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import NumberFormat from "react-number-format";
 import { updateProduct } from "../../store";
 
 const ProductHub = () => {
@@ -13,13 +14,6 @@ const ProductHub = () => {
   useEffect(() => {
     setRows(products);
   }, [products]);
-
-  //   const dispatchProductPromise = () => {
-  //     return useCallback(
-  //       (product) => new Promise((resolve) => resolve(product)),
-  //       []
-  //     );
-  //   };
 
   const [snackbar, setSnackbar] = React.useState(null);
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -55,18 +49,110 @@ const ProductHub = () => {
   };
 
   const locked = ["id", "createdAt", "updatedAt"];
-  const GridColDef = Object.keys(rows[0] || {}).map((key) => {
-    return {
-      field: key,
-      headerName: key.toUpperCase(),
-      width: 150,
-      editable: locked.indexOf(key) === -1 ? true : false,
+  const columns = [
+    {
+      field: "status",
+      headerName: "Status",
+      type: "boolean",
+      width: 100,
+      editable: true,
+      //   preProcessEditCellProps: (params) => {
+      //     const isValid = !!params.props.value;
+      //     return { ...params.props, error: !isValid };
+      //   },
+    },
+    {
+      field: "id",
+      headerName: "ID",
+      type: "number",
+      width: 50,
+      editable: false,
       preProcessEditCellProps: (params) => {
         const isValid = !!params.props.value;
         return { ...params.props, error: !isValid };
       },
-    };
-  });
+    },
+    {
+      field: "name",
+      headerName: "Name",
+      type: "string",
+      width: 150,
+      editable: true,
+      preProcessEditCellProps: (params) => {
+        const isValid = !!params.props.value;
+        return { ...params.props, error: !isValid };
+      },
+    },
+    {
+      field: "hexCode",
+      headerName: "Hex Code",
+      type: "string",
+      width: 150,
+      editable: true,
+      preProcessEditCellProps: (params) => {
+        const isValid =
+          !!params.props.value && params.props.value.startsWith("#");
+        return { ...params.props, error: !isValid };
+      },
+    },
+    {
+      field: "category",
+      headerName: "Category",
+      type: "singleSelect",
+      valueOptions: ["TODO: dropdown"],
+      width: 150,
+      editable: true,
+      preProcessEditCellProps: (params) => {
+        const isValid = !!params.props.value;
+        return { ...params.props, error: !isValid };
+      },
+    },
+    {
+      field: "price",
+      headerName: "Price",
+      type: "number",
+      width: 100,
+      editable: true,
+      renderCell: (params) => {
+        return (
+          <NumberFormat
+            value={params.value / 100}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"$"}
+            decimalScale={2}
+            fixedDecimalScale={true}
+          />
+        );
+      },
+      preProcessEditCellProps: (params) => {
+        const isValid = !!params.props.value;
+        return { ...params.props, error: !isValid };
+      },
+    },
+    {
+      field: "quantity",
+      headerName: "Inventory",
+      type: "number",
+      width: 100,
+      editable: true,
+      preProcessEditCellProps: (params) => {
+        const isValid = !!params.props.value;
+        return { ...params.props, error: !isValid };
+      },
+    },
+    {
+      field: "description",
+      headerName: "Description",
+      type: "string",
+      width: 150,
+      editable: true,
+      preProcessEditCellProps: (params) => {
+        const isValid = !!params.props.value;
+        return { ...params.props, error: !isValid };
+      },
+    },
+  ];
 
   return (
     <div>
@@ -74,7 +160,7 @@ const ProductHub = () => {
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid
           rows={rows}
-          columns={GridColDef}
+          columns={columns}
           experimentalFeatures={{ preventCommitWhileValidating: true }}
           onCellEditCommit={handleCellEditCommit}
         />
