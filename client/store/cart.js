@@ -29,9 +29,9 @@ const createdCart = (cart) => ({
   cart,
 });
 
-const addedToCart = (cartItem) => ({
+const addedToCart = (cartItems) => ({
   type: ADDED_TO_CART,
-  cartItem,
+  cartItems,
 });
 
 const removedItemFromCart = (cartItem) => ({
@@ -86,26 +86,29 @@ export const createCart = (userId) => {
   };
 };
 
-export const addToCart = (cartId, productId) => {
+export const addToCart = (cartId, productId, quantity) => {
   return async (dispatch) => {
-    let cartItem = {};
+    let cartItems = [];
     if (cartId === -1) {
       const localCart = JSON.parse(localStorage.getItem("cart"));
-      cartItem = { productId };
+      const cartItems = new Array(quantity).fill("").map((ci) => {
+        return { productId };
+      });
       const localCartCopy = JSON.stringify({
         ...localCart,
-        cartItems: [...localCart.cartItems, cartItem],
+        cartItems: [...localCart.cartItems, ...cartItems],
       });
       localStorage.setItem("cart", localCartCopy);
     } else {
-      cartItem = (
+      cartItems = (
         await axios.post(`/api/cartItems`, {
           cartId,
           productId,
+          quantity,
         })
       ).data;
     }
-    dispatch(addedToCart(cartItem));
+    dispatch(addedToCart(cartItems));
   };
 };
 
@@ -172,7 +175,7 @@ export default function (state = {}, action) {
     case ADDED_TO_CART:
       return {
         ...state,
-        cartItems: [...state.cartItems, action.cartItem],
+        cartItems: [...state.cartItems, ...action.cartItems],
       };
     case REMOVED_ITEM_FROM_CART:
       return {
