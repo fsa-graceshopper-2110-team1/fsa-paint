@@ -18,7 +18,7 @@ const RequireAdminAuth = ({ children }) => {
 
   return auth.auth === "not fetched" ? (
     "Loading access credentials..."
-  ) : user.admin ? (
+  ) : user.isAdmin ? (
     children
   ) : (
     <Navigate to="/login" state={{ path: location.pathname }} />
