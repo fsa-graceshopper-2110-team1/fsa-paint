@@ -7,11 +7,13 @@ const ProductHub = () => {
 
   const GridRowsProp = products || [];
 
+  const locked = ["id", "createdAt", "updatedAt"];
   const GridColDef = Object.keys(GridRowsProp[0] || {}).map((key) => {
     return {
       field: key,
       headerName: key.toUpperCase(),
       width: 150,
+      editable: locked.indexOf(key) === -1 ? true : false,
     };
   });
 
