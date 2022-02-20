@@ -1,9 +1,11 @@
 import React from "react";
+import ProductHub from "./ProductHub";
 
 const AdminHub = () => {
   return (
     <div>
-      <p>Success!</p>
+      <h3>Admin Hub</h3>
+      <ProductHub />
     </div>
   );
 };

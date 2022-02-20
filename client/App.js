@@ -24,7 +24,7 @@ import { LoginModal } from "./components/Auth/LoginModal";
 import { NavbarTwo } from "./components/NavbarTwo";
 import { MyAccount } from "./components/MyAccount";
 import { FlashMessage } from "./components/FlashMessage";
-import AdminHub from "./components/AdminHub";
+import AdminHub from "./components/Admin/AdminHub";
 
 const App = () => {
   const dispatch = useDispatch();
