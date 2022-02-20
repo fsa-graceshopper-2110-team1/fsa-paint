@@ -14,7 +14,7 @@ import Paper from "@mui/material/Paper";
 
 export const Browse = () => {
   const products = useSelector((state) => state.products)
-    .filter((p) => p.status === "active")
+    .filter((p) => p.status)
     .sort(function (a, b) {
       if (a.hexCode > b.hexCode) {
         return -1;
@@ -109,7 +109,7 @@ export const Browse = () => {
                 sx={{
                   display: "flex",
                   alignItems: "flex-end",
-                  marginLeft: 10,
+                  marginLeft: 6,
                   marginTop: 1,
                   height: 40,
                 }}
@@ -127,8 +127,9 @@ export const Browse = () => {
                   .filter((p) => p.category === cat)
                   .map((product) => (
                     <Box
-                      sx={{ display: "flex", marginLeft: 10, marginRight: 20 }}
-                      component={"div"} key={product.id}
+                      sx={{ display: "flex", marginLeft: 6, marginRight: 20 }}
+                      component={"div"}
+                      key={product.id}
                     >
                       <Link to={`/product/${product.id}`} key={product.id}>
                         <Box
@@ -154,8 +155,8 @@ export const Browse = () => {
                         <Typography color="secondary" size="large">
                           <b>{product.name}</b>
                         </Typography>
-                        
-                        <Typography color="secondary" sx={{marginTop: 0.4}}>
+
+                        <Typography color="secondary" sx={{ marginTop: 0.4 }}>
                           <NumberFormat
                             value={product.price / 100}
                             displayType={"text"}

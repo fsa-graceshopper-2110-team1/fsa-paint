@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { me } from "../../store";
 
-const RequireAuth = ({ children }) => {
+const RequireAdminAuth = ({ children }) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -18,11 +18,11 @@ const RequireAuth = ({ children }) => {
 
   return auth.auth === "not fetched" ? (
     "Loading access credentials..."
-  ) : user.id ? (
+  ) : user.isAdmin ? (
     children
   ) : (
     <Navigate to="/login" state={{ path: location.pathname }} />
   );
 };
 
-export default RequireAuth;
+export default RequireAdminAuth;

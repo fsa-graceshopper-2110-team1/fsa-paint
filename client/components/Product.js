@@ -1,6 +1,6 @@
 import React from "react";
-import { useSelector, useDispatch} from "react-redux";
-import {useState} from "react"
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 import NumberFormat from "react-number-format";
 import { useParams } from "react-router-dom";
 import { addToCart } from "../store";
@@ -18,9 +18,8 @@ import ImagesearchRollerOutlinedIcon from "@mui/icons-material/ImagesearchRoller
 import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
 import LandscapeIcon from "@mui/icons-material/Landscape";
 import IconButton from "@mui/material/IconButton";
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 export const Product = () => {
   const { productId } = useParams();
@@ -45,7 +44,7 @@ export const Product = () => {
       },
     },
   });
-  const[count,setCount] = useState(1)
+  const [count, setCount] = useState(1);
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -98,11 +97,11 @@ export const Product = () => {
                   <p>{product.description}</p>
                 </Grid>
                 <Grid item>
-                    <Box>
+                  <Box>
                     <IconButton
                       variant="contained"
                       onClick={() => {
-                        setCount(count-1)
+                        setCount(count - 1);
                       }}
                     >
                       <RemoveCircleIcon fontSize="medium" />
@@ -110,26 +109,26 @@ export const Product = () => {
                     {count}
                     <IconButton
                       variant="contained"
-                      onClick={() =>{
-                        setCount(count+1)
-                      }
-                      }
+                      onClick={() => {
+                        setCount(count + 1);
+                      }}
                     >
                       <AddCircleIcon fontSize="medium" />
                     </IconButton>
-                    </Box>
-                    
-                  </Grid>
-                  <Grid item xs={12} sm={12} sx={{justifyItems:"center"}}>
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      onClick={() => dispatch(addToCart(cart.id, product.id))}
-                    >
-                      Add to cart
-                    </Button>
-                  </Grid>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={12} sx={{ justifyItems: "center" }}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={() =>
+                      dispatch(addToCart(cart.id, product.id, count))
+                    }
+                  >
+                    Add to cart
+                  </Button>
+                </Grid>
               </Grid>
             </Box>
           </Grid>

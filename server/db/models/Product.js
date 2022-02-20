@@ -1,7 +1,5 @@
 const db = require("../db");
-const { STRING, DECIMAL, INTEGER, TEXT, ENUM } = db.Sequelize.DataTypes;
-
-const status = ["active", "inactive"];
+const { STRING, DECIMAL, INTEGER, TEXT, BOOLEAN } = db.Sequelize.DataTypes;
 
 const Product = db.define("product", {
   name: {
@@ -39,9 +37,9 @@ const Product = db.define("product", {
     type: STRING,
   },
   status: {
-    type: ENUM(status),
+    type: BOOLEAN,
     allowNull: false,
-    defaultValue: "active",
+    defaultValue: true,
   },
 });
 

@@ -5,6 +5,7 @@ import axios from "axios";
  */
 const GOT_USER_ORDERS = "GOT_USER_ORDERS";
 const CREATED_ORDER = "CREATED_ORDER";
+const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
 
 /**
  * ACTION CREATORS
@@ -17,6 +18,11 @@ const gotUserOrders = (orders) => ({
 const createdOrder = (order) => ({
   type: CREATED_ORDER,
   order,
+});
+
+const updatedOrderStatus = (status) => ({
+  type: UPDATE_ORDER_STATUS,
+  status,
 });
 
 /**
@@ -38,6 +44,13 @@ export const createOrder = (userId, cartId) => {
   };
 };
 
+export const updateOrderStatus = (orderId, status) => {
+  return async (dispatch) => {
+    await axios.put(`/api/orders/${orderId}/status`, status);
+    dispatch(updatedOrderStatus(status));
+  };
+};
+
 /**
  * REDUCER
  */
@@ -47,6 +60,8 @@ export default function (state = { all: [], current: {} }, action) {
       return { ...state, all: action.orders };
     case CREATED_ORDER:
       return { ...state, current: action.order };
+    case UPDATE_ORDER_STATUS:
+      return { ...state, current: { ...state.current, status: action.status } };
     default:
       return state;
   }

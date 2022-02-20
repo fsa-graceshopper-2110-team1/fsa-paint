@@ -33,3 +33,14 @@ router.post("/", async (req, res, next) => {
     next(err);
   }
 });
+
+// PUT /api/products/:id
+router.put("/:id", async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.id);
+    const updatedProduct = await product.update(req.body);
+    res.json(updatedProduct);
+  } catch (err) {
+    next(err);
+  }
+});

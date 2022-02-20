@@ -96,7 +96,7 @@ export const ShippingForm = () => {
     });
 
     const { sessionID } = response;
-    console.log("This is session ID", sessionID);
+    // console.log("This is session ID", sessionID);
     const { error } = await stripe.redirectToCheckout({ sessionId: sessionID });
 
     if (error) {

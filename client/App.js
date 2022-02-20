@@ -12,6 +12,7 @@ import {
 } from "./store";
 
 import RequireAuth from "./components/Auth/RequireAuth";
+import RequireAdminAuth from "./components/Auth/RequireAdminAuth";
 import Home from "./components/Home";
 import { ShippingForm } from "./components/ShippingForm";
 import Browse from "./components/Browse";
@@ -22,6 +23,8 @@ import Navbar from "./components/Navbar";
 import { LoginModal } from "./components/Auth/LoginModal";
 import { NavbarTwo } from "./components/NavbarTwo";
 import { MyAccount } from "./components/MyAccount";
+import { FlashMessage } from "./components/FlashMessage";
+import AdminHub from "./components/Admin/AdminHub";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -64,6 +67,7 @@ const App = () => {
     <div>
       <BrowserRouter>
         <NavbarTwo />
+        <FlashMessage />
         <Routes>
           <Route path="/" element={<Home />}>
             <Route
@@ -85,13 +89,28 @@ const App = () => {
               }
             />
           </Route>
-          <Route path="my-account" element={<MyAccount />} />
+          <Route
+            path="my-account"
+            element={
+              <RequireAuth>
+                <MyAccount />
+              </RequireAuth>
+            }
+          />
           <Route
             path="shipping"
             element={
               <RequireAuth>
                 <ShippingForm />
               </RequireAuth>
+            }
+          />
+          <Route
+            path="admin-hub"
+            element={
+              <RequireAdminAuth>
+                <AdminHub />
+              </RequireAdminAuth>
             }
           />
         </Routes>
