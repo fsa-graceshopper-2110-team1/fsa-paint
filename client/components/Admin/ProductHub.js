@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import NumberFormat from "react-number-format";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import NumberFormat from "react-number-format";
 import { updateProduct } from "../../store";
 
 const ProductHub = () => {
   const products = useSelector((state) => state.products);
+  const categories = [...new Set(products.map((product) => product.category))];
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
 
@@ -56,10 +58,6 @@ const ProductHub = () => {
       type: "boolean",
       width: 100,
       editable: true,
-      //   preProcessEditCellProps: (params) => {
-      //     const isValid = !!params.props.value;
-      //     return { ...params.props, error: !isValid };
-      //   },
     },
     {
       field: "id",
@@ -67,9 +65,8 @@ const ProductHub = () => {
       type: "number",
       width: 50,
       editable: false,
-      preProcessEditCellProps: (params) => {
-        const isValid = !!params.props.value;
-        return { ...params.props, error: !isValid };
+      renderCell: (params) => {
+        return <Link to={`/product/${params.value}`}>{params.value}</Link>;
       },
     },
     {
@@ -99,7 +96,7 @@ const ProductHub = () => {
       field: "category",
       headerName: "Category",
       type: "singleSelect",
-      valueOptions: ["TODO: dropdown"],
+      valueOptions: categories,
       width: 150,
       editable: true,
       preProcessEditCellProps: (params) => {
