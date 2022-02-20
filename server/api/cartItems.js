@@ -28,11 +28,17 @@ router.get("/cart/:id", async (req, res, next) => {
   }
 });
 
-// POST /api/cartItems/ {body: cartId, productId}
+// POST /api/cartItems/ {body: cartId, productId, quantity}
 router.post("/", async (req, res, next) => {
   try {
-    const cartItem = await CartItem.create(req.body);
-    res.send(cartItem);
+    const itemsToAdd = new Array(req.body.quantity).fill("").map((i) => {
+      return { cartId: req.body.cartId, productId: req.body.productId };
+    });
+    const cartItems = await Promise.all(
+      itemsToAdd.map((i) => CartItem.create(i))
+    );
+    // const cartItem = await CartItem.create(req.body);
+    res.send(cartItems);
   } catch (err) {
     next(err);
   }
