@@ -45,9 +45,9 @@ export const updateProduct = (product) => {
   };
 };
 
-export const createProduct = (product) => {
+export const createProduct = (newProduct) => {
   return async (dispatch) => {
-    const { data: product } = await axios.post("/api/products", product);
+    const { data: product } = await axios.post("/api/products", newProduct);
     dispatch(createdProduct(product));
   };
 };
