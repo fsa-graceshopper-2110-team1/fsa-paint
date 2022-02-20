@@ -11,13 +11,14 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import { LoginModal } from "./Auth/LoginModal";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import { ExternalLink } from "react-external-link";
+import {BrowserRouter as Router, Link } from "react-router-dom";
+import { ExternalLink } from 'react-external-link';
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Slider from "react-slick";
-import Paper from "@mui/material/Paper";
+import Paper from "@mui/material/Paper"
 import NumberFormat from "react-number-format";
+
 
 export const Home = (props) => {
   const dispatch = useDispatch();
@@ -222,7 +223,8 @@ export const Home = (props) => {
                 </CardContent>
               </CardMedia>
             </Card>
-          </ExternalLink>
+            </ExternalLink>
+          </Grid>
         </Grid>
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
         <Divider>
@@ -324,3 +326,4 @@ export const Home = (props) => {
   );
 };
 export default Home;
+
