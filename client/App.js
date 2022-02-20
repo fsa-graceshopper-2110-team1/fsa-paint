@@ -22,6 +22,7 @@ import Navbar from "./components/Navbar";
 import { LoginModal } from "./components/Auth/LoginModal";
 import { NavbarTwo } from "./components/NavbarTwo";
 import { MyAccount } from "./components/MyAccount";
+import { FlashMessage } from "./components/FlashMessage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -64,6 +65,7 @@ const App = () => {
     <div>
       <BrowserRouter>
         <NavbarTwo />
+        <FlashMessage/>
         <Routes>
           <Route path="/" element={<Home />}>
             <Route

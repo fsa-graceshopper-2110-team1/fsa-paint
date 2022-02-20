@@ -1,17 +1,12 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { useForm } from "react-hook-form";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../store"
-import { useEffect,useState } from "react";
+
 import { MyAccountForm } from "./MyAccountForm";
-import { SettingsSystemDaydreamTwoTone } from "@mui/icons-material";
 
 const theme = createTheme({
   palette: {
@@ -22,27 +17,8 @@ const theme = createTheme({
   },
 });
 
-//increment the number of things
 export const MyAccount = () => {
-    const profile = useSelector((state) => state.auth);
-<<<<<<< Updated upstream
-
-    const preloadedValues = {
-        firstName: profile.firstName,
-        lastName: profile.lastName,
-        email: profile.email,
-    }
-    const {
-        register: register5,
-        handleSubmit: handleSubmit5,
-        formState: { errors },
-      } = useForm({defaultValues:preloadedValues});
-=======
->>>>>>> Stashed changes
-    
-    
-  //Popup success message
-
+  const profile = useSelector((state) => state.auth);
 
   return (
     <ThemeProvider theme={theme}>

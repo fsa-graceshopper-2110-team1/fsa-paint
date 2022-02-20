@@ -7,13 +7,13 @@ import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../store"
 import { useState,useEffect } from "react";
-import { FlashMessage } from "./FlashMessage";
+import { setflashMessage } from "../store";
+
 
 
 export const MyAccountForm = () => {
     const profile = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-    const [success, setSuccess]=useState(false);
 
     const {
         register: register5,
@@ -52,7 +52,7 @@ export const MyAccountForm = () => {
       try{
           await dispatch(updateUser(newUser))
           .then(()=>{
-              setSuccess(true);
+              dispatch(setflashMessage(true,"success","Your profile has been updated"));
           })
       }catch(ex){
           console.log(ex)
@@ -103,7 +103,7 @@ export const MyAccountForm = () => {
         </Grid>
       </Grid>
     </Box>:null}
-    {success ? <FlashMessage/> : ''}
+
     </div>
   );
 };

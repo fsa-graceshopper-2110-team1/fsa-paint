@@ -5,8 +5,9 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import auth from "./auth";
 import products from "./product";
 import cart from "./cart";
+import flashMessage from "./flashMessage";
 
-const reducer = combineReducers({ auth, products, cart });
+const reducer = combineReducers({ auth, products, cart,flashMessage });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, loggerMiddleware)
 );
@@ -16,3 +17,4 @@ export default store;
 export * from "./auth";
 export * from "./product";
 export * from "./cart";
+export * from './flashMessage'
