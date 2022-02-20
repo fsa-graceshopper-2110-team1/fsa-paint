@@ -30,6 +30,19 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// GET /api/orders/latest
+router.get("/latest", async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      order: [["createdAt", "DESC"]], //finds latest
+      include: ["orderItems"],
+    });
+    res.json(order);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // GET /api/orders/user/:id -- all orders for a user
 router.get("/user/:id", async (req, res, next) => {
   try {
@@ -44,7 +57,7 @@ router.get("/user/:id", async (req, res, next) => {
   }
 });
 
-// POST /api/orders {body: userId, cartId}
+// POST /api/orders {body: userId, cartId, shippingAddress}
 router.post("/", async (req, res, next) => {
   try {
     let order = await Order.create(req.body);
