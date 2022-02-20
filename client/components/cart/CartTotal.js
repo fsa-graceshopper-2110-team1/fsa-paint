@@ -8,6 +8,7 @@ import Paper from "@mui/material/Paper";
 import NumberFormat from "react-number-format";
 import Typography from "@mui/material/Typography";
 import { LoginModal } from "../Auth/LoginModal";
+import { createOrder } from "../../store";
 
 export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
   const dispatch = useDispatch();
@@ -55,6 +56,8 @@ export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
             minHeight: "45px",
           }}
           disabled={quantity === 0}
+          // onClick={()=> dispatch(createOrder(cartId, userId))
+          // }
         >
           <Link to={`/shipping`} style={{ color: "black" }}>
             <h3>Proceed to Checkout</h3>
