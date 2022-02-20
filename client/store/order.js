@@ -36,9 +36,13 @@ export const fetchOrders = (userId) => {
   };
 };
 
-export const createOrder = (userId, cartId) => {
+export const createOrder = (userId, cartId, shippingAddress) => {
   return async (dispatch) => {
-    const { data: order } = await axios.post(`/api/orders`, { userId, cartId });
+    const { data: order } = await axios.post(`/api/orders`, {
+      userId,
+      cartId,
+      shippingAddress,
+    });
     dispatch(createdOrder(order));
     return order;
   };

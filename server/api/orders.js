@@ -44,7 +44,7 @@ router.get("/user/:id", async (req, res, next) => {
   }
 });
 
-// POST /api/orders {body: userId, cartId}
+// POST /api/orders {body: userId, cartId, shippingAddress}
 router.post("/", async (req, res, next) => {
   try {
     let order = await Order.create(req.body);
