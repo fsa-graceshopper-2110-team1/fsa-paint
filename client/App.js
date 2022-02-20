@@ -39,10 +39,10 @@ const App = () => {
       const cart = await dispatch(fetchCart(user.id));
     } else {
       //if user not signed in, look for local storage
-      const localCart = window.localStorage.getItem("cart");
+      let localCart = window.localStorage.getItem("cart");
       if (!localCart) {
         //if no local storage cart, create a cart in storage
-        const localCart = JSON.stringify({ id: -1, cartItems: [] });
+        localCart = JSON.stringify({ id: -1, cartItems: [] });
         localStorage.setItem("cart", localCart);
       }
       dispatch(addLocalStorageToCart(JSON.parse(localCart)));
@@ -54,23 +54,37 @@ const App = () => {
     dispatch(fetchProducts());
   }, []);
 
+  //Modal state for login modal in /login route
+  const [showModal, setShowModal] = useState(true);
+  const openModal = () => {
+    setShowModal((prev) => !prev);
+  };
+
   return (
     <div>
-      {/* TODO (REACT-ROUTER V6): 
-        1. useHistory to useNavigate and changing the history.push or history.replace
-        2. remove "/" from Links
-      */}
       <BrowserRouter>
         <NavbarTwo />
         <Routes>
           <Route path="/" element={<Home />}>
-            <Route path="login" element={<LoginModal showModal={true} />} />
+            <Route
+              path="login"
+              element={
+                <LoginModal showModal={showModal} setShowModal={setShowModal} />
+              }
+            />
           </Route>
           <Route path="home" element={<Home />} />
           <Route path="browse/:category" element={<Category />} />
           <Route path="browse" element={<Browse />} />
           <Route path="product/:productId" element={<Product />} />
-          <Route path="cart" element={<CartPage />} />
+          <Route path="cart" element={<CartPage />}>
+            <Route
+              path="login"
+              element={
+                <LoginModal showModal={showModal} setShowModal={setShowModal} />
+              }
+            />
+          </Route>
           <Route path="my-account" element={<MyAccount />} />
           <Route
             path="shipping"
