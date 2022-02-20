@@ -23,6 +23,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import BrushIcon from "@mui/icons-material/Brush";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 const theme = createTheme({
   palette: {
@@ -81,13 +82,13 @@ export const NavbarTwo = () => {
     setAnchorEl2(null);
   };
   const products = useSelector((state) => state.products)
-    .filter((p) => p.status === "active")
+    .filter((p) => p.status)
     .sort(function (a, b) {
-      if (a.hexCode > b.hexCode) {
-        return -1;
-      }
-      if (a.hexCode < b.hexCode) {
+      if (a.category > b.category) {
         return 1;
+      }
+      if (a.category < b.category) {
+        return -1;
       }
       return 0;
     });
@@ -308,6 +309,26 @@ export const NavbarTwo = () => {
                           My orders
                         </Typography>
                       </MenuItem>
+                      {user.isAdmin ? (
+                        <MenuItem
+                          onClick={() => {
+                            navigate("/admin-hub");
+                          }}
+                        >
+                          <ListItemIcon>
+                            <AdminPanelSettingsIcon fontSize="large" />
+                          </ListItemIcon>
+                          <Typography
+                            sx={{
+                              fontFamily: "raleway",
+                              marginLeft: 0.5,
+                              color: "black",
+                            }}
+                          >
+                            Admin Hub
+                          </Typography>
+                        </MenuItem>
+                      ) : null}
                       <Divider />
                       <MenuItem
                         onClick={() => {
