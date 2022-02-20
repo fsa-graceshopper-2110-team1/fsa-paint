@@ -6,6 +6,7 @@ import axios from "axios";
 const GOT_USER_ORDERS = "GOT_USER_ORDERS";
 const CREATED_ORDER = "CREATED_ORDER";
 const UPDATE_ORDER_STATUS = "UPDATE_ORDER_STATUS";
+const GOT_LATEST_ORDER = "GOT_LATEST_ORDER";
 
 /**
  * ACTION CREATORS
@@ -23,6 +24,12 @@ const createdOrder = (order) => ({
 const updatedOrderStatus = (status) => ({
   type: UPDATE_ORDER_STATUS,
   status,
+});
+
+//need this in case of a hard refresh during create order flow
+const gotLatestOrder = (order) => ({
+  type: GOT_LATEST_ORDER,
+  order,
 });
 
 /**
@@ -55,6 +62,13 @@ export const updateOrderStatus = (orderId, status) => {
   };
 };
 
+export const fetchLatestOrder = () => {
+  return async (dispatch) => {
+    let { data: order } = await axios.get(`/api/orders/latest`);
+    return dispatch(gotLatestOrder(order));
+  };
+};
+
 /**
  * REDUCER
  */
@@ -66,6 +80,8 @@ export default function (state = { all: [], current: {} }, action) {
       return { ...state, current: action.order };
     case UPDATE_ORDER_STATUS:
       return { ...state, current: { ...state.current, status: action.status } };
+    case GOT_LATEST_ORDER:
+      return { ...state, current: action.order };
     default:
       return state;
   }

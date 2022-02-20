@@ -30,6 +30,19 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// GET /api/orders/latest
+router.get("/latest", async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      order: [["createdAt", "DESC"]], //finds latest
+      include: ["orderItems"],
+    });
+    res.json(order);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // GET /api/orders/user/:id -- all orders for a user
 router.get("/user/:id", async (req, res, next) => {
   try {
