@@ -23,8 +23,8 @@ router.put("/:id", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     //updating the entire user to be able to use this route to update any property
-    user.update(req.body);
-    res.sendStatus(204);
+    const updatedUser = await user.update(req.body);
+    res.json(updatedUser)
   } catch (err) {
     next(err);
   }

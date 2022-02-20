@@ -8,11 +8,12 @@ const TOKEN = "token";
  */
 const SET_AUTH = "SET_AUTH";
 
+const UPDATE_USER = "UPDATE_USER";
 /**
  * ACTION CREATORS
  */
 const setAuth = (auth) => ({ type: SET_AUTH, auth });
-
+const upUser = (user) => ({ type: UPDATE_USER, user });
 /**
  * THUNK CREATORS
  */
@@ -43,6 +44,18 @@ export const logout = () => (dispatch) => {
   window.localStorage.removeItem(TOKEN);
 };
 
+export const updateUser = (user) => {
+  return async (dispatch) => {
+    try {
+      const newUser = (await axios.put(`/api/users/${user.id}`, user)).data;
+      console.log("THIS IS NEW USER", newUser);
+      dispatch(upUser(newUser));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 /**
  * REDUCER
  */
@@ -50,6 +63,8 @@ export default function (state = {}, action) {
   switch (action.type) {
     case SET_AUTH:
       return action.auth;
+    case UPDATE_USER:
+      return action.user;
     default:
       return state;
   }
