@@ -18,9 +18,9 @@ export const MyAccountForm = () => {
     const {
         register: register5,
         handleSubmit: handleSubmit5,
-        formState: { errors },
+        formState: { errors,isDirty,isValid },
         setValue,
-      } = useForm({
+      } = useForm({mode:"onChange",
           defaultValues:{
               form:{
                   firstName: profile.firstName,
@@ -29,6 +29,7 @@ export const MyAccountForm = () => {
               }
           }
       });
+
 
     useEffect( ()=>{
         setValue("form",{
@@ -39,7 +40,6 @@ export const MyAccountForm = () => {
     }, [profile])
 
     const onSubmit = async (data) => {
-        console.log("THIS IS DATA",data)
         const newUser = {
             email: data.form.email,
             firstName: data.form.firstName,
@@ -48,7 +48,6 @@ export const MyAccountForm = () => {
             id: profile.id,
             password: profile.password,
         }
-        console.log("THIS IS NEW USER 2 ",newUser)
       try{
           await dispatch(updateUser(newUser))
           .then(()=>{
@@ -58,6 +57,7 @@ export const MyAccountForm = () => {
           console.log(ex)
       }
     }
+
   return (
     <div>
    {profile ?
@@ -78,7 +78,6 @@ export const MyAccountForm = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             id="lastName"
-
             {...register5("form.lastName", { required: true })}
             label="Last name"
             fullWidth
@@ -89,7 +88,15 @@ export const MyAccountForm = () => {
         <Grid item xs={12}>
           <TextField
             id="email"
-            {...register5("form.email", { required: true })}
+            {...register5("form.email", {
+                required: "Required field",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9._%+-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              error={!!errors?.email}
+              helperText={errors?.email ? errors.email.message : null}
             label="Email"
             fullWidth
             autoComplete="email"
@@ -97,13 +104,12 @@ export const MyAccountForm = () => {
           />
         </Grid>
         <Grid item xs={12} sm={12}>
-          <Button type="submit" fullWidth variant="contained" color="primary">
+          <Button type="submit" fullWidth variant="contained" color="primary" disabled={!isDirty || !isValid}>
             Update Information
           </Button>
         </Grid>
       </Grid>
     </Box>:null}
-
     </div>
   );
 };
