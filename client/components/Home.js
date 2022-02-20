@@ -26,9 +26,7 @@ export const Home = (props) => {
 
   const user = useSelector((state) => state.auth);
   const products = useSelector((state) => state.products);
-  products.forEach(p=> console.log(p.category))
   let fp = products.filter((p) => p.category === 'Basic')
-  console.log("FP", fp)
 
   const theme = createTheme({
     palette: {
@@ -44,7 +42,7 @@ export const Home = (props) => {
 
   const NextArrow = ({ onClick }) => {
     return (
-      <div className="go_after" onClick={onClick}>
+      <div className="go after" onClick={onClick}>
         <ArrowForwardIosIcon />
       </div>
     );
@@ -52,7 +50,7 @@ export const Home = (props) => {
 
   const PrevArrow = ({ onClick }) => {
     return (
-      <div className="go_last" onClick={onClick}>
+      <div className="go last" onClick={onClick}>
         <ArrowBackIosIcon />
       </div>
     );
@@ -105,7 +103,7 @@ export const Home = (props) => {
         <Card className="main_page_top">
           <CardMedia
             image={
-              "https://i.postimg.cc/BnpYnnWw/six-n-five-studio-renovation-isern-serra-c-salva-lopez.jpg"
+              "https://i.postimg.cc/Kjg3xvsf/spacejoy-9-M66-C-w-To-M-unsplash.jpg"
             }
             className="living_room_image"
           >
@@ -183,7 +181,7 @@ export const Home = (props) => {
             md={7}
             sx={{
               backgroundImage:
-                "url(https://i.postimg.cc/zDLdX2dc/top-colors-2020-1574699363.jpg)",
+                "url(https://i.postimg.cc/xjs6dspb/spacejoy-KSfe2-Z4-REEM-unsplash.jpg)",
 
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
@@ -192,7 +190,7 @@ export const Home = (props) => {
           />
           <Grid item xs={false} sm={false} md={0.5} />
           <Grid pt={7} item>
-            <h2>Top Colors of 2022</h2>
+            <h1>Top Colors of 2022</h1>
             <ExternalLink href="https://porchdaydreamer.com/2022-paint-color-trends-best-picks/">
               <Button variant="outlined" sx={{ color: "black" }}>
                 Learn More
@@ -206,26 +204,21 @@ export const Home = (props) => {
         <Grid
           container
           sx={{ height: "60vh" }}
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justify="center"
         >
-          <Grid item>
+          <Grid item xs={false}
+            sm={12}
+            md={12}
+          >
             <ExternalLink href="https://www.thekitchn.com/the-best-paint-finish-for-kitchen-walls-190798">
-            <Card sx={{width: '200vh' }}
-            direction="column"
-            alignItems="center"
-            justify="center"
-            >
+            <Card>
               <CardMedia sx ={{height: '60vh'}}
-                image="https://i.postimg.cc/HWzBzJSb/93-0-0-3263-10000-3978-1920.jpg"
+                image="https://i.postimg.cc/dt3w7xsM/sidekix-media-I-QC1-JICz-A0-unsplash.jpg"
                 className="kitchen_image"
               >
-                <CardContent  sx={{display: "flex", alignItems: "center", flexDirection: "column"}}>
-                  <Box className="indiv_color_box" 
-                    sx={{display:"flex",flexDirection:"column", justifyContent:"center"}}>
-                    <h2 className="best_paint">Best Paint For Your Kitchen</h2>
+                <CardContent  sx={{display: "flex", flexDirection: "column"}}>
+                  <Box className="best_paint_box" 
+                    sx={{display:"flex",flexDirection:"column", alignItems: 'center'}}>
+                    <h1 className="best_paint">Best Paint For Your Kitchen</h1>
                   </Box>
                 </CardContent>
               </CardMedia>
@@ -237,111 +230,98 @@ export const Home = (props) => {
         <Divider>
             <h2>Get Started</h2>
         </Divider>
-        <Grid container sx={{ height: "60vh", backgroundColor: "white"}} 
-          direction="column"
-          alignItems="center"
-          justify="center"
+        <Grid container sx={{ height: "50vh", backgroundColor: "white"}} 
+          direction="row"
           spacing={2}
+          className="get_started"
           >
           <Grid item xs={false}
             sm={6}
-            md={2}
+            md={3}
           >
             <ExternalLink href="https://www.dontwasteyourmoney.com/best-paint-brush-for-home/">
-              <Card sx={{width: '60vh' }} component={Paper}
+              <Card component={Paper}
               >
                 <CardMedia 
-                  sx ={{height: '50vh'}}
-                  image = "https://i.postimg.cc/vT5NXzSM/Paint-Brush-201908-001.jpg"
+                  sx ={{height: '40vh'}}
+                  image = "https://i.postimg.cc/tTdv4pZ3/henry-perks-dw5f-YCa8k-Fs-unsplash.jpg"
                 ></CardMedia>
                 <Box
-                  component={"h4"}
                   sx={{
                     display: "flex",
-                    flexDirection: "column",
-                    alignItems:"center",
-                    justify:"center"
+                    flexDirection: "column"
                   }}
                 >
-                  <Typography>Best Brushes of 2022</Typography>
+                  <h3>Best Brushes of 2022</h3>
                 </Box>
               </Card>
             </ExternalLink>
           </Grid>
           <Grid item xs={false}
             sm={6}
-            md={2}
+            md={3}
           >
             <ExternalLink href="https://www.thespruce.com/how-to-tape-a-room-for-painting-4684538">
-              <Card sx={{width: '60vh' }} component={Paper}>
+              <Card component={Paper}>
                 <CardMedia 
-                  sx ={{height: '50vh'}}
-                  image = "https://i.postimg.cc/1zrhFz0C/how-to-tape-a-room-for-painting-4684538-hero-9dd06934b93a4839ae01f1e8d8a48828.jpg"
+                  sx ={{height: '40vh'}}
+                  image = "https://i.postimg.cc/dVpsKPyQ/roselyn-tirado-cq-AX2wl-K-Yw-unsplash.jpg"
                 ></CardMedia>
                 <Box
-                  component={"h4"}
                   sx={{
                     display: "flex",
-                    flexDirection: "column",
-                    alignItems:"center",
-                    justify:"center"
+                    flexDirection: "column"
                   }}
                 >
-                  <Typography>The Art of Tape</Typography>
+                  <h3>The Art of Tape</h3>
                 </Box>
               </Card>
             </ExternalLink>
           </Grid>
           <Grid item xs={false}
             sm={6}
-            md={2}
+            md={3}
           >
             <ExternalLink href="https://www.thespruce.com/choosing-interior-paint-colors-4011484">
-              <Card sx={{width: '60vh' }} component={Paper}>
+              <Card component={Paper}>
                 <CardMedia 
-                  sx ={{height: '50vh'}}
-                  image = "https://i.postimg.cc/TPGBT68r/download.jpg"
+                  sx ={{height: '40vh'}}
+                  image = "https://i.postimg.cc/Kc6D4Rht/mika-baumeister-Ptab-Te6i-J-8-unsplash.jpg"
                 ></CardMedia>
                 <Box
-                  component={"h4"}
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    alignItems:"center",
-                    justify:"center"
                   }}
                 >
-                  <Typography>How To Pick Colors For A Room</Typography>
+                  <h3>How To Pick Colors For A Room</h3>
                 </Box>
               </Card>
             </ExternalLink>
           </Grid>
           <Grid item xs={false}
             sm={6}
-            md={2}
+            md={3}
           >
             <ExternalLink href="https://www.hgtv.com/how-to/home-improvement/15-painting-tips-to-paint-like-a-pro">
-              <Card sx={{width: '60vh' }} component={Paper}>
+              <Card component={Paper}>
                 <CardMedia 
-                  sx ={{height: '50vh'}}
-                  image = "https://i.postimg.cc/26yc5j0B/download-1.jpg"
+                  sx ={{height: '40vh'}}
+                  image = "https://i.postimg.cc/xTZ5Ycpr/roselyn-tirado-GDWmu0b-Ff-S4-unsplash.jpg"
                 ></CardMedia>
                 <Box
-                component={"h4"}
                 sx={{
                   display: "flex",
-                  flexDirection: "column",
-                  alignItems:"center",
-                  justify:"center"
+                  flexDirection: "column"
                 }}
                 >
-                  <Typography>10 Ways To Paint Like A Pro</Typography>
+                  <h3>10 Ways To Paint Like A Pro</h3>
                 </Box>
               </Card>
             </ExternalLink>
           </Grid>
         </Grid>
-        <Grid container sx={{ height: "15vh", backgroundColor: "white" }} />
+        <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
       </ThemeProvider>
   );
 };

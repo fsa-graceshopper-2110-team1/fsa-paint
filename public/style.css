@@ -13,7 +13,7 @@ label {
   color: white;
   font-size: 4rem;
   text-align: center;
-  padding-top: 5rem;
+  padding-top: 7rem;
 }
 
 .indiv_color_box{
@@ -21,29 +21,12 @@ label {
   padding-top: 4rem;
 }
 
-/*
-nav a {
-  display: inline-block;
-  margin: 1em;
-}
-*/
 header{
   width:fit-content
 }
 .living_room_image {
   height: 25rem; 
 }
-
-/* form div {
-  margin: 1em;
-  display: inline-block;
-} */
-
-/* .login-form{
-  display:flex;
-  
-  justify-content: space-between;
-} */
 
 .arrow {
   position:relative;
@@ -111,17 +94,25 @@ header{
   padding: 10px;
   text-align:justify; 
 }
+.best_paint_box {
+  text-align: center;
+  padding-top: 8rem;
+}
+
 .go {
   position: absolute;
   z-index: 10;
 }
-.go_after {
+.after {
   right: 0%;
-  top: 50%;
+  top: 30%;
 }
 
-.go_last{
+.last{
   left: 0%;
-  top: 50%;
+  top: 30%;
 }
 
+.get_started h3 {
+  text-align: center;
+}
