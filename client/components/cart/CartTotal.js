@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createOrder } from "../../store";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -56,7 +55,6 @@ export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
             minHeight: "45px",
           }}
           disabled={quantity === 0}
-          onClick={() => dispatch(createOrder(cartId, userId))}
         >
           <Link to={`/shipping`} style={{ color: "black" }}>
             <h3>Proceed to Checkout</h3>

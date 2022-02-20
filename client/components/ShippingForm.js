@@ -11,6 +11,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useSelector, useDispatch } from "react-redux";
 import { useStripe } from "@stripe/react-stripe-js";
+import { createOrder } from "../store";
 
 const theme = createTheme({
   palette: {
@@ -23,6 +24,7 @@ const theme = createTheme({
 
 //STRIPE API FETCH FUNCTION
 async function fetchFromAPI(endpoint, opts) {
+
   const { method, body } = { method: "POST", body: null, ...opts };
 
   const res = await fetch(`http://localhost:8080/${endpoint}`, {
@@ -45,7 +47,10 @@ export const ShippingForm = () => {
   const cartItems = useSelector((state) => state.cart?.cartItems);
   const email = useSelector((state) => state.auth.email);
   const allProducts = useSelector((state) => state.products);
+  const {cartId, userId} = useSelector((state)=>state.cart)
   const stripe = useStripe();
+  const dispatch = useDispatch();
+
 
   //CartItems is set up so it allows for duplicates if you add the same item twice
   //This filter checks if the productId already exists and removes it if it does
@@ -91,10 +96,10 @@ export const ShippingForm = () => {
 
   //SUBMIT BUTTON FOR SHIPPING FORM THAT SENDS STRIPE THE OBJECT
   const onSubmit = async () => {
+    dispatch(createOrder(cartId, userId))
     const response = await fetchFromAPI("create-checkout-session", {
       body: { line_items, customer_email: email },
     });
-
     const { sessionID } = response;
     // console.log("This is session ID", sessionID);
     const { error } = await stripe.redirectToCheckout({ sessionId: sessionID });
