@@ -70,14 +70,6 @@ export const CartItem = (props) => {
               </Box>
               <Box sx={{ display: "flex" }}>
                 <IconButton
-                  disabled={quantity === gallons}
-                  variant="contained"
-                  onClick={() => dispatch(addToCart(cartId, productId))}
-                >
-                  <AddCircleIcon fontSize="medium" />
-                </IconButton>
-
-                <IconButton
                   variant="contained"
                   disabled={quantity === 1}
                   onClick={() =>
@@ -85,6 +77,13 @@ export const CartItem = (props) => {
                   }
                 >
                   <RemoveCircleIcon fontSize="medium" />
+                </IconButton>
+                <IconButton
+                  disabled={quantity === gallons}
+                  variant="contained"
+                  onClick={() => dispatch(addToCart(cartId, productId, 1))}
+                >
+                  <AddCircleIcon fontSize="medium" />
                 </IconButton>
 
                 <IconButton
