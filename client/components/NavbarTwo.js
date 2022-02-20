@@ -81,13 +81,13 @@ export const NavbarTwo = () => {
     setAnchorEl2(null);
   };
   const products = useSelector((state) => state.products)
-    .filter((p) => p.status === "active")
+    .filter((p) => p.status)
     .sort(function (a, b) {
-      if (a.hexCode > b.hexCode) {
-        return -1;
-      }
-      if (a.hexCode < b.hexCode) {
+      if (a.category > b.category) {
         return 1;
+      }
+      if (a.category < b.category) {
+        return -1;
       }
       return 0;
     });
