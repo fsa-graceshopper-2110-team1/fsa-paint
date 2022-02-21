@@ -125,6 +125,7 @@ export const OrderTable = () => {
   orders
     ? (rows = orders.map((order) => {
         return {
+            id: order.id,
           date: moment(order.createdAt).format("L"),
           shipping: "",
           total: order.total,
@@ -175,7 +176,7 @@ export const OrderTable = () => {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row key={row.id} row={row} />
           ))}
         </TableBody>
       </Table>
