@@ -18,31 +18,9 @@ import { useState, useEffect } from "react";
 import { fetchOrders } from "../../store";
 const moment = require("moment");
 
-//this is the function to create the prop that gets passed into row
-function createData(name, calories, fat, carbs, protein, price) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        date: "2020-01-05",
-        customerId: "11091700",
-        amount: 3,
-      },
-      {
-        date: "2020-01-02",
-        customerId: "Anonymous",
-        amount: 1,
-      },
-    ],
-  };
-}
-// Row is the component that is being rendered
 
+
+//This is the meat of the table code
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -60,12 +38,11 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {row.date}
         </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        <TableCell align="right">{row.shipping}</TableCell>
+        <TableCell align="right">{(row.total/100).toFixed(2)}</TableCell>
+        <TableCell align="right">{row.expected}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -77,23 +54,21 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell>Product</TableCell>
+                    <TableCell>Price ($)</TableCell>
+                    <TableCell align="right">Quantity</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
+                  {row.details.map((detailRow) => (
+                    <TableRow key={detailRow.product}>
                       <TableCell component="th" scope="row">
-                        {historyRow.date}
+                        {detailRow.product}
                       </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                      <TableCell>
+                      {(detailRow.price/ 100).toFixed(2)}
                       </TableCell>
+                      <TableCell align="right">{detailRow.quantity}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -106,72 +81,25 @@ function Row(props) {
   );
 }
 //this seems to be some sort of conditional information for the row props
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
-  }).isRequired,
-};
+// Row.propTypes = {
+//   row: PropTypes.shape({
+//     calories: PropTypes.number.isRequired,
+//     carbs: PropTypes.number.isRequired,
+//     fat: PropTypes.number.isRequired,
+//     history: PropTypes.arrayOf(
+//       PropTypes.shape({
+//         amount: PropTypes.number.isRequired,
+//         customerId: PropTypes.string.isRequired,
+//         date: PropTypes.string.isRequired,
+//       })
+//     ).isRequired,
+//     name: PropTypes.string.isRequired,
+//     price: PropTypes.number.isRequired,
+//     protein: PropTypes.number.isRequired,
+//   }).isRequired,
+// };
 //these are the props being passed into row
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0, 3.99),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3, 4.99),
-  createData("Eclair", 262, 16.0, 24, 6.0, 3.79),
-  createData("Cupcake", 305, 3.7, 67, 4.3, 2.5),
-  createData("Gingerbread", 356, 16.0, 49, 3.9, 1.5),
-];
 
-// const orders = [
-//     createData()
-// ]
-// //need a specific array of objects
-
-// cart.map((item) => {
-//     return {
-//       quantity: cartItems.reduce((accum, elem) => {
-//         if (elem.productId === item.productId) {
-//           accum++;
-//           return accum;
-//         } else {
-//           return accum;
-//         }
-//       }, 0),
-//       price_data: {
-//         currency: "usd",
-//         unit_amount: allProducts.filter((paint) => {
-//           if (paint.id === item.productId) {
-//             return paint;
-//           }
-//         })[0].price,
-//         product_data: {
-//           name: allProducts.filter((paint) => {
-//             if (paint.id === item.productId) {
-//               return paint;
-//             }
-//           })[0].name,
-//         },
-//       },
-//     };
-//   }))
-
-const object = {
-  date: "",
-  shipping: "",
-  total: "",
-  expected: "",
-  details: [{ product: "", price: "", amount: "" }],
-};
 
 export const OrderTable = () => {
   const { id } = useSelector((state) => state.auth);
@@ -180,7 +108,6 @@ export const OrderTable = () => {
     id ? dispatch(fetchOrders(id)) : "";
   }, [id]);
   const orders = useSelector((state) => state.order.all);
-  console.log("THIS IS ORDERS", orders[0]);
   const allProducts = useSelector((state) => state.products);
 
 
@@ -194,9 +121,9 @@ export const OrderTable = () => {
   //for quantity, you need to go through the whole orderItems array and reduce to get the quanit
 
   //here is the array of objects passed to tablebody:
-  let roos;
+  let rows;
   orders
-    ? (roos = orders.map((order) => {
+    ? (rows = orders.map((order) => {
         return {
           date: moment(order.createdAt).format("L"),
           shipping: "",
@@ -231,7 +158,6 @@ export const OrderTable = () => {
         };
       }))
     : null;
-  console.log("THIS IS ROOS", roos);
 
   // orders ? deets = orders.orderItems.map(()) : null;
   //
@@ -241,9 +167,9 @@ export const OrderTable = () => {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Date</TableCell>
+            <TableCell>Order Date</TableCell>
             <TableCell align="right">Shipping Information</TableCell>
-            <TableCell align="right">Total</TableCell>
+            <TableCell align="right">Total price ($)</TableCell>
             <TableCell align="right">Expected Delivery</TableCell>
           </TableRow>
         </TableHead>
