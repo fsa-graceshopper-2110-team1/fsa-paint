@@ -10,7 +10,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import { LoginModal } from "./Auth/LoginModal";
+import { LoginModal } from "../Auth/LoginModal";
 import {BrowserRouter as Router, Link } from "react-router-dom";
 import { ExternalLink } from 'react-external-link';
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -18,7 +18,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Slider from "react-slick";
 import Paper from "@mui/material/Paper"
 import NumberFormat from "react-number-format";
-
+import ButtonBases from "./ButtonBases"
 
 export const Home = (props) => {
   const dispatch = useDispatch();
@@ -201,30 +201,14 @@ export const Home = (props) => {
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
         <Divider />
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
-        <Grid
-          container
-          sx={{ height: "60vh" }}
-        >
+        <Grid container sx={{ height: "60vh", backgroundColor: "white" }}>
           <Grid item xs={false}
             sm={12}
             md={12}
           >
-            <ExternalLink href="https://www.thekitchn.com/the-best-paint-finish-for-kitchen-walls-190798">
-            <Card>
-              <CardMedia sx ={{height: '60vh'}}
-                image="https://i.postimg.cc/tJX7222H/cat-han-Vgy-N-CWXQVM-unsplash.jpg"
-                className="kitchen_image"
-              >
-                <CardContent  sx={{display: "flex", flexDirection: "column"}}>
-                  <Box className="best_paint_box" 
-                    sx={{display:"flex",flexDirection:"column", alignItems: 'center'}}>
-                    <h1 className="best_paint">Best Paint For Your Kitchen</h1>
-                  </Box>
-                </CardContent>
-              </CardMedia>
-            </Card>
-            </ExternalLink>
+            <ButtonBases/>
           </Grid>
+          
         </Grid>
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
         <Divider>

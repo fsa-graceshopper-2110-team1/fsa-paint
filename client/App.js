@@ -13,7 +13,7 @@ import {
 
 import RequireAuth from "./components/Auth/RequireAuth";
 import RequireAdminAuth from "./components/Auth/RequireAdminAuth";
-import Home from "./components/Home";
+import Home from "./components/HomePage/Home";
 import { ShippingForm } from "./components/ShippingForm";
 import Browse from "./components/Browse";
 import Category from "./components/Category";
