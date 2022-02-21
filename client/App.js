@@ -25,6 +25,7 @@ import { NavbarTwo } from "./components/NavbarTwo";
 import { MyAccount } from "./components/MyAccount";
 import { FlashMessage } from "./components/FlashMessage";
 import AdminHub from "./components/Admin/AdminHub";
+import ProductHub from "./components/Admin/ProductHub";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -110,6 +111,14 @@ const App = () => {
             element={
               <RequireAdminAuth>
                 <AdminHub />
+              </RequireAdminAuth>
+            }
+          />
+          <Route
+            path="product-hub"
+            element={
+              <RequireAdminAuth>
+                <ProductHub />
               </RequireAdminAuth>
             }
           />

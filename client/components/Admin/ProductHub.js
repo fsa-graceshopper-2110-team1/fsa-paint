@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { updateProduct } from "../../store";
+import EditToolbar from "./ProductHubToolbar";
 
 const ProductHub = () => {
   const products = useSelector((state) => state.products);
@@ -22,23 +23,26 @@ const ProductHub = () => {
 
   const handleCellEditCommit = async (params) => {
     try {
-      // Dispatch product update
-      const response = await dispatch(
-        updateProduct({
-          id: params.id,
-          [params.field]: params.value,
-        })
-      );
+      const currentRow = rows.find((row) => row.id === params.id);
+      if (currentRow[params.field] !== params.value) {
+        // Dispatch product update
+        const response = await dispatch(
+          updateProduct({
+            id: params.id,
+            [params.field]: params.value,
+          })
+        );
 
-      setSnackbar({
-        children: "Product successfully saved",
-        severity: "success",
-      });
-      setRows((prev) =>
-        prev.map((row) =>
-          row.id === params.id ? { ...row, ...response } : row
-        )
-      );
+        setSnackbar({
+          children: "Product successfully saved",
+          severity: "success",
+        });
+        setRows((prev) =>
+          prev.map((row) =>
+            row.id === params.id ? { ...row, ...response } : row
+          )
+        );
+      }
     } catch (error) {
       console.log(error);
       setSnackbar({
@@ -160,6 +164,9 @@ const ProductHub = () => {
           columns={columns}
           experimentalFeatures={{ preventCommitWhileValidating: true }}
           onCellEditCommit={handleCellEditCommit}
+          components={{
+            Toolbar: EditToolbar,
+          }}
         />
         {!!snackbar && (
           <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={6000}>
