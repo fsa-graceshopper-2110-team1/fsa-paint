@@ -97,9 +97,8 @@ export const ShippingForm = () => {
   //SUBMIT BUTTON FOR SHIPPING FORM THAT SENDS STRIPE THE OBJECT
   const onSubmit = async (data) => {
     const shipping = JSON.stringify(data)
-    console.log("this is the form data", shipping)
 
-    dispatch(createOrder(cartId, userId))
+    dispatch(createOrder(cartId, userId,shipping))
     // const response = await fetchFromAPI("create-checkout-session", {
     //   body: { line_items, customer_email: email },
     // });
@@ -115,21 +114,7 @@ export const ShippingForm = () => {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage:
-              "url(https://i.postimg.cc/vZ3YkhBJ/Shipping-Side-Pic.jpg)",
-
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={8} component={Paper} elevation={6} square>
           <Box
             sx={{
               my: 8,
@@ -266,6 +251,20 @@ export const ShippingForm = () => {
             </Grid>
           </Box>
         </Grid>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={4}
+          sx={{
+            backgroundImage:
+              "url(https://i.postimg.cc/vZ3YkhBJ/Shipping-Side-Pic.jpg)",
+
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
       </Grid>
     </ThemeProvider>
   );

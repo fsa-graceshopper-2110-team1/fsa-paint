@@ -25,6 +25,7 @@ import { NavbarTwo } from "./components/NavbarTwo";
 import { MyAccount } from "./components/MyAccount";
 import { FlashMessage } from "./components/FlashMessage";
 import AdminHub from "./components/Admin/AdminHub";
+import { MyOrders } from "./components/Orders/MyOrders";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -81,6 +82,7 @@ const App = () => {
           <Route path="browse/:category" element={<Category />} />
           <Route path="browse" element={<Browse />} />
           <Route path="product/:productId" element={<Product />} />
+          <Route path="orders" element={<MyOrders />} />
           <Route path="cart" element={<CartPage />}>
             <Route
               path="login"

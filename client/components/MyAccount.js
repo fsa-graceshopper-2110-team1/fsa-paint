@@ -24,20 +24,8 @@ export const MyAccount = () => {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage:
-              "url(https://i.postimg.cc/SQ6r3RmN/Paintbrushes.jpg)",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        
+        <Grid item xs={12} sm={8} md={8} component={Paper} elevation={6} square>
 
           <Box
             sx={{
@@ -56,6 +44,19 @@ export const MyAccount = () => {
             ) : <h3>Loading please wait..</h3>}
           </Box>
         </Grid>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={4}
+          sx={{
+            backgroundImage:
+              "url(https://i.postimg.cc/SQ6r3RmN/Paintbrushes.jpg)",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
       </Grid>
     </ThemeProvider>
   );
