@@ -48,7 +48,7 @@ router.get("/user/:id", async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       where: { userId: req.params.id },
-      order: ["id", "DESC"],
+      order: [["id", "DESC"]],
       include: ["orderItems"],
     });
     res.json(orders);

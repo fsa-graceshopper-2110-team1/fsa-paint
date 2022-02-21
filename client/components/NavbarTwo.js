@@ -297,6 +297,7 @@ export const NavbarTwo = () => {
                           </Typography>
                         </MenuItem>
                       </Link>
+                      <Link to="orders">
                       <MenuItem>
                         <Avatar />
                         <Typography
@@ -309,6 +310,7 @@ export const NavbarTwo = () => {
                           My orders
                         </Typography>
                       </MenuItem>
+                      </Link>
                       {user.isAdmin ? (
                         <MenuItem
                           onClick={() => {
