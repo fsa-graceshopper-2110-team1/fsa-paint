@@ -16,6 +16,8 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+let sortby = 'color'
 
 export const Category = () => {
   const { category } = useParams();
@@ -29,39 +31,39 @@ export const Category = () => {
     return b.price - a.price;
   };
   let photo =
-    "https://i.postimg.cc/BnpYnnWw/six-n-five-studio-renovation-isern-serra-c-salva-lopez.jpg";
+    "https://i.postimg.cc/Gp5w0k8W/andrew-neel-DLD5-Lvn-Fbl-U-unsplash.jpg";
   switch (category) {
-    case "white":
-      photo = "https://i.postimg.cc/vBVwC6Wc/White.jpg";
+    case "basic":
+      photo = "https://i.postimg.cc/Gp5w0k8W/andrew-neel-DLD5-Lvn-Fbl-U-unsplash.jpg";
+      break;
     case "yellow":
-      photo = "https://i.postimg.cc/52MnbQLZ/Yellow.jpg";
+      photo = "https://i.postimg.cc/s1d7jpJ6/shutterstock-1166635960.jpg";
       break;
     case "brown":
-      photo = "https://i.postimg.cc/0NSkm3b6/Brown.png";
+      photo = "https://i.postimg.cc/c1jKGM90/1673749537-huge.jpg";
       break;
     case "orange":
       photo = "https://i.postimg.cc/QNyzGM63/Orange.jpg";
       break;
     case "pink":
-      photo = "https://i.postimg.cc/kGPPCXcw/Pink.jpg";
+      photo = "https://i.postimg.cc/Gh2ZGvd8/shutterstock-1370833175.jpg";
       break;
     case "purple":
       photo = "https://i.postimg.cc/hPgR3vht/Purple.jpg";
       break;
     case "red":
-      photo = "https://i.postimg.cc/7YVrv4TM/Red.jpg";
+      photo = "https://i.postimg.cc/59kPcTWy/shutterstock-1437658973.jpg";
       break;
     case "blue":
       photo = "https://i.postimg.cc/qvvV4Fsf/Blue.jpg";
       break;
     case "gray":
-      photo = "https://i.postimg.cc/9fD6qqgJ/Gray.jpg";
+      photo = "https://i.postimg.cc/JztDfYmr/alexandra-gorn-JIUjvqe2-ZHg-unsplash-1.jpg";
       break;
     case "green":
       photo = "https://i.postimg.cc/DZsRx3TG/Green.png";
       break;
   }
-  let sortby = "color";
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -73,14 +75,10 @@ export const Category = () => {
   const handleShade = () => {
     setAnchorEl(null);
     sortby = "color";
-    // console.log("::: " + sortby)
-    // console.log('bycolor')
   };
   const handlePrice = () => {
     setAnchorEl(null);
     sortby = "price";
-    // console.log("::: " + sortby)
-    // console.log('byprice')
   };
   const theme = createTheme({
     palette: {
@@ -96,15 +94,14 @@ export const Category = () => {
   });
   return (
     <ThemeProvider theme={theme}>
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
+      <Grid container
+        sx={{ height: "60vh" }}
       >
-        <Grid item>
-          <Card sx={{ width: "200vh" }}>
+        <Grid item xs={false}
+          sm={12}
+          md={12}
+        >
+          <Card>
             <CardMedia
               sx={{ height: "60vh" }}
               image={photo}
@@ -122,7 +119,6 @@ export const Category = () => {
                   sx={{
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "center",
                   }}
                 >
                   <h1 className="indiv_color">THE {category.toUpperCase()}S</h1>
@@ -136,8 +132,8 @@ export const Category = () => {
         <Grid item></Grid>
       </Grid>
       <Divider />
-      <Grid container sx={{ height: "1ovh" }}>
-        <Grid item>
+      <Grid container justifyContent="flex-end" sx={{ height: "1ovh" }}>
+        <Grid item >
           <Button
             aria-controls={open ? "basic-menu" : undefined}
             aria-haspopup="true"
@@ -145,7 +141,7 @@ export const Category = () => {
             onClick={handleClick}
             sx={{ color: "black", alignSeld: "right" }}
           >
-            Sort By
+            Sort By <KeyboardArrowDownIcon />
           </Button>
           <Menu
             id="basic-menu"
@@ -159,17 +155,24 @@ export const Category = () => {
             <MenuItem onClick={handleShade}>Shade</MenuItem>
             <MenuItem onClick={handlePrice}>Price</MenuItem>
           </Menu>
+          
         </Grid>
       </Grid>
       <Divider />
       <Grid container sx={{ height: "10vh" }}>
         <Grid item></Grid>
       </Grid>
-      <Grid direction="rows" container spacing={2}>
+      <Grid container spacing={1} className="category_paintcards" >
         {products
-          .sort(sortby === "color" ? sortColor : sortPrice)
+          .sort(sortby === "price" ? sortPrice: sortColor)
           .map((product) => (
-            <Grid item sm={6} md={2.4} lg={2.4}>
+            <Grid item 
+              sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              key={product.id} sm={6} md={2.4} lg={2.4}>
               <Link to={`/product/${product.id}`} key={product.id}>
                 <Box
                   component={Paper}
@@ -177,9 +180,8 @@ export const Category = () => {
                   square
                   sx={{
                     height: 250,
-                    width: 160,
+                    width: 200,
                     backgroundColor: product.hexCode,
-                    textAlign: "left",
                   }}
                 ></Box>
               </Link>
@@ -187,11 +189,11 @@ export const Category = () => {
                 component={"h4"}
                 sx={{
                   display: "flex",
-                  justifyContent: "flex-start",
+                  alignItems: "center",
                   flexDirection: "column",
                 }}
               >
-                <Typography color="secondary" size="large">
+                <Typography color="secondary" size="large" sx={{textAlign:"left"}}>
                   <b>{product.name}</b>
                 </Typography>
                 <Typography color="secondary" sx={{ marginTop: 0.4 }}>

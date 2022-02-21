@@ -13,7 +13,7 @@ import {
 
 import RequireAuth from "./components/Auth/RequireAuth";
 import RequireAdminAuth from "./components/Auth/RequireAdminAuth";
-import Home from "./components/Home";
+import Home from "./components/HomePage/Home";
 import { ShippingForm } from "./components/ShippingForm";
 import Browse from "./components/Browse";
 import Category from "./components/Category";
@@ -26,6 +26,7 @@ import { MyAccount } from "./components/MyAccount";
 import { FlashMessage } from "./components/FlashMessage";
 import AdminHub from "./components/Admin/AdminHub";
 import { MyOrders } from "./components/Orders/MyOrders";
+import ProductHub from "./components/Admin/ProductHub";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -112,6 +113,14 @@ const App = () => {
             element={
               <RequireAdminAuth>
                 <AdminHub />
+              </RequireAdminAuth>
+            }
+          />
+          <Route
+            path="product-hub"
+            element={
+              <RequireAdminAuth>
+                <ProductHub />
               </RequireAdminAuth>
             }
           />
