@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
 import { useForm } from "react-hook-form";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +23,9 @@ const CreateProductForm = ({ path, setShowModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const products = useSelector((state) => state.products);
+  const categories = [...new Set(products.map((product) => product.category))];
 
   const {
     register,
@@ -68,7 +72,6 @@ const CreateProductForm = ({ path, setShowModal }) => {
               id="hexCode"
               label="Hex Code"
               variant="outlined"
-              autoFocus
               {...register("hexCode", {
                 required: "Required field",
                 pattern: {
@@ -86,7 +89,6 @@ const CreateProductForm = ({ path, setShowModal }) => {
               id="price"
               label="Price (in cents)"
               variant="outlined"
-              autoFocus
               {...register("price", {
                 required: "Required field",
                 inputMode: "numeric",
@@ -105,7 +107,6 @@ const CreateProductForm = ({ path, setShowModal }) => {
               id="quantity"
               label="Inventory Quantity"
               variant="outlined"
-              autoFocus
               {...register("quantity", {
                 required: "Required field",
                 inputMode: "numeric",
@@ -124,7 +125,6 @@ const CreateProductForm = ({ path, setShowModal }) => {
               id="description"
               label="Description"
               variant="outlined"
-              autoFocus
               {...register("description", {
                 required: "Required field",
               })}
@@ -136,11 +136,28 @@ const CreateProductForm = ({ path, setShowModal }) => {
             />
           </Grid>
           <Grid item xs={12} sm={12}>
+            {/* <TextField
+              id="category"
+              label="Category"
+              select
+              variant="outlined"
+              {...register("category", {
+                required: "Required field",
+              })}
+              error={!!errors?.category}
+              helperText={errors?.category ? errors.category.message : null}
+              fullWidth
+            >
+              {categories.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </TextField> */}
             <TextField
               id="category"
               label="Category"
               variant="outlined"
-              autoFocus
               {...register("category", {
                 required: "Required field",
               })}

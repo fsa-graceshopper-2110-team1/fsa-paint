@@ -1,47 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
-import { DataGrid, GridToolbarContainer } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 import { updateProduct } from "../../store";
-import CreateProductModal from "./CreateProductModal";
-
-function EditToolbar(props) {
-  // const { apiRef } = props;
-
-  //MODAL
-  const [showModal, setShowModal] = useState(false);
-  const openModal = () => {
-    setShowModal((prev) => !prev);
-  };
-
-  const handleClick = () => {
-    // const id = randomId();
-    // apiRef.current.updateRows([{ id, isNew: true }]);
-    // apiRef.current.setRowMode(id, "edit");
-    // // Wait for the grid to render with the new row
-    // setTimeout(() => {
-    //   apiRef.current.scrollToIndexes({
-    //     rowIndex: apiRef.current.getRowsCount() - 1,
-    //   });
-    //   apiRef.current.setCellFocus(id, "name");
-    // });
-    openModal();
-  };
-
-  return (
-    <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
-      </Button>
-      <CreateProductModal showModal={showModal} setShowModal={setShowModal} />
-    </GridToolbarContainer>
-  );
-}
+import EditToolbar from "./ProductHubToolbar";
 
 const ProductHub = () => {
   const products = useSelector((state) => state.products);
