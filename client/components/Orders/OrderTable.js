@@ -16,7 +16,9 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { fetchOrders } from "../../store";
+const moment = require("moment");
 
+//this is the function to create the prop that gets passed into row
 function createData(name, calories, fat, carbs, protein, price) {
   return {
     name,
@@ -39,11 +41,12 @@ function createData(name, calories, fat, carbs, protein, price) {
     ],
   };
 }
+// Row is the component that is being rendered
 
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-
+  // console.log("This is ROW PROPS", row)
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -102,7 +105,7 @@ function Row(props) {
     </React.Fragment>
   );
 }
-
+//this seems to be some sort of conditional information for the row props
 Row.propTypes = {
   row: PropTypes.shape({
     calories: PropTypes.number.isRequired,
@@ -120,7 +123,7 @@ Row.propTypes = {
     protein: PropTypes.number.isRequired,
   }).isRequired,
 };
-
+//these are the props being passed into row
 const rows = [
   createData("Frozen yoghurt", 159, 6.0, 24, 4.0, 3.99),
   createData("Ice cream sandwich", 237, 9.0, 37, 4.3, 4.99),
@@ -129,13 +132,109 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9, 1.5),
 ];
 
+// const orders = [
+//     createData()
+// ]
+// //need a specific array of objects
+
+// cart.map((item) => {
+//     return {
+//       quantity: cartItems.reduce((accum, elem) => {
+//         if (elem.productId === item.productId) {
+//           accum++;
+//           return accum;
+//         } else {
+//           return accum;
+//         }
+//       }, 0),
+//       price_data: {
+//         currency: "usd",
+//         unit_amount: allProducts.filter((paint) => {
+//           if (paint.id === item.productId) {
+//             return paint;
+//           }
+//         })[0].price,
+//         product_data: {
+//           name: allProducts.filter((paint) => {
+//             if (paint.id === item.productId) {
+//               return paint;
+//             }
+//           })[0].name,
+//         },
+//       },
+//     };
+//   }))
+
+const object = {
+  date: "",
+  shipping: "",
+  total: "",
+  expected: "",
+  details: [{ product: "", price: "", amount: "" }],
+};
+
 export const OrderTable = () => {
   const { id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     id ? dispatch(fetchOrders(id)) : "";
   }, [id]);
+  const orders = useSelector((state) => state.order.all);
+  console.log("THIS IS ORDERS", orders[0]);
+  const allProducts = useSelector((state) => state.products);
 
+
+
+  //details is an array of objects
+  //each object has a product, price and amount
+  //need to map over a list of the items to create each product
+  //however, the way its set up it sends every product, not in quantity
+  //so similar to cart need to make a cartItems array that doesn't have the duplicates
+  //then map over that non duplicate array to get each product, each price
+  //for quantity, you need to go through the whole orderItems array and reduce to get the quanit
+
+  //here is the array of objects passed to tablebody:
+  let roos;
+  orders
+    ? (roos = orders.map((order) => {
+        return {
+          date: moment(order.createdAt).format("L"),
+          shipping: "",
+          total: order.total,
+          expected: moment(order.createdAt).add(3, "days").format("L"),
+          details: order.orderItems
+            .filter(
+              (v, i, a) => a.findIndex((t) => t.productId === v.productId) === i
+            )
+            .map((item) => {
+              return {
+                product: allProducts.filter((paint) => {
+                  if (paint.id === item.productId) {
+                    return paint;
+                  }
+                })[0].name,
+                price: allProducts.filter((paint) => {
+                  if (paint.id === item.productId) {
+                    return paint;
+                  }
+                })[0].price,
+                quantity: order.orderItems.reduce((accum, elem) => {
+                  if (elem.productId === item.productId) {
+                    accum++;
+                    return accum;
+                  } else {
+                    return accum;
+                  }
+                }, 0),
+              };
+            }),
+        };
+      }))
+    : null;
+  console.log("THIS IS ROOS", roos);
+
+  // orders ? deets = orders.orderItems.map(()) : null;
+  //
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -143,10 +242,9 @@ export const OrderTable = () => {
           <TableRow>
             <TableCell />
             <TableCell>Date</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell align="right">Shipping Information</TableCell>
+            <TableCell align="right">Total</TableCell>
+            <TableCell align="right">Expected Delivery</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
