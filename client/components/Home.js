@@ -212,7 +212,7 @@ export const Home = (props) => {
             <ExternalLink href="https://www.thekitchn.com/the-best-paint-finish-for-kitchen-walls-190798">
             <Card>
               <CardMedia sx ={{height: '60vh'}}
-                image="https://i.postimg.cc/dt3w7xsM/sidekix-media-I-QC1-JICz-A0-unsplash.jpg"
+                image="https://i.postimg.cc/tJX7222H/cat-han-Vgy-N-CWXQVM-unsplash.jpg"
                 className="kitchen_image"
               >
                 <CardContent  sx={{display: "flex", flexDirection: "column"}}>
