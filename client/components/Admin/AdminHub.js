@@ -1,23 +1,49 @@
 import React from "react";
 import ProductHub from "./ProductHub";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 
 const AdminHub = () => {
+  const navigate = useNavigate();
   return (
-    <div>
+    <Grid
+      container
+      component="main"
+      sx={{ height: "70vh", width: "100vw", m: 1 }}
+    >
       <h3>Admin Hub</h3>
-      <ul>
-        <li>
-          <Link to="/product-hub">Manage Products</Link>{" "}
-        </li>
-        <li>
-          <Link to="/user-hub">View Users</Link>{" "}
-        </li>
-        <li>
-          <Link to="/order-hub">View Orders</Link>{" "}
-        </li>
-      </ul>
-    </div>
+      <Grid item xs={12} sm={12} sx={{ justifyItems: "center" }}>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/product-hub")}
+        >
+          Manage Products
+        </Button>
+      </Grid>
+      <Grid item xs={12} sm={12} sx={{ justifyItems: "center" }}>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/order-hub")}
+        >
+          View Users
+        </Button>
+      </Grid>
+      <Grid item xs={12} sm={12} sx={{ justifyItems: "center" }}>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/user-hub")}
+        >
+          View Orders
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 
