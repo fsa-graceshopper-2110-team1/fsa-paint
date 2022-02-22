@@ -7,6 +7,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { updateProduct } from "../../store";
 import EditToolbar from "./ProductHubToolbar";
+import Box from "@mui/material/Box";
 
 const ProductHub = () => {
   const products = useSelector((state) => state.products);
@@ -164,7 +165,13 @@ const ProductHub = () => {
   ];
 
   return (
-    <div>
+    <Box
+      sx={{
+        my: 4,
+        mx: 4,
+      }}
+      component="div"
+    >
       <h3>Manage Products</h3>
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid
@@ -182,7 +189,7 @@ const ProductHub = () => {
           </Snackbar>
         )}
       </div>
-    </div>
+    </Box>
   );
 };
 
