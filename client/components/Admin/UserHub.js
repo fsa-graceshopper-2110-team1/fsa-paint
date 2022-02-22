@@ -4,11 +4,24 @@ import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { fetchAllUsers } from "../../store";
 import moment from "moment";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: "#FFFFFF",
+      main: "#EDF2FB",
+    },
+  },
+});
 
 const UserHub = () => {
   const users = useSelector((state) => state.admin.users);
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchAllUsers());
@@ -67,6 +80,7 @@ const UserHub = () => {
   ];
 
   return (
+    <ThemeProvider theme={theme}>
     <Box
       sx={{
         my: 4,
@@ -78,7 +92,15 @@ const UserHub = () => {
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid rows={rows} columns={columns} />
       </div>
+      <Button   sx={{marginTop:"20px"}}
+                variant="contained"
+                color="primary"
+                onClick={() => navigate("/admin-hub")}>
+                
+      Back to Admin Hub
+      </Button>
     </Box>
+    </ThemeProvider>
   );
 };
 
