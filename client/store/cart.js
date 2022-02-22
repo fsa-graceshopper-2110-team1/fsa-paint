@@ -91,7 +91,7 @@ export const addToCart = (cartId, productId, quantity) => {
     let cartItems = [];
     if (cartId === -1) {
       const localCart = JSON.parse(localStorage.getItem("cart"));
-      const cartItems = new Array(quantity).fill("").map((ci) => {
+      cartItems = new Array(quantity).fill("").map((ci) => {
         return { productId };
       });
       const localCartCopy = JSON.stringify({
