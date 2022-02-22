@@ -60,14 +60,16 @@ const ProductHub = () => {
       field: "status",
       headerName: "Status",
       type: "boolean",
-      width: 100,
+      minWidth: 80,
+      flex: 0.25,
       editable: true,
     },
     {
       field: "id",
       headerName: "ID",
       type: "number",
-      width: 50,
+      minWidth: 80,
+      flex: 0.25,
       editable: false,
       renderCell: (params) => {
         return <Link to={`/product/${params.value}`}>{params.value}</Link>;
@@ -77,7 +79,8 @@ const ProductHub = () => {
       field: "name",
       headerName: "Name",
       type: "string",
-      width: 150,
+      minWidth: 150,
+      flex: 0.75,
       editable: true,
       preProcessEditCellProps: (params) => {
         const isValid = !!params.props.value;
@@ -88,7 +91,8 @@ const ProductHub = () => {
       field: "hexCode",
       headerName: "Hex Code",
       type: "string",
-      width: 150,
+      minWidth: 150,
+      flex: 0.75,
       editable: true,
       preProcessEditCellProps: (params) => {
         const isValid =
@@ -101,7 +105,8 @@ const ProductHub = () => {
       headerName: "Category",
       type: "singleSelect",
       valueOptions: categories,
-      width: 150,
+      minWidth: 100,
+      flex: 0.75,
       editable: true,
       preProcessEditCellProps: (params) => {
         const isValid = !!params.props.value;
@@ -112,7 +117,8 @@ const ProductHub = () => {
       field: "price",
       headerName: "Price",
       type: "number",
-      width: 100,
+      minWidth: 100,
+      flex: 0.5,
       editable: true,
       renderCell: (params) => {
         return (
@@ -135,7 +141,8 @@ const ProductHub = () => {
       field: "quantity",
       headerName: "Inventory",
       type: "number",
-      width: 100,
+      minWidth: 100,
+      flex: 0.5,
       editable: true,
       preProcessEditCellProps: (params) => {
         const isValid = !!params.props.value;
@@ -146,7 +153,8 @@ const ProductHub = () => {
       field: "description",
       headerName: "Description",
       type: "string",
-      width: 150,
+      minWidth: 200,
+      flex: 2,
       editable: true,
       preProcessEditCellProps: (params) => {
         const isValid = !!params.props.value;

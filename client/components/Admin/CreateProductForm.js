@@ -136,6 +136,7 @@ const CreateProductForm = ({ path, setShowModal }) => {
             />
           </Grid>
           <Grid item xs={12} sm={12}>
+            {/* the code below is if we wanted to try to fix a dropdown of categories */}
             {/* <TextField
               id="category"
               label="Category"

@@ -6,9 +6,17 @@ const AdminHub = () => {
   return (
     <div>
       <h3>Admin Hub</h3>
-      <Link to="/product-hub">Manage Products</Link>
-      <Link to="/user-hub">View Users</Link>
-      <Link to="/order-hub">View Orders</Link>
+      <ul>
+        <li>
+          <Link to="/product-hub">Manage Products</Link>{" "}
+        </li>
+        <li>
+          <Link to="/user-hub">View Users</Link>{" "}
+        </li>
+        <li>
+          <Link to="/order-hub">View Orders</Link>{" "}
+        </li>
+      </ul>
     </div>
   );
 };
