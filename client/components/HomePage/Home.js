@@ -19,6 +19,7 @@ import Slider from "react-slick";
 import Paper from "@mui/material/Paper"
 import NumberFormat from "react-number-format";
 import ButtonBases from "./ButtonBases"
+//import GetStarted from "./GetStarted"
 
 export const Home = (props) => {
   const dispatch = useDispatch();
@@ -176,8 +177,8 @@ export const Home = (props) => {
         <Grid container sx={{ height: "60vh" }}>
           <Grid
             item
-            xs={false}
-            sm={4}
+            xs={12}
+            sm={12}
             md={7}
             sx={{
               backgroundImage:
@@ -188,7 +189,7 @@ export const Home = (props) => {
               backgroundPosition: "center",
             }}
           />
-          <Grid item xs={false} sm={false} md={0.5} />
+          <Grid item xs={0} sm={0} md={0.5} />
           <Grid pt={7} item>
             <h1>Top Colors of 2022</h1>
             <ExternalLink href="https://porchdaydreamer.com/2022-paint-color-trends-best-picks/">
@@ -201,8 +202,8 @@ export const Home = (props) => {
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
         <Divider />
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
-        <Grid container sx={{ height: "60vh", backgroundColor: "white" }}>
-          <Grid item xs={false}
+        <Grid container sx={{ height: "50vh", backgroundColor: "white" }}>
+          <Grid item xs={12}
             sm={12}
             md={12}
           >
@@ -219,7 +220,7 @@ export const Home = (props) => {
           spacing={2}
           className="get_started"
           >
-          <Grid item xs={false}
+          <Grid item xs={12}
             sm={6}
             md={3}
           >

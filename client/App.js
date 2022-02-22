@@ -29,6 +29,7 @@ import { MyOrders } from "./components/Orders/MyOrders";
 import ProductHub from "./components/Admin/ProductHub";
 import UserHub from "./components/Admin/UserHub";
 import OrderHub from "./components/Admin/OrderHub";
+import { Success } from "./components/Success";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -86,6 +87,7 @@ const App = () => {
           <Route path="browse" element={<Browse />} />
           <Route path="product/:productId" element={<Product />} />
           <Route path="orders" element={<MyOrders />} />
+          <Route path="success" element={<Success />}/>
           <Route path="cart" element={<CartPage />}>
             <Route
               path="login"
