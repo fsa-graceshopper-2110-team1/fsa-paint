@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { fetchUsers } from "../../store";
+import moment from "moment";
 
 const UserHub = () => {
   const users = useSelector((state) => state.users);
@@ -45,6 +46,16 @@ const UserHub = () => {
       type: "string",
       minWidth: 150,
       flex: 1,
+    },
+    {
+      field: "createdAt",
+      headerName: "Registration Date",
+      type: "date",
+      minWidth: 100,
+      flex: 0.5,
+      renderCell: (params) => {
+        return moment(params.value).format("L");
+      },
     },
     {
       field: "isAdmin",
