@@ -24,7 +24,6 @@ const theme = createTheme({
 
 //STRIPE API FETCH FUNCTION
 async function fetchFromAPI(endpoint, opts) {
-
   const { method, body } = { method: "POST", body: null, ...opts };
 
   const res = await fetch(`http://localhost:8080/${endpoint}`, {
@@ -47,10 +46,9 @@ export const ShippingForm = () => {
   const cartItems = useSelector((state) => state.cart?.cartItems);
   const email = useSelector((state) => state.auth.email);
   const allProducts = useSelector((state) => state.products);
-  const {cartId, userId} = useSelector((state)=>state.cart)
+  const { id: cartId, userId } = useSelector((state) => state.cart);
   const stripe = useStripe();
   const dispatch = useDispatch();
-
 
   //CartItems is set up so it allows for duplicates if you add the same item twice
   //This filter checks if the productId already exists and removes it if it does
@@ -96,8 +94,8 @@ export const ShippingForm = () => {
 
   //SUBMIT BUTTON FOR SHIPPING FORM THAT SENDS STRIPE THE OBJECT
   const onSubmit = async (data) => {
-    const shipping = JSON.stringify(data)
-    dispatch(createOrder(cartId, userId,shipping))
+    const shipping = JSON.stringify(data);
+    dispatch(createOrder(userId, cartId, shipping));
     const response = await fetchFromAPI("create-checkout-session", {
       body: { line_items, customer_email: email },
     });

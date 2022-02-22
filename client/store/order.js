@@ -62,9 +62,10 @@ export const updateOrderStatus = (orderId, status) => {
   };
 };
 
-export const fetchLatestOrder = (id) => {
+export const fetchLatestOrder = (userId) => {
   return async (dispatch) => {
-    let { data: order } = await axios.get(`/api/orders/user/${id}/latest`);
+    console.log(userId);
+    let { data: order } = await axios.get(`/api/orders/user/${userId}/latest`);
     return dispatch(gotLatestOrder(order));
   };
 };

@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -53,8 +53,6 @@ const invoiceSubtotal = subtotal(rows);
 const invoiceTaxes = TAX_RATE * invoiceSubtotal;
 const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
-
-
 function SpanningTable() {
   return (
     <TableContainer component={Paper}>
@@ -106,22 +104,22 @@ function SpanningTable() {
 }
 
 export const Success = () => {
-    const dispatch = useDispatch();
-    const id= useSelector((state)=>state.auth?.id)
-    useEffect(() => {
-        dispatch(fetchLatestOrder(id))
-    },[id])
-    const order = useSelector((state)=>state.order?.current)
-    order ?
-    rows = order.map((order)=>{
-        return{
-            expected:"",
-            product:"",
-            quantity:"",
-            price:"",
-        }
-    }) : null;
-
+  const dispatch = useDispatch();
+  const id = useSelector((state) => state.auth?.id);
+  useEffect(() => {
+    if (id) dispatch(fetchLatestOrder(id));
+  }, [id]);
+  const order = useSelector((state) => state.order?.current);
+  // order
+  //   ? (rows = order?.map((order) => {
+  //       return {
+  //         expected: "",
+  //         product: "",
+  //         quantity: "",
+  //         price: "",
+  //       };
+  //     }))
+  //   : null;
 
   return (
     <div>
@@ -153,8 +151,7 @@ export const Success = () => {
             </Box>
           </Grid>
         </Grid>
-        <Box>   
-        </Box>
+        <Box></Box>
       </ThemeProvider>
       <Home />
     </div>
