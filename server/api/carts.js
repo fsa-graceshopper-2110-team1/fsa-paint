@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Cart },
+  models: { Cart, CartItem },
 } = require("../db");
 module.exports = router;
 
@@ -60,7 +60,9 @@ router.delete("/:id", async (req, res, next) => {
     cart.destroy();
 
     //deleting a cart also deletes all cartItems associated with it
-    const cartItems = await Cart.findAll({ where: { cartId: req.params.id } });
+    const cartItems = await CartItem.findAll({
+      where: { cartId: req.params.id },
+    });
     cartItems.map((cartItem) => cartItem.destroy());
 
     res.sendStatus(204);
