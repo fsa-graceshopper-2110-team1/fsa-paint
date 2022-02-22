@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Avatar from "@mui/material/Avatar";
 import MenuItem from "@mui/material/MenuItem";
-import ImagesearchRollerIcon from "@mui/icons-material/ImagesearchRoller";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Logout from "@mui/icons-material/Logout";
@@ -21,8 +20,6 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import { LoginModal } from "./Auth/LoginModal";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
-import ColorLensIcon from "@mui/icons-material/ColorLens";
-import BrushIcon from "@mui/icons-material/Brush";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 const theme = createTheme({
@@ -174,7 +171,6 @@ export const NavbarTwo = () => {
               >
                 <Link to="browse">
                   <MenuItem>
-                    <ColorLensIcon sx={{ color: "black" }} />
                     <Typography
                       sx={{
                         fontFamily: "raleway",
@@ -196,7 +192,7 @@ export const NavbarTwo = () => {
                         color="secondary"
                       >
                         <MenuItem>
-                          <BrushIcon sx={{ color: "black" }} />
+                          
                           <Typography
                             sx={{
                               fontFamily: "raleway",

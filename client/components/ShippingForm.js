@@ -97,17 +97,16 @@ export const ShippingForm = () => {
   //SUBMIT BUTTON FOR SHIPPING FORM THAT SENDS STRIPE THE OBJECT
   const onSubmit = async (data) => {
     const shipping = JSON.stringify(data)
-
     dispatch(createOrder(cartId, userId,shipping))
-    // const response = await fetchFromAPI("create-checkout-session", {
-    //   body: { line_items, customer_email: email },
-    // });
-    // const { sessionID } = response;
-    // const { error } = await stripe.redirectToCheckout({ sessionId: sessionID });
+    const response = await fetchFromAPI("create-checkout-session", {
+      body: { line_items, customer_email: email },
+    });
+    const { sessionID } = response;
+    const { error } = await stripe.redirectToCheckout({ sessionId: sessionID });
 
-    // if (error) {
-    //   console.log(error);
-    // }
+    if (error) {
+      console.log(error);
+    }
   };
 
   return (

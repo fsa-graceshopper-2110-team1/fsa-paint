@@ -31,9 +31,10 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // GET /api/orders/latest
-router.get("/latest", async (req, res, next) => {
+router.get("/user/:id/latest", async (req, res, next) => {
   try {
     const order = await Order.findOne({
+      where: {userId: req.params.id},
       order: [["createdAt", "DESC"]], //finds latest
       include: ["orderItems"],
     });

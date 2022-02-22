@@ -27,6 +27,7 @@ import { FlashMessage } from "./components/FlashMessage";
 import AdminHub from "./components/Admin/AdminHub";
 import { MyOrders } from "./components/Orders/MyOrders";
 import ProductHub from "./components/Admin/ProductHub";
+import { Success } from "./components/Success";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -84,6 +85,7 @@ const App = () => {
           <Route path="browse" element={<Browse />} />
           <Route path="product/:productId" element={<Product />} />
           <Route path="orders" element={<MyOrders />} />
+          <Route path="success" element={<Success />}/>
           <Route path="cart" element={<CartPage />}>
             <Route
               path="login"

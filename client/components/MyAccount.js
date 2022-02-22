@@ -5,7 +5,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useSelector, useDispatch } from "react-redux";
-
 import { MyAccountForm } from "./MyAccountForm";
 
 const theme = createTheme({
