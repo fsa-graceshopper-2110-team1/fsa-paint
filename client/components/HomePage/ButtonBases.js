@@ -7,7 +7,7 @@ import { ExternalLink } from 'react-external-link';
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
-  height: 300,
+  height: 400,
   [theme.breakpoints.down('sm')]: {
     width: '100% !important', // Overrides inline-style
     height: 100,

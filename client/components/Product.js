@@ -83,7 +83,7 @@ export const Product = () => {
                   <StarRateIcon fontSize="small" />
                   <StarHalfIcon fontSize="small" />
                   <StarOutlineIcon fontSize="small" />
-                  <p>Benjamin Moore</p>
+                  <p>Grace Paint</p>
                   <NumberFormat
                     value={product.price / 100}
                     displayType={"text"}
@@ -195,7 +195,7 @@ export const Product = () => {
         </Grid>
         <Grid
           container
-          sx={{ height: "20vh", backgroundColor: "white", mx: "auto" }}
+          sx={{ height: "10vh", backgroundColor: "white", mx: "auto" }}
         />
         <Grid
           container
