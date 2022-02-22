@@ -7,8 +7,18 @@ import products from "./product";
 import cart from "./cart";
 import order from "./order";
 import flashMessage from "./flashMessage";
+import admin from "./admin";
 import success from './success'
-const reducer = combineReducers({ auth, products, cart,order,flashMessage, success });
+
+const reducer = combineReducers({
+  auth,
+  products,
+  cart,
+  order,
+  flashMessage,
+  admin,
+  success
+});
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, loggerMiddleware)
@@ -19,7 +29,7 @@ export default store;
 export * from "./auth";
 export * from "./product";
 export * from "./cart";
-export * from './flashMessage'
+export * from "./flashMessage";
 export * from "./order";
+export * from "./admin";
 export * from './success'
-

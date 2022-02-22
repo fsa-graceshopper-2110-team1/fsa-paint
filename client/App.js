@@ -27,6 +27,8 @@ import { FlashMessage } from "./components/FlashMessage";
 import AdminHub from "./components/Admin/AdminHub";
 import { MyOrders } from "./components/Orders/MyOrders";
 import ProductHub from "./components/Admin/ProductHub";
+import UserHub from "./components/Admin/UserHub";
+import OrderHub from "./components/Admin/OrderHub";
 import { Success } from "./components/Success";
 
 const App = () => {
@@ -123,6 +125,22 @@ const App = () => {
             element={
               <RequireAdminAuth>
                 <ProductHub />
+              </RequireAdminAuth>
+            }
+          />
+          <Route
+            path="user-hub"
+            element={
+              <RequireAdminAuth>
+                <UserHub />
+              </RequireAdminAuth>
+            }
+          />
+          <Route
+            path="order-hub"
+            element={
+              <RequireAdminAuth>
+                <OrderHub />
               </RequireAdminAuth>
             }
           />

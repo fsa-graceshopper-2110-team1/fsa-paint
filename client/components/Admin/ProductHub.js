@@ -7,6 +7,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { updateProduct } from "../../store";
 import EditToolbar from "./ProductHubToolbar";
+import Box from "@mui/material/Box";
 
 const ProductHub = () => {
   const products = useSelector((state) => state.products);
@@ -60,14 +61,16 @@ const ProductHub = () => {
       field: "status",
       headerName: "Status",
       type: "boolean",
-      width: 100,
+      minWidth: 80,
+      flex: 0.25,
       editable: true,
     },
     {
       field: "id",
       headerName: "ID",
       type: "number",
-      width: 50,
+      minWidth: 80,
+      flex: 0.25,
       editable: false,
       renderCell: (params) => {
         return <Link to={`/product/${params.value}`}>{params.value}</Link>;
@@ -77,7 +80,8 @@ const ProductHub = () => {
       field: "name",
       headerName: "Name",
       type: "string",
-      width: 150,
+      minWidth: 150,
+      flex: 0.75,
       editable: true,
       preProcessEditCellProps: (params) => {
         const isValid = !!params.props.value;
@@ -88,7 +92,8 @@ const ProductHub = () => {
       field: "hexCode",
       headerName: "Hex Code",
       type: "string",
-      width: 150,
+      minWidth: 150,
+      flex: 0.75,
       editable: true,
       preProcessEditCellProps: (params) => {
         const isValid =
@@ -101,7 +106,8 @@ const ProductHub = () => {
       headerName: "Category",
       type: "singleSelect",
       valueOptions: categories,
-      width: 150,
+      minWidth: 100,
+      flex: 0.75,
       editable: true,
       preProcessEditCellProps: (params) => {
         const isValid = !!params.props.value;
@@ -112,7 +118,8 @@ const ProductHub = () => {
       field: "price",
       headerName: "Price",
       type: "number",
-      width: 100,
+      minWidth: 100,
+      flex: 0.5,
       editable: true,
       renderCell: (params) => {
         return (
@@ -135,7 +142,8 @@ const ProductHub = () => {
       field: "quantity",
       headerName: "Inventory",
       type: "number",
-      width: 100,
+      minWidth: 100,
+      flex: 0.5,
       editable: true,
       preProcessEditCellProps: (params) => {
         const isValid = !!params.props.value;
@@ -146,7 +154,8 @@ const ProductHub = () => {
       field: "description",
       headerName: "Description",
       type: "string",
-      width: 150,
+      minWidth: 200,
+      flex: 2,
       editable: true,
       preProcessEditCellProps: (params) => {
         const isValid = !!params.props.value;
@@ -156,7 +165,13 @@ const ProductHub = () => {
   ];
 
   return (
-    <div>
+    <Box
+      sx={{
+        my: 4,
+        mx: 4,
+      }}
+      component="div"
+    >
       <h3>Manage Products</h3>
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid
@@ -174,7 +189,7 @@ const ProductHub = () => {
           </Snackbar>
         )}
       </div>
-    </div>
+    </Box>
   );
 };
 
