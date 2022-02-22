@@ -8,12 +8,26 @@ import Alert from "@mui/material/Alert";
 import { updateProduct } from "../../store";
 import EditToolbar from "./ProductHubToolbar";
 import Box from "@mui/material/Box";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: "#FFFFFF",
+      main: "#EDF2FB",
+    },
+  },
+});
+
 
 const ProductHub = () => {
   const products = useSelector((state) => state.products);
   const categories = [...new Set(products.map((product) => product.category))];
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setRows(products);
@@ -165,6 +179,7 @@ const ProductHub = () => {
   ];
 
   return (
+    <ThemeProvider theme={theme}>
     <Box
       sx={{
         my: 4,
@@ -189,7 +204,15 @@ const ProductHub = () => {
           </Snackbar>
         )}
       </div>
+      <Button   sx={{marginTop:"20px"}}
+                variant="contained"
+                color="primary"
+                onClick={() => navigate("/admin-hub")}>
+                
+      Back to Admin Hub
+      </Button>
     </Box>
+    </ThemeProvider>
   );
 };
 
