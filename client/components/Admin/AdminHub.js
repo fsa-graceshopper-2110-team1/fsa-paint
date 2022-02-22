@@ -30,7 +30,7 @@ const AdminHub = () => {
           color="primary"
           onClick={() => navigate("/order-hub")}
         >
-          View Users
+          View Orders
         </Button>
       </Grid>
       <Grid item xs={12} sm={12} sx={{ justifyItems: "center" }}>
@@ -40,7 +40,7 @@ const AdminHub = () => {
           color="primary"
           onClick={() => navigate("/user-hub")}
         >
-          View Orders
+          View Users
         </Button>
       </Grid>
     </Grid>
