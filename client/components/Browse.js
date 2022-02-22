@@ -118,7 +118,7 @@ export const Browse = () => {
                   to={`/browse/${cat.toLowerCase()}`}
                   className="colortitle"
                 >
-                  The {cat.toUpperCase()}S
+                  {cat.toUpperCase()}S
                 </Link>
               </Box>
 
