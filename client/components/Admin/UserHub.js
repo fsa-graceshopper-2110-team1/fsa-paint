@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import { fetchUsers } from "../../store";
+import { fetchAllUsers } from "../../store";
 import moment from "moment";
 
 const UserHub = () => {
-  const users = useSelector((state) => state.users);
+  const users = useSelector((state) => state.admin.users);
   const dispatch = useDispatch();
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchAllUsers());
   }, []);
 
   useEffect(() => {

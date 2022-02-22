@@ -7,7 +7,7 @@ import products from "./product";
 import cart from "./cart";
 import order from "./order";
 import flashMessage from "./flashMessage";
-import users from "./users";
+import admin from "./admin";
 
 const reducer = combineReducers({
   auth,
@@ -15,7 +15,7 @@ const reducer = combineReducers({
   cart,
   order,
   flashMessage,
-  users,
+  admin,
 });
 
 const middleware = composeWithDevTools(
@@ -29,4 +29,4 @@ export * from "./product";
 export * from "./cart";
 export * from "./flashMessage";
 export * from "./order";
-export * from "./users";
+export * from "./admin";

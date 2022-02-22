@@ -28,6 +28,7 @@ import AdminHub from "./components/Admin/AdminHub";
 import { MyOrders } from "./components/Orders/MyOrders";
 import ProductHub from "./components/Admin/ProductHub";
 import UserHub from "./components/Admin/UserHub";
+import OrderHub from "./components/Admin/OrderHub";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -130,6 +131,14 @@ const App = () => {
             element={
               <RequireAdminAuth>
                 <UserHub />
+              </RequireAdminAuth>
+            }
+          />
+          <Route
+            path="order-hub"
+            element={
+              <RequireAdminAuth>
+                <OrderHub />
               </RequireAdminAuth>
             }
           />
