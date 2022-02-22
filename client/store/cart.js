@@ -68,7 +68,7 @@ export const fetchCart = (userId) => {
     if (cart.id && localCart) {
       await Promise.all(
         localCart.cartItems.map((ci) => {
-          return dispatch(addToCart(cart.id, ci.productId));
+          return dispatch(addToCart(cart.id, ci.productId, 1));
         })
       );
       localStorage.removeItem("cart");

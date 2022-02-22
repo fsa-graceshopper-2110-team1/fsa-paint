@@ -7,13 +7,14 @@ const TOKEN = "token";
  * ACTION TYPES
  */
 const SET_AUTH = "SET_AUTH";
-
 const UPDATE_USER = "UPDATE_USER";
+
 /**
  * ACTION CREATORS
  */
 const setAuth = (auth) => ({ type: SET_AUTH, auth });
 const upUser = (user) => ({ type: UPDATE_USER, user });
+
 /**
  * THUNK CREATORS
  */
