@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchLatestOrder, fetchSuccess, deleteCartAndItems } from "../store";
+const moment = require("moment");
 
 import Home from "./HomePage/Home";
 
@@ -27,7 +28,7 @@ const theme = createTheme({
 const TAX_RATE = 0.08;
 
 function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
+  return `${num.toFixed(2)/100}`;
 }
 
 function priceRow(qty, unit) {
@@ -43,17 +44,18 @@ function subtotal(items) {
   return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }
 
-const rows = [
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-];
+// const rows = [
+//   createRow("Paperclips (Box)", 100, 1.15),
+//   createRow("Paper (Case)", 10, 45.99),
+//   createRow("Waste Basket", 2, 17.99),
+// ];
 
 const invoiceSubtotal = subtotal(rows);
 const invoiceTaxes = TAX_RATE * invoiceSubtotal;
 const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
-function SpanningTable() {
+function SpanningTable(props) {
+    const {rows} = props
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="spanning table">
@@ -65,18 +67,18 @@ function SpanningTable() {
             <TableCell align="right">Price</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Desc</TableCell>
-            <TableCell align="right">Qty.</TableCell>
-            <TableCell align="right">Unit</TableCell>
-            <TableCell align="right">Sum</TableCell>
+            <TableCell>Product</TableCell>
+            <TableCell align="right">Expected Delivery</TableCell>
+            <TableCell align="right">Quantity</TableCell>
+            <TableCell align="right">Price / Gallon</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.desc}>
-              <TableCell>{row.desc}</TableCell>
-              <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.unit}</TableCell>
+            <TableRow key={row.id}>
+              <TableCell>{row.product}</TableCell>
+              <TableCell align="right">{row.expected}</TableCell>
+              <TableCell align="right">{row.quantity}</TableCell>
               <TableCell align="right">{ccyFormat(row.price)}</TableCell>
             </TableRow>
           ))}
@@ -107,6 +109,9 @@ export const Success = () => {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.auth?.id);
   const cartId = useSelector((state) => state.cart?.id);
+  const allProducts = useSelector((state) => state.products);
+  const order = useSelector((state) => state.order?.current);
+  const orderItems = useSelector((state) => state.order?.current.orderItems);
 
   useEffect(() => {
     if (id) dispatch(fetchLatestOrder(id));
@@ -116,17 +121,42 @@ export const Success = () => {
     if (cartId && cartId !== -1) dispatch(deleteCartAndItems(cartId));
   }, [cartId]);
 
-  const order = useSelector((state) => state.order?.current);
-  // order
-  //   ? (rows = order?.map((order) => {
-  //       return {
-  //         expected: "",
-  //         product: "",
-  //         quantity: "",
-  //         price: "",
-  //       };
-  //     }))
-  //   : null;
+  let filteredOrderItems;
+  orderItems
+    ? (filteredOrderItems = orderItems.filter(
+        (v, i, a) => a.findIndex((t) => t.productId === v.productId) === i
+      ))
+    : null;
+
+  let rows;
+  filteredOrderItems
+    ? (rows = filteredOrderItems.map((prod) => {
+        return {
+            id: prod.id,
+          expected: moment(order.createdAt).add(3, "days").format("L"),
+          product: allProducts.filter((paint) => {
+            if (paint.id === prod.productId) {
+              return paint;
+            }
+          })[0].name,
+          quantity: orderItems.reduce((accum, elem) => {
+            if (elem.productId === prod.productId) {
+              accum++;
+              return accum;
+            } else {
+              return accum;
+            }
+          }, 0),
+          price: allProducts.filter((paint) => {
+            if (paint.id === prod.productId) {
+              return paint;
+            }
+          })[0].price,
+        };
+      }))
+    : null;
+
+    console.log("THIS IS ROWS", rows)
 
   return (
     <div>
