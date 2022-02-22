@@ -11,7 +11,8 @@ import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchLatestOrder, fetchSuccess, deleteCartAndItems } from "../store";
+import { fetchLatestOrder, deleteCartAndItems } from "../store";
+const moment = require("moment");
 
 import Home from "./HomePage/Home";
 
@@ -24,36 +25,21 @@ const theme = createTheme({
   },
 });
 
-const TAX_RATE = 0.08;
+const TAX_RATE = 0.088875;
 
 function ccyFormat(num) {
-  return `${num.toFixed(2)}`;
+  return `${num.toFixed(0) / 100}`;
 }
 
-function priceRow(qty, unit) {
-  return qty * unit;
+function intToFloat(num, decPlaces) {
+  return num / 100 + "." + Array(decPlaces + 1).join("0");
 }
 
-function createRow(desc, qty, unit) {
-  const price = priceRow(qty, unit);
-  return { desc, qty, unit, price };
-}
+function SpanningTable(props) {
+  const { rows, total } = props;
+  const invoiceTaxes = TAX_RATE * total;
+  const invoiceTotal = invoiceTaxes + total;
 
-function subtotal(items) {
-  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-}
-
-const rows = [
-  createRow("Paperclips (Box)", 100, 1.15),
-  createRow("Paper (Case)", 10, 45.99),
-  createRow("Waste Basket", 2, 17.99),
-];
-
-const invoiceSubtotal = subtotal(rows);
-const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-const invoiceTotal = invoiceTaxes + invoiceSubtotal;
-
-function SpanningTable() {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="spanning table">
@@ -65,31 +51,31 @@ function SpanningTable() {
             <TableCell align="right">Price</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>Desc</TableCell>
-            <TableCell align="right">Qty.</TableCell>
-            <TableCell align="right">Unit</TableCell>
-            <TableCell align="right">Sum</TableCell>
+            <TableCell>Product</TableCell>
+            <TableCell align="right">Expected Delivery</TableCell>
+            <TableCell align="right">Quantity</TableCell>
+            <TableCell align="right">Price ($) / Gallon</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.desc}>
-              <TableCell>{row.desc}</TableCell>
-              <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.unit}</TableCell>
-              <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+            <TableRow key={row.id}>
+              <TableCell>{row.product}</TableCell>
+              <TableCell align="right">{row.expected}</TableCell>
+              <TableCell align="right">{row.quantity}</TableCell>
+              <TableCell align="right">{intToFloat(row.price, 2)}</TableCell>
             </TableRow>
           ))}
 
           <TableRow>
             <TableCell rowSpan={3} />
             <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+            <TableCell align="right">{intToFloat(total, 2)}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Tax</TableCell>
             <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-              0
+              3
             )} %`}</TableCell>
             <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
           </TableRow>
@@ -107,6 +93,13 @@ export const Success = () => {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.auth?.id);
   const cartId = useSelector((state) => state.cart?.id);
+  const allProducts = useSelector((state) => state.products);
+  const order = useSelector((state) => state.order?.current);
+  const orderItems = useSelector((state) => state.order?.current.orderItems);
+  const total = useSelector((state) => state.order?.current.total);
+  const shippingInfo = useSelector(
+    (state) => state.order?.current.shippingAddress
+  );
 
   useEffect(() => {
     if (id) dispatch(fetchLatestOrder(id));
@@ -116,17 +109,49 @@ export const Success = () => {
     if (cartId && cartId !== -1) dispatch(deleteCartAndItems(cartId));
   }, [cartId]);
 
-  const order = useSelector((state) => state.order?.current);
-  // order
-  //   ? (rows = order?.map((order) => {
-  //       return {
-  //         expected: "",
-  //         product: "",
-  //         quantity: "",
-  //         price: "",
-  //       };
-  //     }))
-  //   : null;
+  let shipping;
+  shippingInfo ? (shipping = JSON.parse(shippingInfo)) : null;
+
+  let filteredOrderItems;
+  orderItems
+    ? (filteredOrderItems = orderItems.filter(
+        (v, i, a) => a.findIndex((t) => t.productId === v.productId) === i
+      ))
+    : null;
+
+  let rows;
+  filteredOrderItems
+    ? (rows = filteredOrderItems.map((prod) => {
+        return {
+          id: prod.id,
+          expected: moment(order.createdAt).add(3, "days").format("L"),
+          product: allProducts.filter((paint) => {
+            if (paint.id === prod.productId) {
+              return paint;
+            }
+          })[0].name,
+          quantity: orderItems.reduce((accum, elem) => {
+            if (elem.productId === prod.productId) {
+              accum++;
+              return accum;
+            } else {
+              return accum;
+            }
+          }, 0),
+          price: allProducts.filter((paint) => {
+            if (paint.id === prod.productId) {
+              return paint;
+            }
+          })[0].price,
+        };
+      }))
+    : null;
+
+
+  let firstName, lastName, address1, address2, zip, city, state;
+  shipping
+    ? ({ firstName, lastName, address1, address2, zip, city, state } = shipping)
+    : null;
 
   return (
     <div>
@@ -153,12 +178,31 @@ export const Success = () => {
               }}
               component="div"
             >
-              <h2>Order Successful!</h2>
-              <SpanningTable />
+              <h2>Thank You - Order Successful!</h2>
+              {rows ? <SpanningTable rows={rows} total={total} /> : null}
+            </Box>
+            <Box sx={{display:"flex",alignItems:"center",flexDirection:"column",justifyContent:"center",marginTop:-2}}>
+            {shippingInfo && shipping ? (
+              <Box sx={{display:"flex", justifyContent:"center", alignItems:"flex-start", flexDirection:"column"}}>
+                <Box component={"h4"} sx={{marginBottom:0}}>Ship To:</Box>
+                <Box>
+                  {firstName} {lastName}
+                </Box>
+                <Box>
+                  {address1} {address2}
+                </Box>
+                <Box>
+                  {zip}
+                  {", "}
+                  {city}
+                  {", "}
+                  {state}
+                </Box>
+              </Box>
+            ) : null}
             </Box>
           </Grid>
         </Grid>
-        <Box></Box>
       </ThemeProvider>
       <Home />
     </div>
