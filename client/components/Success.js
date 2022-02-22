@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchLatestOrder, fetchSuccess } from "../store";
+import { fetchLatestOrder, fetchSuccess, deleteCartAndItems } from "../store";
 
 import Home from "./HomePage/Home";
 
@@ -106,9 +106,16 @@ function SpanningTable() {
 export const Success = () => {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.auth?.id);
+  const cartId = useSelector((state) => state.cart?.id);
+
   useEffect(() => {
     if (id) dispatch(fetchLatestOrder(id));
   }, [id]);
+
+  useEffect(() => {
+    if (cartId && cartId !== -1) dispatch(deleteCartAndItems(cartId));
+  }, [cartId]);
+
   const order = useSelector((state) => state.order?.current);
   // order
   //   ? (rows = order?.map((order) => {

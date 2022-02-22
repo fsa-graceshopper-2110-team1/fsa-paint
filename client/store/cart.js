@@ -11,6 +11,7 @@ const REMOVED_ITEM_FROM_CART = "REMOVED_ITEM_FROM_CART";
 const REMOVED_PRODUCT_FROM_CART = "REMOVED_PRODUCT_FROM_CART";
 const REMOVED_LOCAL_ITEM_FROM_CART = "REMOVED_LOCAL_ITEM_FROM_CART";
 const ADD_LOCALSTORAGE_TO_CART = "ADD_LOCALSTORAGE_TO_CART";
+const DELETE_CART_AND_ITEMS = "DELETE_CART_AND_ITEMS";
 
 /**
  * ACTION CREATORS
@@ -52,6 +53,10 @@ const removedLocalItemFromCart = (localCart) => ({
 export const addLocalStorageToCart = (localCart) => ({
   type: ADD_LOCALSTORAGE_TO_CART,
   localCart,
+});
+
+export const deletedCartAndItems = () => ({
+  type: DELETE_CART_AND_ITEMS,
 });
 
 /**
@@ -158,6 +163,13 @@ export const removeProductFromCart = (cartId, productId) => {
   };
 };
 
+export const deleteCartAndItems = (cartId) => {
+  return async (dispatch) => {
+    await axios.delete(`/api/carts/${cartId}`);
+    dispatch(deletedCartAndItems());
+  };
+};
+
 /**
  * REDUCER
  */
@@ -193,6 +205,8 @@ export default function (state = {}, action) {
       };
     case ADD_LOCALSTORAGE_TO_CART:
       return action.localCart;
+    case DELETE_CART_AND_ITEMS:
+      return {};
     default:
       return state;
   }
