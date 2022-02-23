@@ -23,7 +23,7 @@ const AdminHub = () => {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        <Grid item xs={12} sm={8} md={8} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={8} >
           <Box
             sx={{
               my: 8,
@@ -79,6 +79,7 @@ const AdminHub = () => {
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
+            borderLeft:"solid 1px black",
           }}
         />
       </Grid>

@@ -263,6 +263,7 @@ export const ShippingForm = () => {
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
+            borderLeft:"solid 1px black",
           }}
         />
       </Grid>

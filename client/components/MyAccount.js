@@ -27,7 +27,7 @@ export const MyAccount = () => {
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         
-        <Grid item xs={12} sm={8} md={8}  elevation={6} square>
+        <Grid item xs={12} sm={8} md={8}  elevation={6}>
 
           <Box
             sx={{
@@ -57,6 +57,7 @@ export const MyAccount = () => {
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
+            borderLeft:"solid 1px black",
           }}
         />
       </Grid>
