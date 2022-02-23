@@ -31,6 +31,7 @@ import UserHub from "./components/Admin/UserHub";
 import OrderHub from "./components/Admin/OrderHub";
 import { Success } from "./components/Success";
 import { Footer } from "./components/Footer";
+import { PageNotFound } from "./components/PageNotFound";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -89,6 +90,7 @@ const App = () => {
           <Route path="product/:productId" element={<Product />} />
           <Route path="orders" element={<MyOrders />} />
           <Route path="success" element={<Success />}/>
+          <Route path="*" element={<PageNotFound/>}/>
           <Route path="cart" element={<CartPage />}>
             <Route
               path="login"
