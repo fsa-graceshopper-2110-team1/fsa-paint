@@ -48,7 +48,8 @@
     "sequelize": "^6.3.5",
     "slick-carousel": "^1.8.1",
     "stripe": "^8.202.0",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "dotenv": "^16.0.0",
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -59,7 +60,6 @@
     "axios-mock-adapter": "^1.16.0",
     "babel-loader": "^8.2.2",
     "chai": "^4.2.0",
-    "dotenv": "^16.0.0",
     "enzyme": "^3.11.0",
     "esm": "^3.2.25",
     "file-loader": "^6.2.0",
