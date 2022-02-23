@@ -121,3 +121,42 @@ header{
 .get_started h3 {
   text-align: center;
 }
+
+.paint_chip_name {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0.5rem;
+  right: 0;
+  background: theme.palette.common.black;
+  color: black;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.paint_chip_number {
+  position: absolute;
+  top: 2.25rem;
+  bottom: 0;
+  left: 0.5rem;
+  right: 0;
+  color: black;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .2s, visibility .2s;
+}
+
+.paint_chip_box:hover .paint_chip_name {
+  visibility: visible;
+  opacity: 1;
+}
+.paint_chip_box:hover .paint_chip_number {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+.paint_chip_box {
+  position: relative;
+  display: inline-block;
+}

@@ -18,7 +18,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Slider from "react-slick";
 import Paper from "@mui/material/Paper"
 import NumberFormat from "react-number-format";
-import ButtonBases from "./ButtonBases"
+import KitchenImage from "./KitchenImage"
 //import GetStarted from "./GetStarted"
 
 export const Home = (props) => {
@@ -132,8 +132,10 @@ export const Home = (props) => {
                       sx={{ display: "flex", marginLeft: 10, marginRight: 20 }}
                       component={"div"} key={product.id}
                     >
-                      <Link to={`/product/${product.id}`} key={product.id}>
-                        <Box
+                      <Link to={`/product/${product.id}`} key={product.id} >
+                      <div className="paint_chip_box">
+                      
+                        <Box 
                           component={Paper}
                           elevation={4}
                           square
@@ -144,21 +146,11 @@ export const Home = (props) => {
                             textAlign: "left",
                           }}
                         ></Box>
-                      </Link>
-                      <Box
-                        component={"h4"}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <Typography color="secondary" size="large">
-                          <b>{product.name}</b>
-                        </Typography>
-                        
-                        <Typography color="secondary" sx={{marginTop: 0.4}}>
-                          <NumberFormat
+                      
+                      <p className="paint_chip_name">{product.name}</p>
+                      <NumberFormat
+                            className="paint_chip_number"
+                            component={"p"}
                             value={product.price / 100}
                             displayType={"text"}
                             thousandSeparator={true}
@@ -166,8 +158,8 @@ export const Home = (props) => {
                             decimalScale={2}
                             fixedDecimalScale={true}
                           />
-                        </Typography>
-                      </Box>
+                      </div>
+                      </Link>
                     </Box>
                   ))}
               </Slider>
@@ -207,7 +199,7 @@ export const Home = (props) => {
             sm={12}
             md={12}
           >
-            <ButtonBases/>
+            <KitchenImage/>
           </Grid>
           
         </Grid>
@@ -312,3 +304,29 @@ export const Home = (props) => {
 };
 export default Home;
 
+
+/*
+<Box
+                        component={"h4"}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Typography color="secondary" size="large">
+                          <b>{product.name}</b>
+                        </Typography>
+                        
+                        <Typography color="secondary" sx={{marginTop: 0.4}}>
+                          <NumberFormat
+                            value={product.price / 100}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                            decimalScale={2}
+                            fixedDecimalScale={true}
+                          />
+                        </Typography>
+                      </Box>
+*/
