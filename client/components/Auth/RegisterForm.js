@@ -16,6 +16,9 @@ const theme = createTheme({
       main: "#EDF2FB",
     },
   },
+  typography:{
+    fontFamily:"Raleway"
+}
 });
 
 export const RegisterForm = ({ path }) => {

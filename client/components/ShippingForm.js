@@ -20,6 +20,9 @@ const theme = createTheme({
       main: "#EDF2FB",
     },
   },
+  typography:{
+    fontFamily:"Raleway"
+}
 });
 
 //STRIPE API FETCH FUNCTION
