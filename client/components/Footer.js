@@ -17,7 +17,7 @@ const theme = createTheme({
 
 function Copyright() {
     return (
-      <Typography variant="body2" color="white" align="center" fontFamily="Raleway">
+      <Typography variant="body2" color="black" align="center" fontFamily="Raleway">
         {'Copyright © '}
         <Link color="inherit" href="https://www.copyright.gov/">
           Grace Paint
@@ -32,11 +32,11 @@ export const Footer = () =>{
 
     return(
         <ThemeProvider theme={theme}>
-        <Box sx={{ bgcolor: 'gray', p: 3, marginTop:"auto" }} component="footer">
+        <Box sx={{ bgcolor: 'white', p: 3, marginTop:"auto",borderTop:"ridge 1px gray"}} component="footer">
         <Typography
           variant="subtitle1"
           align="center"
-          color="white"
+          color="black"
           component="p"
           fontFamily="Raleway"
         >
