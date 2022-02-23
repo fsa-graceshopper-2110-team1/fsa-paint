@@ -7,9 +7,9 @@ import { ExternalLink } from 'react-external-link';
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
-  height: 400,
+  height: 300,
   [theme.breakpoints.down('sm')]: {
-    width: '100% !important', // Overrides inline-style
+    width: '100% !important', 
     height: 100,
   },
   '&:hover, &.Mui-focusVisible': {
@@ -69,7 +69,7 @@ const ImageMarked = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }));
 
-export default function ButtonBases() {
+export default function KitchenImage() {
   return (
     <ExternalLink href="https://www.thekitchn.com/the-best-paint-finish-for-kitchen-walls-190798">
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>

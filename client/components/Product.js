@@ -20,6 +20,8 @@ import LandscapeIcon from "@mui/icons-material/Landscape";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import ProductReviews from "./ProductPage/ProductReviews"
+import CompanyInformation from "./ProductPage/CompanyInformation"
 
 export const Product = () => {
   const { productId } = useParams();
@@ -48,41 +50,24 @@ export const Product = () => {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <Grid container component="main" sx={{ height: "70vh", m: 1 }}>
-          <CssBaseline />
-          <Grid
-            item
-            xs={false}
-            sm={2}
-            md={4}
+        <Grid container direction="row"spacing={2} sx={{ height: "80vh"}}>
+          <Grid item xs={12} sm={12} md={3}
             sx={{
               backgroundColor: hexcode,
               border: "1px solid",
               borderColor: "light gray",
-              height: "90vh",
-              display: "flex",
-              alignItems: "center",
+              height: "50vh",
+              mx: "4vh",
+              my: "4vh"
             }}
           />
-          <Grid item xs={12} sm={8} md={8}>
-            <Box
-              sx={{
-                //my: 8,
-                mx: 4,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                alignContent: "center",
-              }}
-            >
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
-                  <h2>{product.name}</h2>
-                  <StarRateIcon fontSize="small" />
-                  <StarRateIcon fontSize="small" />
-                  <StarRateIcon fontSize="small" />
-                  <StarHalfIcon fontSize="small" />
-                  <StarOutlineIcon fontSize="small" />
+          <Grid item xs={12} sm={8} md={8} sx={{mx:"3"}}>
+            <h2>{product.name}</h2>
+            <StarRateIcon fontSize="small" />
+            <StarRateIcon fontSize="small" />
+            <StarRateIcon fontSize="small" />
+            <StarHalfIcon fontSize="small" />
+            <StarOutlineIcon fontSize="small" />
                   <p>Grace Paint</p>
                   <NumberFormat
                     value={product.price / 100}
@@ -92,16 +77,15 @@ export const Product = () => {
                     decimalScale={2}
                     fixedDecimalScale={true}
                   />{" "}
-                </Grid>
-                <Grid item xs={12}>
+
                   <p>{product.description}</p>
-                </Grid>
-                <Grid item>
                   <Box>
                     <IconButton
                       variant="contained"
                       onClick={() => {
-                        setCount(count - 1);
+                        if(count>1){
+                          setCount(count - 1);
+                        }
                       }}
                     >
                       <RemoveCircleIcon fontSize="medium" />
@@ -116,10 +100,8 @@ export const Product = () => {
                       <AddCircleIcon fontSize="medium" />
                     </IconButton>
                   </Box>
-                </Grid>
-                <Grid item xs={12} sm={12} sx={{ justifyItems: "center" }}>
                   <Button
-                    fullWidth
+                    sx={{width:"20vh", my: "10"}}
                     variant="contained"
                     color="primary"
                     onClick={() =>
@@ -128,107 +110,18 @@ export const Product = () => {
                   >
                     Add to cart
                   </Button>
-                </Grid>
-              </Grid>
-            </Box>
           </Grid>
         </Grid>
-        <Grid container sx={{ height: "60vh", backgroundColor: "white" }} />
-        <Grid
-          container
-          sx={{ height: "40vh", backgroundColor: "primary.light", mx: "auto" }}
-        >
-          <Grid
-            item
-            sx={{
-              backgroundColor: "primary.light",
-              width: 1 / 4,
-              m: 3,
-              mx: "auto",
-            }}
-          >
-            <ImagesearchRollerOutlinedIcon
-              fontSize="large"
-              sx={{ mx: "auto" }}
-            />
-            <h3>Two Coat Guarantee</h3>
-            <p>
-              Save time and money with our patented paint mix that not only look
-              great but are easy to use. Get the color walls you desired with
-              only two coats.
-            </p>
-          </Grid>
-          <Grid
-            item
-            sx={{
-              backgroundColor: "primary.light",
-              m: 3,
-              width: 1 / 4,
-              mx: "auto",
-            }}
-          >
-            <FormatColorFillIcon fontSize="large" />
-            <h3>Mixed In House</h3>
-            <p>
-              All of our paint is mixed in our stores to insure we produce the
-              best product every time. We know our paint the best so why
-              wouldn't we be the one to mix it.
-            </p>
-          </Grid>
-          <Grid
-            item
-            sx={{
-              backgroundColor: "primary.light",
-              width: 1 / 4,
-              m: 3,
-              mx: "auto",
-            }}
-          >
-            <LandscapeIcon fontSize="large" />
-            <h3>Sustainably Sourced</h3>
-            <p>
-              We know you care about the planet and we do to. Since the
-              beginning we have pledge to only used sustainably sourced
-              materials that are procurred in ethically.
-            </p>
-          </Grid>
+        <Grid container sx={{ height: "10vh", backgroundColor: "white" }} />
+        <Grid container sx={{height:"50vh"}}>
+          <CompanyInformation/>
         </Grid>
         <Grid
           container
           sx={{ height: "10vh", backgroundColor: "white", mx: "auto" }}
         />
-        <Grid
-          container
-          sx={{ height: "50vh", backgroundColor: "white", mx: "auto" }}
-        >
-          <Grid item textAlign="center" sx={{ mx: "auto" }}>
-            <h2 sx={{ mx: "auto" }}>Reviews</h2>
-            <Grid item sx={{ mx: "auto" }}>
-              <StarRateIcon fontSize="medium" />
-              <StarRateIcon fontSize="medium" />
-              <StarRateIcon fontSize="medium" />
-              <StarHalfIcon fontSize="medium" />
-              <StarOutlineIcon fontSize="medium" />
-            </Grid>
-            <p sx={{ mx: "auto" }}>2 Reviews</p>
-          </Grid>
-          <Grid item>
-            <Card sx={{ mx: "auto", m: 2 }}>
-              <h5>Nancy</h5>
-              <StarRateIcon fontSize="small" />
-              <StarRateIcon fontSize="small" />
-              <StarRateIcon fontSize="small" />
-              <StarRateIcon fontSize="small" />
-              <StarOutlineIcon fontSize="small" />
-              <h4>Full Coverage</h4>
-              <p>
-                Only needed two coats to cover a dark colored wall. Happy with
-                the results, it worked great in my living room. Make sure to
-                test it in the light because it looks very different with
-                natural light and artificial light.
-              </p>
-            </Card>
-          </Grid>
+        <Grid container sx={{height:"50vh"}}>
+        <ProductReviews/>
         </Grid>
       </div>
     </ThemeProvider>
