@@ -76,7 +76,7 @@ export const CartPage = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Grid container>
+        <Grid container sx={{minHeight:"100vh"}}>
           <Grid item xs={12} sm={7} md={7}>
             <Box component="h1" sx={{ marginLeft: 10 }}>
               Shopping Cart

@@ -24,7 +24,7 @@ export const MyOrders = () => {
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         
-        <Grid item xs={12} sm={8} md={8} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={8} square>
 
           <Box
             sx={{
