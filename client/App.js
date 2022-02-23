@@ -30,6 +30,7 @@ import ProductHub from "./components/Admin/ProductHub";
 import UserHub from "./components/Admin/UserHub";
 import OrderHub from "./components/Admin/OrderHub";
 import { Success } from "./components/Success";
+import { Footer } from "./components/Footer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -145,6 +146,7 @@ const App = () => {
             }
           />
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </div>
   );
