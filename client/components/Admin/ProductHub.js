@@ -19,8 +19,10 @@ const theme = createTheme({
       main: "#EDF2FB",
     },
   },
+  typography: {
+    fontFamily: "Raleway",
+  },
 });
-
 
 const ProductHub = () => {
   const products = useSelector((state) => state.products);
@@ -180,38 +182,43 @@ const ProductHub = () => {
 
   return (
     <ThemeProvider theme={theme}>
-    <Box
-      sx={{
-        my: 4,
-        mx: 4,
-      }}
-      component="div"
-    >
-      <h3>Manage Products</h3>
-      <div style={{ height: 600, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          experimentalFeatures={{ preventCommitWhileValidating: true }}
-          onCellEditCommit={handleCellEditCommit}
-          components={{
-            Toolbar: EditToolbar,
-          }}
-        />
-        {!!snackbar && (
-          <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={6000}>
-            <Alert {...snackbar} onClose={handleCloseSnackbar} />
-          </Snackbar>
-        )}
-      </div>
-      <Button   sx={{marginTop:"20px"}}
-                variant="contained"
-                color="primary"
-                onClick={() => navigate("/admin-hub")}>
-                
-      Back to Admin Hub
-      </Button>
-    </Box>
+      <Box
+        sx={{
+          my: 4,
+          mx: 4,
+        }}
+        component="div"
+      >
+        <h3>Manage Products</h3>
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            experimentalFeatures={{ preventCommitWhileValidating: true }}
+            onCellEditCommit={handleCellEditCommit}
+            components={{
+              Toolbar: EditToolbar,
+            }}
+          />
+          {!!snackbar && (
+            <Snackbar
+              open
+              onClose={handleCloseSnackbar}
+              autoHideDuration={6000}
+            >
+              <Alert {...snackbar} onClose={handleCloseSnackbar} />
+            </Snackbar>
+          )}
+        </div>
+        <Button
+          sx={{ marginTop: "20px" }}
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/admin-hub")}
+        >
+          Back to Admin Hub
+        </Button>
+      </Box>
     </ThemeProvider>
   );
 };

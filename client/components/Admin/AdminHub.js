@@ -15,6 +15,9 @@ const theme = createTheme({
       main: "#EDF2FB",
     },
   },
+  typography: {
+    fontFamily: "Raleway",
+  },
 });
 
 const AdminHub = () => {
@@ -23,7 +26,7 @@ const AdminHub = () => {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        <Grid item xs={12} sm={8} md={8} >
+        <Grid item xs={12} sm={8} md={8}>
           <Box
             sx={{
               my: 8,
@@ -36,7 +39,16 @@ const AdminHub = () => {
             component="div"
           >
             <h2>Admin Hub</h2>
-            <Grid item xs={12} sm={12} sx={{ justifyItems: "center",marginBottom:"30px",width:"200px" }}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                justifyItems: "center",
+                marginBottom: "30px",
+                width: "200px",
+              }}
+            >
               <Button
                 fullWidth
                 variant="contained"
@@ -46,7 +58,16 @@ const AdminHub = () => {
                 Manage Products
               </Button>
             </Grid>
-            <Grid item xs={12} sm={12} sx={{ justifyItems: "center",marginBottom:"30px",width:"200px" }}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                justifyItems: "center",
+                marginBottom: "30px",
+                width: "200px",
+              }}
+            >
               <Button
                 fullWidth
                 variant="contained"
@@ -56,7 +77,12 @@ const AdminHub = () => {
                 View Orders
               </Button>
             </Grid>
-            <Grid item xs={12} sm={12} sx={{ justifyItems: "center",width:"200px" }}>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{ justifyItems: "center", width: "200px" }}
+            >
               <Button
                 fullWidth
                 variant="contained"
@@ -79,7 +105,7 @@ const AdminHub = () => {
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            borderLeft:"solid 1px black",
+            borderLeft: "solid 1px black",
           }}
         />
       </Grid>
