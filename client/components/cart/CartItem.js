@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import NumberFormat from "react-number-format";
 import Paper from "@mui/material/Paper";
+import Card from "@mui/material/Card"
+import Divider from "@mui/material/Divider"
 import {
   addToCart,
   removeItemFromCart,
@@ -23,15 +25,11 @@ import {
 export const CartItem = (props) => {
   const dispatch = useDispatch();
   const { cartId, productId, hexCode, name, gallons, price, quantity } = props;
-
   return (
     <Grid container spacing={3} component="main">
-      <Grid item xs={11} sm={11} md={11}>
+      <Grid item xs={11} sm={11} md={11} sx={{marginLeft: 3}}>
         <Box
           sx={{
-            borderTop: "3px solid black",
-            borderBottom: "3px solid black",
-            marginLeft: 8,
             marginBottom: 2,
             display: "flex",
             alignItems: "center",
@@ -48,44 +46,58 @@ export const CartItem = (props) => {
           ></Box>
           <Grid item xs={12}>
             <Box sx={{ marginLeft: 2 }}>
-              <Box component={"h2"} sx={{ marginLeft: 1 }}>
-                {name}
+              <Box sx={{ marginLeft: 1, display:"flex", alignItems:"center" }}>
+                <Box component={"h2"}> {name} </Box>
               </Box>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Box
                   component={"p"}
                   sx={{ marginLeft: 1 }}
-                >{`Gallons: ${gallons}`}</Box>
-                <Box sx={{ marginLeft: "25%" }}>
-                  {"Price:    "}
-                  <NumberFormat
-                    value={price / 100}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                  />
-                </Box>
+                >{`Gallons: ${gallons}`}</Box>                
+                <Box sx={{ marginLeft: "25%"}}><p>Item Price:</p></Box>
+                <Box sx={{marginLeft:"10%"}}><p>Total Price: </p></Box>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Box sx={{ display: "flex" }}>
+                    <IconButton
+                      disabled={quantity === gallons}
+                      variant="contained"
+                      onClick={() => dispatch(addToCart(cartId, productId))}
+                    >
+                      <AddCircleIcon fontSize="medium" />
+                    </IconButton>
+                    <IconButton
+                      variant="contained"
+                      disabled={quantity === 1}
+                      onClick={() =>
+                        dispatch(removeItemFromCart(cartId, productId))
+                      }
+                    >
+                      <RemoveCircleIcon fontSize="medium" />
+                    </IconButton>
+                  </Box>
+                  <Box sx={{ marginLeft: "25%" }}>
+                    <NumberFormat
+                      value={price / 100}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  </Box>
+                  <Box sx={{ marginLeft: "10%" }}>
+                    <NumberFormat
+                      value={(price * gallons) / 100}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                    </Box>
               </Box>
               <Box sx={{ display: "flex" }}>
-                <IconButton
-                  variant="contained"
-                  disabled={quantity === 1}
-                  onClick={() =>
-                    dispatch(removeItemFromCart(cartId, productId))
-                  }
-                >
-                  <RemoveCircleIcon fontSize="medium" />
-                </IconButton>
-                <IconButton
-                  disabled={quantity === gallons}
-                  variant="contained"
-                  onClick={() => dispatch(addToCart(cartId, productId, 1))}
-                >
-                  <AddCircleIcon fontSize="medium" />
-                </IconButton>
-
                 <IconButton
                   variant="contained"
                   sx={{ marginLeft: "auto" }}
@@ -96,9 +108,10 @@ export const CartItem = (props) => {
                   <DeleteIcon fontSize="medium" />
                 </IconButton>
               </Box>
-            </Box>
+            </Box>           
           </Grid>
         </Box>
+        <Divider />
       </Grid>
     </Grid>
   );
