@@ -105,7 +105,7 @@ export const Category = () => {
       <Grid container
         sx={{ height: "60vh" }}
       >
-        <Grid item xs={false}
+        <Grid item xs={12}
           sm={12}
           md={12}
         >
