@@ -1,5 +1,5 @@
 const stripeAPI = require("../../stripe");
-const dotenv = require("dotenv").config().parsed;
+require("dotenv").config();
 const router = require("express").Router();
 
 async function createCheckoutSession(req, res) {
