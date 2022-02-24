@@ -21,6 +21,7 @@ import { LoginModal } from "./Auth/LoginModal";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import MoreIcon from '@mui/icons-material/MoreVert';
 
 const theme = createTheme({
   palette: {
@@ -35,9 +36,9 @@ const theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
-      sm: 333,
-      md: 900,
-      lg: 1200,
+      sm: 200,
+      md: 450,
+      lg: 900,
       xl: 1536,
     },
   },
@@ -91,6 +92,162 @@ export const NavbarTwo = () => {
     });
   const categories = [...new Set(products.map((product) => product.category))];
 
+  //MOBILE DROPDOWN MENU
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+  const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <Link to="cart">
+          <IconButton size="large" color="secondary">
+            <Badge badgeContent={cart?.cartItems?.length} color="error">
+              <ShoppingCartIcon />
+              <Typography
+            sx={{
+              fontFamily: "raleway",
+              color: "black",
+              marginLeft: 0.5,
+            }}
+          >
+            Cart
+          </Typography>
+            </Badge>
+          </IconButton>
+        </Link>
+      </MenuItem>
+      <Divider />
+      <Link to="browse">
+        <MenuItem>
+          <Typography
+            sx={{
+              fontFamily: "raleway",
+              color: "black",
+              marginLeft: 0.5,
+            }}
+          >
+            Browse All
+          </Typography>
+        </MenuItem>
+      </Link>
+      <Divider />
+      {user.firstName ? (
+        <div>
+          <Link to="my-account">
+            <MenuItem>
+              <Avatar />
+              <Typography
+                sx={{
+                  fontFamily: "raleway",
+                  marginLeft: 0.5,
+                  color: "black",
+                }}
+              >
+                My account
+              </Typography>
+            </MenuItem>
+          </Link>
+          <Link to="orders">
+            <MenuItem>
+              <Avatar />
+              <Typography
+                sx={{
+                  fontFamily: "raleway",
+                  marginLeft: 0.5,
+                  color: "black",
+                }}
+              >
+                My orders
+              </Typography>
+            </MenuItem>
+          </Link>
+          {user.isAdmin ? (
+            <MenuItem
+              onClick={() => {
+                navigate("/admin-hub");
+              }}
+            >
+              <ListItemIcon>
+                <AdminPanelSettingsIcon fontSize="large" />
+              </ListItemIcon>
+              <Typography
+                sx={{
+                  fontFamily: "raleway",
+                  marginLeft: 0.5,
+                  color: "black",
+                }}
+              >
+                Admin Hub
+              </Typography>
+            </MenuItem>
+          ) : null}
+          <Divider />
+          <MenuItem
+            onClick={() => {
+              dispatch(logout());
+              navigate("/home");
+            }}
+          >
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            <Typography
+              sx={{
+                fontFamily: "raleway",
+                marginLeft: 0.5,
+                color: "black",
+              }}
+            >
+              Logout
+            </Typography>
+          </MenuItem>
+        </div>
+      ) : (
+        <MenuItem>
+          <IconButton
+            size="large"
+            edge="end"
+            onClick={openModal}
+            color="secondary"
+          >
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            <Typography
+              sx={{
+                fontFamily: "raleway",
+                marginLeft: 0.5,
+                color: "black",
+              }}
+            >
+              Log in
+            </Typography>
+          </IconButton>
+        </MenuItem>
+      )}
+    </Menu>
+  );
+
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -105,34 +262,35 @@ export const NavbarTwo = () => {
                     height: 60,
                     width: 120,
                     marginTop: 0.5,
-                    marginLeft: 3,
+                    marginLeft: 2,
                   }}
                 />
               </Link>
-              <IconButton
-                size="large"
-                color="secondary"
-                sx={{ borderRadius: 2 }}
-                aria-controls={open2 ? "account-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open2 ? "true" : undefined}
-                onClick={handleClick2}
-              >
-                <Typography
-                  variant="p"
-                  component="div"
-                  sx={{
-                    fontSize: "16px",
-                    marginLeft: 1,
-                    marginRight: 1,
-                    fontFamily: "raleway",
-                    letterSpacing: "0.1rem",
-                  }}
+              <Box sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
+                <IconButton
+                  size="large"
+                  color="secondary"
+                  sx={{ borderRadius: 2 }}
+                  aria-controls={open2 ? "account-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open2 ? "true" : undefined}
+                  onClick={handleClick2}
                 >
-                  PRODUCTS
-                </Typography>
-              </IconButton>
-
+                  <Typography
+                    variant="p"
+                    component="div"
+                    sx={{
+                      fontSize: "16px",
+                      marginLeft: 1,
+                      marginRight: 1,
+                      fontFamily: "raleway",
+                      letterSpacing: "0.1rem",
+                    }}
+                  >
+                    PRODUCTS
+                  </Typography>
+                </IconButton>
+              </Box>
               <Menu
                 anchorEl={anchorEl2}
                 id="account-menu"
@@ -192,7 +350,6 @@ export const NavbarTwo = () => {
                         color="secondary"
                       >
                         <MenuItem>
-                          
                           <Typography
                             sx={{
                               fontFamily: "raleway",
@@ -211,38 +368,41 @@ export const NavbarTwo = () => {
               <Box sx={{ flexGrow: 1 }} />
               <Box
                 sx={{
-                  display: { xs: "none", sm: "flex", md: "flex" },
+                  display: { xs: "none", sm: "none", md: "flex" },
                   marginRight: 2,
                   alignItems: "center",
                 }}
               >
                 {user.firstName ? (
                   <>
-                    <IconButton
-                      size="large"
-                      edge="end"
-                      color="secondary"
-                      aria-controls={open ? "account-menu" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? "true" : undefined}
-                      onClick={handleClick}
-                      sx={{ borderRadius: 2 }}
+                    <Box
+                      sx={{ display: { xs: "none", sm: "none", md: "flex" } }}
                     >
-                      <AccountCircle />
-                      <Typography
-                        variant="h6"
-                        component="div"
-                        sx={{
-                          marginLeft: 0.5,
-                          fontSize: "15px",
-                          fontFamily: "raleway",
-                          letterSpacing: "0.1rem",
-                        }}
+                      <IconButton
+                        size="large"
+                        edge="end"
+                        color="secondary"
+                        aria-controls={open ? "account-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                        onClick={handleClick}
+                        sx={{ borderRadius: 2 }}
                       >
-                        {user.firstName.toUpperCase()}
-                      </Typography>
-                    </IconButton>
-
+                        <AccountCircle />
+                        <Typography
+                          variant="h6"
+                          component="div"
+                          sx={{
+                            marginLeft: 0.5,
+                            fontSize: "15px",
+                            fontFamily: "raleway",
+                            letterSpacing: "0.1rem",
+                          }}
+                        >
+                          {user.firstName.toUpperCase()}
+                        </Typography>
+                      </IconButton>
+                    </Box>
                     {/* //this is the dropdown menu after you click the button */}
                     <Menu
                       anchorEl={anchorEl}
@@ -294,18 +454,18 @@ export const NavbarTwo = () => {
                         </MenuItem>
                       </Link>
                       <Link to="orders">
-                      <MenuItem>
-                        <Avatar />
-                        <Typography
-                          sx={{
-                            fontFamily: "raleway",
-                            marginLeft: 0.5,
-                            color: "black",
-                          }}
-                        >
-                          My orders
-                        </Typography>
-                      </MenuItem>
+                        <MenuItem>
+                          <Avatar />
+                          <Typography
+                            sx={{
+                              fontFamily: "raleway",
+                              marginLeft: 0.5,
+                              color: "black",
+                            }}
+                          >
+                            My orders
+                          </Typography>
+                        </MenuItem>
                       </Link>
                       {user.isAdmin ? (
                         <MenuItem
@@ -359,16 +519,34 @@ export const NavbarTwo = () => {
                     <AccountCircleIcon />
                   </IconButton>
                 )}
-                <Link to="cart">
-                  <IconButton size="large" color="secondary">
-                    <Badge badgeContent={cart?.cartItems?.length} color="error">
-                      <ShoppingCartIcon />
-                    </Badge>
-                  </IconButton>
-                </Link>
+                <Box sx={{ display: { xs: "none", sm: "none", md: "flex" } }}>
+                  <Link to="cart">
+                    <IconButton size="large" color="secondary">
+                      <Badge
+                        badgeContent={cart?.cartItems?.length}
+                        color="error"
+                      >
+                        <ShoppingCartIcon />
+                      </Badge>
+                    </IconButton>
+                  </Link>
+                </Box>
+              </Box>
+              <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
               </Box>
             </Toolbar>
           </AppBar>
+          {renderMobileMenu}
           <Box component={"div"} sx={{ height: "70px" }} />
         </Box>
       </ThemeProvider>
