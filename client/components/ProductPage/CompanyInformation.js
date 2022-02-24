@@ -37,7 +37,7 @@ export default function ProductReviews() {
             spacing={4}
             justifyContent="space-around"
             alignItems="center"
-            sx={{height:"40vh", backgroundColor: "primary.light"}}>
+            sx={{ backgroundColor: "primary.light", marginTop: 5}}>
             <Grid item xs={12} sm={12} md={3} sx={{mx:"2vh"}}>
                 <ImagesearchRollerOutlinedIcon fontSize="large"/>
                 <h3>Two Coat Guarantee</h3>

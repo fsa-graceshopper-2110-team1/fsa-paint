@@ -40,8 +40,8 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.date}
         </TableCell>
-        <TableCell align="right">{row.shipping}</TableCell>
-        <TableCell align="right">{(row.total/100).toFixed(2)}</TableCell>
+        <TableCell align="center">{row.shipping}</TableCell>
+        <TableCell align="right">{((row.total/100) +(row.total/100*0.08875)).toFixed(2)}</TableCell>
         <TableCell align="right">{row.expected}</TableCell>
       </TableRow>
       <TableRow>
@@ -66,7 +66,7 @@ function Row(props) {
                         {detailRow.product}
                       </TableCell>
                       <TableCell>
-                      {(detailRow.price/ 100).toFixed(2)}
+                      {((detailRow.price/ 100)).toFixed(2)}
                       </TableCell>
                       <TableCell align="right">{detailRow.quantity}</TableCell>
                     </TableRow>
@@ -124,10 +124,18 @@ export const OrderTable = () => {
   let rows;
   orders
     ? (rows = orders.map((order) => {
+    const shipping = JSON.parse(order.shippingAddress)
+    let ship
+    shipping ? ship = 
+    `${shipping.address1 ? shipping.address1 : ""} ${shipping.address2 ? shipping.address2 : ""}
+
+    ${shipping.zip ? shipping.zip : ""}, ${shipping.city? shipping.city : ""}, ${shipping.state ? shipping.state : ""}` : ship = "";
+    console.log(ship)
+
         return {
             id: order.id,
           date: moment(order.createdAt).format("L"),
-          shipping: "",
+          shipping: ship,
           total: order.total,
           expected: moment(order.createdAt).add(3, "days").format("L"),
           details: order.orderItems
@@ -169,7 +177,7 @@ export const OrderTable = () => {
           <TableRow>
             <TableCell />
             <TableCell>Order Date</TableCell>
-            <TableCell align="right">Shipping Information</TableCell>
+            <TableCell align="center">Shipping Information</TableCell>
             <TableCell align="right">Total price ($)</TableCell>
             <TableCell align="right">Expected Delivery</TableCell>
           </TableRow>

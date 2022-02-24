@@ -23,6 +23,9 @@ const theme = createTheme({
       main: "#EDF2FB",
     },
   },
+  typography: {
+    fontFamily: "Raleway",
+  },
 });
 
 const TAX_RATE = 0.088875;

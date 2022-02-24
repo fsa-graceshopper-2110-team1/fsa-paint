@@ -72,7 +72,7 @@ const ImageMarked = styled('span')(({ theme }) => ({
 export default function KitchenImage() {
   return (
     <ExternalLink href="https://www.thekitchn.com/the-best-paint-finish-for-kitchen-walls-190798">
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%', border: "1px solid black" }}>
         <ImageButton
           focusRipple
           key='kitchen_image'
