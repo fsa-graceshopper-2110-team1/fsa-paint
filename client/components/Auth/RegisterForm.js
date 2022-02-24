@@ -16,14 +16,15 @@ const theme = createTheme({
       main: "#EDF2FB",
     },
   },
-  typography:{
-    fontFamily:"Raleway"
-}
+  typography: {
+    fontFamily: "Raleway",
+  },
 });
 
-export const RegisterForm = ({ path }) => {
+export const RegisterForm = ({ path, setShowModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const authError = useSelector((state) => state.auth.error);
 
@@ -37,7 +38,10 @@ export const RegisterForm = ({ path }) => {
     const authed = await dispatch(authenticate(data, "signup"));
     //authed === undefined when authenticate is successful
     //close modal if auth is successful
-    if (!authed) navigate(path || "/home");
+    if (!authed) {
+      navigate(path || location.pathname);
+      setShowModal(false);
+    }
   };
 
   return (
