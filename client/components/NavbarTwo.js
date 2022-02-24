@@ -22,6 +22,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import MoreIcon from '@mui/icons-material/MoreVert';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 
 const theme = createTheme({
   palette: {
@@ -120,10 +121,11 @@ export const NavbarTwo = () => {
     >
       <MenuItem>
         <Link to="cart">
-          <IconButton size="large" color="secondary">
-            <Badge badgeContent={cart?.cartItems?.length} color="error">
-              <ShoppingCartIcon />
-              <Typography
+            <Box component="div" sx={{display:"flex" }}>
+            <Badge sx={{marginRight:4}}badgeContent={cart?.cartItems?.length} color="error">
+              <ShoppingCartIcon style={{ color: 'black' }}/>
+            </Badge>
+            <Typography
             sx={{
               fontFamily: "raleway",
               color: "black",
@@ -132,18 +134,19 @@ export const NavbarTwo = () => {
           >
             Cart
           </Typography>
-            </Badge>
-          </IconButton>
+          </Box>
         </Link>
       </MenuItem>
       <Divider />
       <Link to="browse">
         <MenuItem>
+            <ColorLensIcon style={{ color: 'black',height: '30px', width: '30px',marginRight:1 }}/>
           <Typography
             sx={{
               fontFamily: "raleway",
               color: "black",
-              marginLeft: 0.5,
+              marginLeft: 1,
+              marginBottom:1
             }}
           >
             Browse All
@@ -155,7 +158,7 @@ export const NavbarTwo = () => {
         <div>
           <Link to="my-account">
             <MenuItem>
-              <Avatar />
+              <Avatar sx={{ height: '30px', width: '30px',marginRight:1 }}/>
               <Typography
                 sx={{
                   fontFamily: "raleway",
@@ -169,7 +172,7 @@ export const NavbarTwo = () => {
           </Link>
           <Link to="orders">
             <MenuItem>
-              <Avatar />
+              <Avatar sx={{ height: '30px', width: '30px',marginRight:1 }}/>
               <Typography
                 sx={{
                   fontFamily: "raleway",
