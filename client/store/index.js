@@ -8,7 +8,7 @@ import cart from "./cart";
 import order from "./order";
 import flashMessage from "./flashMessage";
 import admin from "./admin";
-import success from './success'
+import success from "./success";
 
 const reducer = combineReducers({
   auth,
@@ -17,12 +17,20 @@ const reducer = combineReducers({
   order,
   flashMessage,
   admin,
-  success
+  success,
 });
 
-const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, loggerMiddleware)
-);
+// const middleware = composeWithDevTools(
+//   applyMiddleware(thunkMiddleware, loggerMiddleware)
+// );
+
+let middleware;
+if (process.env.NODE_ENV === "development") {
+  middleware = applyMiddleware(thunkMiddleware, loggerMiddleware);
+} else {
+  middleware = applyMiddleware(thunkMiddleware);
+}
+
 const store = createStore(reducer, middleware);
 
 export default store;
@@ -32,4 +40,4 @@ export * from "./cart";
 export * from "./flashMessage";
 export * from "./order";
 export * from "./admin";
-export * from './success'
+export * from "./success";
