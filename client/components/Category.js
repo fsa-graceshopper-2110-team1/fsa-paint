@@ -17,15 +17,23 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-let sortby = 'color'
+let sortby = 'name'
 
 export const Category = () => {
   const { category } = useParams();
   const products = useSelector((state) => state.products).filter(
     (p) => p.category.toLowerCase() === category && p.status === "active"
   );
-  const sortColor = function (a, b) {
-    return b.hexCode - a.hexCode;
+  const sortName = function (a, b) {
+    let nameA = a.name.toUpperCase
+    let nameB = b.name.toUpperCase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
   };
   const sortPrice = function (a, b) {
     return b.price - a.price;
@@ -72,9 +80,9 @@ export const Category = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleShade = () => {
+  const handleName = () => {
     setAnchorEl(null);
-    sortby = "color";
+    sortby = "name";
   };
   const handlePrice = () => {
     setAnchorEl(null);
@@ -152,7 +160,7 @@ export const Category = () => {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={handleShade}>Shade</MenuItem>
+            <MenuItem onClick={handleName}>Name</MenuItem>
             <MenuItem onClick={handlePrice}>Price</MenuItem>
           </Menu>
           
@@ -164,7 +172,7 @@ export const Category = () => {
       </Grid>
       <Grid container spacing={1} className="category_paintcards" >
         {products
-          .sort(sortby === "price" ? sortPrice: sortColor)
+          .sort(sortby === "price" ? sortPrice: sortName)
           .map((product) => (
             <Grid item 
               sx={{
