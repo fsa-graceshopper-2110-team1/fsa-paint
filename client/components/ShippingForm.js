@@ -12,6 +12,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useSelector, useDispatch } from "react-redux";
 import { useStripe } from "@stripe/react-stripe-js";
 import { createOrder } from "../store";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -41,7 +42,6 @@ async function fetchFromAPI(endpoint, opts) {
 }
 
 export const ShippingForm = () => {
-  console.log(window.location.origin);
   const {
     register: register4,
     handleSubmit: handleSubmit4,
@@ -53,6 +53,7 @@ export const ShippingForm = () => {
   const { id: cartId, userId } = useSelector((state) => state.cart);
   const stripe = useStripe();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //CartItems is set up so it allows for duplicates if you add the same item twice
   //This filter checks if the productId already exists and removes it if it does
@@ -99,15 +100,20 @@ export const ShippingForm = () => {
   //SUBMIT BUTTON FOR SHIPPING FORM THAT SENDS STRIPE THE OBJECT
   const onSubmit = async (data) => {
     const shipping = JSON.stringify(data);
-    dispatch(createOrder(userId, cartId, shipping));
-    const response = await fetchFromAPI("create-checkout-session", {
-      body: { line_items, customer_email: email },
-    });
-    const { sessionID } = response;
-    const { error } = await stripe.redirectToCheckout({ sessionId: sessionID });
-
-    if (error) {
-      console.log(error);
+    const { order } = await dispatch(createOrder(userId, cartId, shipping));
+    if (order?.error) {
+      navigate("/cart");
+    } else {
+      const response = await fetchFromAPI("create-checkout-session", {
+        body: { line_items, customer_email: email },
+      });
+      const { sessionID } = response;
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: sessionID,
+      });
+      if (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -115,7 +121,7 @@ export const ShippingForm = () => {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        <Grid item xs={12} sm={8} md={8} square>
+        <Grid item xs={12} sm={8} md={8}>
           <Box
             sx={{
               my: 8,

@@ -43,17 +43,20 @@ export const fetchOrders = (userId) => {
   };
 };
 
-export const createOrder = (userId, cartId, shippingAddress) => {
-  return async (dispatch) => {
-    const { data: order } = await axios.post(`/api/orders`, {
-      userId,
-      cartId,
-      shippingAddress,
-    });
-    dispatch(createdOrder(order));
-    return order;
+export const createOrder =
+  (userId, cartId, shippingAddress) => async (dispatch) => {
+    try {
+      const { data: order } = await axios.post(`/api/orders`, {
+        userId,
+        cartId,
+        shippingAddress,
+      });
+      dispatch(createdOrder(order));
+      return order;
+    } catch (err) {
+      return dispatch(createdOrder({ error: "Item out of stock" }));
+    }
   };
-};
 
 export const updateOrderStatus = (orderId, status) => {
   return async (dispatch) => {
