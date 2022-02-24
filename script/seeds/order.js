@@ -24,18 +24,20 @@ async function orderSeed() {
     }),
   ]);
 
-  const [orderItems1, orderItems2, orderItems3] = await Promise.all([
-    OrderItem.generateOrderItems(carts[0], orders[0]),
-    OrderItem.generateOrderItems(carts[1], orders[1]),
-    OrderItem.generateOrderItems(carts[0], orders[2]),
-  ]);
+  // const [orderItems1, orderItems2, orderItems3] = await Promise.all([
+  //   OrderItem.generateOrderItems(carts[0], orders[0]),
+  //   OrderItem.generateOrderItems(carts[1], orders[1]),
+  //   OrderItem.generateOrderItems(carts[0], orders[2]),
+  // ]);
 
-  const orderItems = [...orderItems1, ...orderItems2, ...orderItems3];
+  // const orderItems = [...orderItems1, ...orderItems2, ...orderItems3];
 
   console.log(
-    `seeded ${orders.length} orders, ${orderItems.length} orderItems`
+    `seeded ${orders.length} orders
+    `
   );
 
+  // , ${orderItems.length} orderItems
   return [orders];
 }
 

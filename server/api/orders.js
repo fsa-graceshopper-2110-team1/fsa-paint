@@ -65,11 +65,37 @@ router.post("/", async (req, res, next) => {
     // creating an order also generates order items for all cart items
     // adding each orderitem also updates the total price
     let cart = await Cart.findByPk(req.body.cartId);
+
+    let items = await cart.getCartItems();
+    const products = await Promise.all(items.map((item) => item.getProduct()));
+
+    const prodQtty = products.reduce((acc, prod) => {
+      if (!acc[prod.id]) acc[prod.id] = prod.quantity;
+      return acc;
+    }, {});
+
+    const itemQtty = items.reduce((acc, item) => {
+      acc[item.productId] ? acc[item.productId]++ : (acc[item.productId] = 1);
+      return acc;
+    }, {});
+
+    Object.keys(itemQtty).forEach((prod) => {
+      if (itemQtty[prod] > prodQtty[prod]) {
+        const error = Error(`Product ${prod} is out of stock!`);
+        error.status = 401;
+        throw error;
+      } else {
+        console.log("ok");
+      }
+    });
+
     const orderItems = await OrderItem.generateOrderItems(cart, order);
+
     order = await Order.findOne({
       where: { id: order.id },
       include: ["orderItems"],
     });
+
     res.json(order);
   } catch (err) {
     next(err);

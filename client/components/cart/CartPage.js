@@ -75,10 +75,10 @@ export const CartPage = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Grid container sx={{minHeight:"100vh"}}>
+        <Grid container sx={{ minHeight: "100vh" }}>
           <Grid item xs={12} sm={7} md={7}>
             <Box component="h1" sx={{ marginLeft: 10 }}>
-              My Cart 
+              My Cart
             </Box>
             {cartItems?.length === 0 || !cartItems ? (
               <div>Your Cart is Empty</div>
