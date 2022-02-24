@@ -17,6 +17,9 @@ const theme = createTheme({
       main: "#EDF2FB",
     },
   },
+  typography: {
+    fontFamily: "Raleway",
+  },
 });
 
 const CreateProductForm = ({ path, setShowModal }) => {
@@ -49,7 +52,7 @@ const CreateProductForm = ({ path, setShowModal }) => {
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
-        sx={{ marginTop: 5 }}
+        sx={{ marginTop: 0.5 }}
         key={1}
       >
         <Grid container spacing={3}>
