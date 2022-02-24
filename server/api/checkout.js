@@ -21,8 +21,8 @@ async function createCheckoutSession(req, res) {
       mode: "payment",
       line_items,
       customer_email,
-      success_url: `${dotenv.WEB_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${dotenv.WEB_APP_URL}/cart`,
+      success_url: `${process.env.WEB_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.WEB_APP_URL}/cart`,
     });
     res.status(200).json({ sessionID: session.id });
   } catch (error) {
@@ -33,6 +33,4 @@ async function createCheckoutSession(req, res) {
   }
 }
 
-
-
-module.exports = createCheckoutSession
+module.exports = createCheckoutSession;

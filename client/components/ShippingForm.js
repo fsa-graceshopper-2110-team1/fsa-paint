@@ -29,7 +29,7 @@ const theme = createTheme({
 async function fetchFromAPI(endpoint, opts) {
   const { method, body } = { method: "POST", body: null, ...opts };
 
-  const res = await fetch(`${window.location.origin}}/${endpoint}`, {
+  const res = await fetch(`${window.location.origin}/${endpoint}`, {
     method,
     body: JSON.stringify(body),
     headers: {
@@ -41,6 +41,7 @@ async function fetchFromAPI(endpoint, opts) {
 }
 
 export const ShippingForm = () => {
+  console.log(window.location.origin);
   const {
     register: register4,
     handleSubmit: handleSubmit4,
