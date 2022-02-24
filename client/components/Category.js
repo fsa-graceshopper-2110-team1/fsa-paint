@@ -63,7 +63,7 @@ export const Category = () => {
       photo = "https://i.postimg.cc/59kPcTWy/shutterstock-1437658973.jpg";
       break;
     case "blue":
-      photo = "https://i.postimg.cc/qvvV4Fsf/Blue.jpg";
+      photo = "https://i.postimg.cc/nzq9b0dz/shutterstock-759694699.jpg";
       break;
     case "gray":
       photo = "https://i.postimg.cc/JztDfYmr/alexandra-gorn-JIUjvqe2-ZHg-unsplash-1.jpg";
