@@ -22,7 +22,7 @@ let sortby = 'name'
 export const Category = () => {
   const { category } = useParams();
   const products = useSelector((state) => state.products).filter(
-    (p) => p.category.toLowerCase() === category && p.status === "active"
+    (p) => p.category.toLowerCase() === category && p.status
   );
   const sortName = function (a, b) {
     let nameA = a.name.toUpperCase
