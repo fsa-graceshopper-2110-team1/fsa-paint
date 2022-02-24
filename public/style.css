@@ -128,7 +128,6 @@ header{
   bottom: 0;
   left: 0.5rem;
   right: 0;
-  background: theme.palette.common.black;
   color: black;
   visibility: hidden;
   opacity: 0;
@@ -143,7 +142,6 @@ header{
   color: black;
   visibility: hidden;
   opacity: 0;
-  transition: opacity .2s, visibility .2s;
 }
 
 .paint_chip_box:hover .paint_chip_name {
