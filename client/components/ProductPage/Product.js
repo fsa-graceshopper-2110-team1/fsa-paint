@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import NumberFormat from "react-number-format";
 import { useParams } from "react-router-dom";
-import { addToCart } from "../store";
+import { addToCart } from "../../store";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -20,8 +20,8 @@ import LandscapeIcon from "@mui/icons-material/Landscape";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import ProductReviews from "./ProductPage/ProductReviews"
-import CompanyInformation from "./ProductPage/CompanyInformation"
+import ProductReviews from "./ProductReviews"
+import CompanyInformation from "./CompanyInformation"
 
 export const Product = () => {
   const { productId } = useParams();
