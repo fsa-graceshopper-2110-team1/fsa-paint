@@ -60,16 +60,16 @@ export const createOrder =
 
 export const updateOrderStatus = (orderId, status) => {
   return async (dispatch) => {
-    await axios.put(`/api/orders/${orderId}/status`, status);
+    await axios.put(`/api/orders/${orderId}/status`, { status });
     dispatch(updatedOrderStatus(status));
   };
 };
 
 export const fetchLatestOrder = (userId) => {
   return async (dispatch) => {
-    console.log(userId);
     let { data: order } = await axios.get(`/api/orders/user/${userId}/latest`);
-    return dispatch(gotLatestOrder(order));
+    dispatch(gotLatestOrder(order));
+    return order;
   };
 };
 
