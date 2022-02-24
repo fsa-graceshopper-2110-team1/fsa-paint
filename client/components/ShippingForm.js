@@ -29,7 +29,7 @@ const theme = createTheme({
 async function fetchFromAPI(endpoint, opts) {
   const { method, body } = { method: "POST", body: null, ...opts };
 
-  const res = await fetch(`http://localhost:8080/${endpoint}`, {
+  const res = await fetch(`${window.location.origin}}/${endpoint}`, {
     method,
     body: JSON.stringify(body),
     headers: {
@@ -263,7 +263,7 @@ export const ShippingForm = () => {
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            borderLeft:"solid 1px black",
+            borderLeft: "solid 1px black",
           }}
         />
       </Grid>
