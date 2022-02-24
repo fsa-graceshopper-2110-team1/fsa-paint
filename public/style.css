@@ -142,6 +142,7 @@ header{
   color: black;
   visibility: hidden;
   opacity: 0;
+  transition: opacity .2s, visibility .2s;
 }
 
 .paint_chip_box:hover .paint_chip_name {

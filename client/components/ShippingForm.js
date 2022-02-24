@@ -115,7 +115,7 @@ export const ShippingForm = () => {
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
-        <Grid item xs={12} sm={8} md={8} square>
+        <Grid item xs={12} sm={8} md={8}>
           <Box
             sx={{
               my: 8,
