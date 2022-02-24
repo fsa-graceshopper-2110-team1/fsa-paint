@@ -84,8 +84,6 @@ router.post("/", async (req, res, next) => {
         const error = Error(`Product ${prod} is out of stock!`);
         error.status = 401;
         throw error;
-      } else {
-        console.log("ok");
       }
     });
 
@@ -118,7 +116,7 @@ router.put("/:id", async (req, res, next) => {
 router.put("/:id/status", async (req, res, next) => {
   try {
     const order = await Order.findByPk(req.params.id);
-    order.update({ status: req.body });
+    order.update(req.body);
     res.sendStatus(204);
   } catch (err) {
     next(err);

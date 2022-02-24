@@ -23,7 +23,6 @@ export const FlashMessage = () => {
     }
     dispatch(setflashMessage(false, flashMessageType, flashMessageMessage));
   };
-  // console.log("THIS IS WHATS BEING PASSED IN",flashMessageOpen)
   return (
     <Snackbar
       open={flashMessageOpen}
