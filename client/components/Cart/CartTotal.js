@@ -52,6 +52,7 @@ export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
       </Box>
       
       {isLoggedIn ? (
+        <Link to={`/shipping`} style={{ color: "black" }}>
         <Button
           variant="contained"
           size="small"
@@ -65,30 +66,30 @@ export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
           // onClick={()=> dispatch(createOrder(cartId, userId))
           // }
         >
-          <Link to={`/shipping`} style={{ color: "black" }}>
+          
             <h3>Checkout</h3>
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       ) : (
-        <Button
-          variant="contained"
-          size="small"
-          style={{
-            maxWidth: "200px",
-            maxHeight: "45px",
-            minWidth: "200px",
-            minHeight: "45px",
-          }}
-          disabled={quantity === 0}
-        >
-          <Link
+        <Link
             to={`/cart/login`}
             state={{ path: location.pathname }}
             style={{ color: "black" }}
+        >
+          <Button
+            variant="contained"
+            size="small"
+            style={{
+              maxWidth: "200px",
+              maxHeight: "45px",
+              minWidth: "200px",
+              minHeight: "45px",
+            }}
+            disabled={quantity === 0}
           >
             <h3>Login to Checkout</h3>
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       )}
     </Box>
   );
