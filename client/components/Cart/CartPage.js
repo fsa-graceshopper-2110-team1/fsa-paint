@@ -9,7 +9,7 @@ import { CartItem } from "./CartItem";
 import { CartTotal } from "./CartTotal";
 import Paper from "@mui/material/Paper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {EmptyCart} from "./EmptyCart"
+import { EmptyCart } from "./EmptyCart";
 
 const theme = createTheme({
   palette: {
@@ -75,39 +75,39 @@ export const CartPage = () => {
   );
   return (
     <>
-      <ThemeProvider theme={theme}>{
-          cartItems?.length === 0 || !cartItems ? (
-              <Grid container>
-                <Grid item>
-                  <EmptyCart/>
-                </Grid>
-              </Grid>    
-            ) : (
-          <Grid container sx={{minHeight:"100vh"}}>
-          <Grid item xs={12} sm={12} md={7}>
-            <Box component="h1" sx={{ marginLeft: 3 }}>
-              My Cart ({quantity} {quantity>1?'items': 'item'})
-            </Box>
-                <Box>
-                  {cart.map((product) => (
-                    <CartItem
-                      {...product}
-                      cartId={userCart.id}
-                      key={product.productId}
-                    />
-                  ))}
-                </Box>
+      <ThemeProvider theme={theme}>
+        {cartItems?.length === 0 || !cartItems ? (
+          <Grid container>
+            <Grid item>
+              <EmptyCart />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={5} md={4} xl={2} lg={3}>
-            <CartTotal
-              total={total}
-              quantity={quantity}
-              isLoggedIn={!!userCart?.userId}
-              cartId={userCart?.id}
-              userId={userCart?.userId}
-            />
+        ) : (
+          <Grid container sx={{ minHeight: "100vh" }}>
+            <Grid item xs={12} sm={12} md={7}>
+              <Box component="h1" sx={{ marginLeft: 3 }}>
+                My Cart ({quantity} {quantity > 1 ? "items" : "item"})
+              </Box>
+              <Box>
+                {cart.map((product) => (
+                  <CartItem
+                    {...product}
+                    cartId={userCart.id}
+                    key={product.productId}
+                  />
+                ))}
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={5} md={4} xl={2} lg={3}>
+              <CartTotal
+                total={total}
+                quantity={quantity}
+                isLoggedIn={!!userCart?.userId}
+                cartId={userCart?.id}
+                userId={userCart?.userId}
+              />
+            </Grid>
           </Grid>
-        </Grid> 
         )}
       </ThemeProvider>
       <Outlet />
