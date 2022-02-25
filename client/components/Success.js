@@ -11,7 +11,11 @@ import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchLatestOrder, deleteCartAndItems } from "../store";
+import {
+  fetchLatestOrder,
+  deleteCartAndItems,
+  updateOrderStatus,
+} from "../store";
 const moment = require("moment");
 
 import Home from "./HomePage/Home";
@@ -22,6 +26,9 @@ const theme = createTheme({
       light: "#FFFFFF",
       main: "#EDF2FB",
     },
+  },
+  typography: {
+    fontFamily: "Raleway",
   },
 });
 
@@ -101,8 +108,11 @@ export const Success = () => {
     (state) => state.order?.current.shippingAddress
   );
 
-  useEffect(() => {
-    if (id) dispatch(fetchLatestOrder(id));
+  useEffect(async () => {
+    if (id) {
+      const order = await dispatch(fetchLatestOrder(id));
+      if (order.id) dispatch(updateOrderStatus(order.id, "confirmed"));
+    }
   }, [id]);
 
   useEffect(() => {
@@ -147,7 +157,6 @@ export const Success = () => {
       }))
     : null;
 
-
   let firstName, lastName, address1, address2, zip, city, state;
   shipping
     ? ({ firstName, lastName, address1, address2, zip, city, state } = shipping)
@@ -181,25 +190,42 @@ export const Success = () => {
               <h2>Thank You - Order Successful!</h2>
               {rows ? <SpanningTable rows={rows} total={total} /> : null}
             </Box>
-            <Box sx={{display:"flex",alignItems:"center",flexDirection:"column",justifyContent:"center",marginTop:-2}}>
-            {shippingInfo && shipping ? (
-              <Box sx={{display:"flex", justifyContent:"center", alignItems:"flex-start", flexDirection:"column"}}>
-                <Box component={"h4"} sx={{marginBottom:0}}>Ship To:</Box>
-                <Box>
-                  {firstName} {lastName}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                justifyContent: "center",
+                marginTop: -2,
+              }}
+            >
+              {shippingInfo && shipping ? (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Box component={"h4"} sx={{ marginBottom: 0 }}>
+                    Ship To:
+                  </Box>
+                  <Box>
+                    {firstName} {lastName}
+                  </Box>
+                  <Box>
+                    {address1} {address2}
+                  </Box>
+                  <Box>
+                    {zip}
+                    {", "}
+                    {city}
+                    {", "}
+                    {state}
+                  </Box>
                 </Box>
-                <Box>
-                  {address1} {address2}
-                </Box>
-                <Box>
-                  {zip}
-                  {", "}
-                  {city}
-                  {", "}
-                  {state}
-                </Box>
-              </Box>
-            ) : null}
+              ) : null}
             </Box>
           </Grid>
         </Grid>

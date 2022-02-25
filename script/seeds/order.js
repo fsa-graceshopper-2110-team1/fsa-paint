@@ -33,7 +33,8 @@ async function orderSeed() {
   const orderItems = [...orderItems1, ...orderItems2, ...orderItems3];
 
   console.log(
-    `seeded ${orders.length} orders, ${orderItems.length} orderItems`
+    `seeded ${orders.length} orders, ${orderItems.length} orderItems
+    `
   );
 
   return [orders];

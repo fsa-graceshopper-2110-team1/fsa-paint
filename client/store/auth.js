@@ -49,7 +49,6 @@ export const updateUser = (user) => {
   return async (dispatch) => {
     try {
       const newUser = (await axios.put(`/api/users/${user.id}`, user)).data;
-      // console.log("THIS IS NEW USER", newUser);
       dispatch(upUser(newUser));
     } catch (err) {
       console.log(err);

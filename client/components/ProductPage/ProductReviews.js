@@ -23,7 +23,7 @@ export default function ProductReviews() {
       <div>
         <Grid container
           justifyContent= "center"
-          sx={{ height: "10vh", backgroundColor: "white"}}
+          sx={{ backgroundColor: "white"}}
         >
           <Grid item xs={1} sm={2} md={1} style={{textAlign: "center"}}>
             <h2>Reviews</h2>
@@ -31,7 +31,7 @@ export default function ProductReviews() {
         </Grid>
         <Grid container 
           justifyContent= "center"
-          sx={{ height: "10vh", backgroundColor: "white", my:"5"}}>
+          sx={{  backgroundColor: "white", my:"5"}}>
           <Grid item xs={12} sm={8} md={2} style={{textAlign: "center"}}> 
             <StarRateIcon fontSize="medium" />
               <StarRateIcon fontSize="medium" />
@@ -40,7 +40,7 @@ export default function ProductReviews() {
               <StarOutlineIcon fontSize="medium" />
           </Grid>
         </Grid>
-        <Grid container sx={{height:'20vh'}}>
+        <Grid >
           <Grid item xs={12} sm={12} md={12}>
             <Card>
               <Box sx={{mx:"3vh", my: "1vh"}}>

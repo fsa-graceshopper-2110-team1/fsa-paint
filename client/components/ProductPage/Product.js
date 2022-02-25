@@ -20,8 +20,8 @@ import LandscapeIcon from "@mui/icons-material/Landscape";
 import IconButton from "@mui/material/IconButton";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import ProductReviews from "./ProductReviews"
-import CompanyInformation from "./CompanyInformation"
+import ProductReviews from "./ProductReviews";
+import CompanyInformation from "./CompanyInformation";
 
 export const Product = () => {
   const { productId } = useParams();
@@ -32,6 +32,7 @@ export const Product = () => {
 
   const cart = useSelector((state) => state.cart);
   const hexcode = product.hexCode;
+  const gallons = product.quantity
   const dispatch = useDispatch();
 
   const theme = createTheme({
@@ -50,79 +51,72 @@ export const Product = () => {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <Grid container direction="row"spacing={2} sx={{ height: "80vh"}}>
-          <Grid item xs={12} sm={12} md={3}
+        <Grid container direction="row" spacing={2} sx={{}}>
+          <Grid
+            item
+            xs={8}
+            sm={4}
+            md={5}
+            lg={4}
             sx={{
               backgroundColor: hexcode,
               border: "1px solid",
               borderColor: "light gray",
               height: "50vh",
-              mx: "4vh",
-              my: "4vh"
-            }}
+              marginLeft:4,
+              marginTop:5
+            }} component={Paper} elevation={3} square
           />
-          <Grid item xs={12} sm={8} md={8} sx={{mx:"3"}}>
+          <Grid item xs={12} sm={6} md={6} lg={7}sx={{ mx: "3", marginLeft:4 }}>
             <h2>{product.name}</h2>
             <StarRateIcon fontSize="small" />
             <StarRateIcon fontSize="small" />
             <StarRateIcon fontSize="small" />
             <StarHalfIcon fontSize="small" />
             <StarOutlineIcon fontSize="small" />
-                  <p>Grace Paint</p>
-                  <NumberFormat
-                    value={product.price / 100}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                  />{" "}
-
-                  <p>{product.description}</p>
-                  <Box>
-                    <IconButton
-                      variant="contained"
-                      onClick={() => {
-                        if(count>1){
-                          setCount(count - 1);
-                        }
-                      }}
-                    >
-                      <RemoveCircleIcon fontSize="medium" />
-                    </IconButton>
-                    {count}
-                    <IconButton
-                      variant="contained"
-                      onClick={() => {
-                        setCount(count + 1);
-                      }}
-                    >
-                      <AddCircleIcon fontSize="medium" />
-                    </IconButton>
-                  </Box>
-                  <Button
-                    sx={{width:"20vh", my: "10"}}
-                    variant="contained"
-                    color="primary"
-                    onClick={() =>
-                      dispatch(addToCart(cart.id, product.id, count))
-                    }
-                  >
-                    Add to cart
-                  </Button>
+            <p>Grace Paint</p>
+            <NumberFormat
+              value={product.price / 100}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+              decimalScale={2}
+              fixedDecimalScale={true}
+            />{" "}
+            <p>{product.description}</p>
+            <Box>
+              <IconButton
+                variant="contained"
+                onClick={() => {
+                  if (count > 1) {
+                    setCount(count - 1);
+                  }
+                }}
+              >
+                <RemoveCircleIcon fontSize="medium" />
+              </IconButton>
+              {count}
+              <IconButton
+                variant="contained"
+                onClick={() => {
+                  setCount(count + 1);
+                }}
+              >
+                <AddCircleIcon fontSize="medium" />
+              </IconButton>
+            </Box>
+            <Button
+              sx={{ width: "20vh", my: "10" }}
+              variant="contained"
+              color="primary"
+              onClick={() => dispatch(addToCart(cart.id, product.id, count))}
+            >
+              Add to cart
+            </Button>
           </Grid>
         </Grid>
-        <Grid container sx={{ height: "10vh", backgroundColor: "white" }} />
-        <Grid container sx={{height:"50vh"}}>
-          <CompanyInformation/>
-        </Grid>
-        <Grid
-          container
-          sx={{ height: "10vh", backgroundColor: "white", mx: "auto" }}
-        />
-        <Grid container sx={{height:"50vh"}}>
-        <ProductReviews/>
-        </Grid>
+        <CompanyInformation />
+        <ProductReviews />
       </div>
     </ThemeProvider>
   );

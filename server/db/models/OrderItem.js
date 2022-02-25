@@ -13,8 +13,10 @@ const OrderItem = db.define("orderItem", {
 OrderItem.beforeCreate(async (orderItem) => {
   try {
     const product = await orderItem.getProduct();
-    product.quantity = product.quantity - 1;
     orderItem.update({ price: product.price });
+    product.update({
+      quantity: product.quantity - 1,
+    });
   } catch (err) {
     console.log(err);
   }

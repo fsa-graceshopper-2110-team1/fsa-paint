@@ -39,6 +39,9 @@ export const Home = (props) => {
         main: "#000000",
       },
     },
+    typography:{
+      fontFamily:"Raleway"
+  }
   });
 
   const NextArrow = ({ onClick }) => {
@@ -112,8 +115,10 @@ export const Home = (props) => {
               <Typography component="p">Color Your World</Typography>
               <Box textAlign="center">
                 <Link to={`/browse`}>
-                  <Button variant="outlined" color="primary">
+                  <Button variant="outlined" color="primary" size="large">
+                    <Typography component="h1">
                     Shop
+                    </Typography>
                   </Button>
                 </Link>
               </Box>
@@ -166,26 +171,26 @@ export const Home = (props) => {
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
         <Divider />
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
-        <Grid container sx={{ height: "60vh" }}>
+        <Grid container sx={{height: "auto"}}>
           <Grid
             item
-            xs={12}
-            sm={12}
+            xs={6}
+            sm={6}
             md={7}
             sx={{
               backgroundImage:
                 "url(https://i.postimg.cc/xjs6dspb/spacejoy-KSfe2-Z4-REEM-unsplash.jpg)",
-
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPosition: "center",
+              border: "1px solid black"
             }}
           />
-          <Grid item xs={0} sm={0} md={0.5} />
-          <Grid pt={7} item>
-            <h1>Top Colors of 2022</h1>
+          <Grid xs={6} sm={6} md={5} item>
+            <Box component={"h1"} sx={{marginLeft:5}}>Top Colors of 2022</Box>
+            <Box component={"p"} sx={{marginLeft:5}}>The 2022 Top Colors are drawn from a selection of over 125+ paints through a collaboration with major paint brands Benjamin Moore, Sherwin Williams, Valspar, Behr and PPG.</Box>
             <ExternalLink href="https://porchdaydreamer.com/2022-paint-color-trends-best-picks/">
-              <Button variant="outlined" sx={{ color: "black" }}>
+              <Button variant="outlined" sx={{ color: "white", marginLeft:5, backgroundColor:"black" }}>
                 Learn More
               </Button>
             </ExternalLink>
@@ -194,20 +199,17 @@ export const Home = (props) => {
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
         <Divider />
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
-        <Grid container sx={{ height: "50vh", backgroundColor: "white" }}>
           <Grid item xs={12}
             sm={12}
             md={12}
           >
-            <KitchenImage/>
-          </Grid>
-          
+            <KitchenImage/>          
         </Grid>
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
         <Divider>
             <h2>Get Started</h2>
         </Divider>
-        <Grid container sx={{ height: "50vh", backgroundColor: "white"}} 
+        <Grid container sx={{ backgroundColor: "white"}} 
           direction="row"
           spacing={2}
           className="get_started"
@@ -234,7 +236,7 @@ export const Home = (props) => {
               </Card>
             </ExternalLink>
           </Grid>
-          <Grid item xs={false}
+          <Grid item xs={12}
             sm={6}
             md={3}
           >
@@ -255,7 +257,7 @@ export const Home = (props) => {
               </Card>
             </ExternalLink>
           </Grid>
-          <Grid item xs={false}
+          <Grid item xs={12}
             sm={6}
             md={3}
           >
@@ -276,7 +278,7 @@ export const Home = (props) => {
               </Card>
             </ExternalLink>
           </Grid>
-          <Grid item xs={false}
+          <Grid item xs={12}
             sm={6}
             md={3}
           >

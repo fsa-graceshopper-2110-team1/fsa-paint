@@ -22,7 +22,6 @@ import moment from "moment";
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-  // console.log("This is ROW PROPS", row)
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>

@@ -81,7 +81,7 @@ export const CartPage = () => {
                 <Grid item>
                   <EmptyCart/>
                 </Grid>
-              </Grid>
+              </Grid>    
             ) : (
           <Grid container sx={{minHeight:"100vh"}}>
           <Grid item xs={12} sm={12} md={7}>
