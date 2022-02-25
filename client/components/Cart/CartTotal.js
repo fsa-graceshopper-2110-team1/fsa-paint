@@ -16,24 +16,29 @@ export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
   return (
     <Box
       sx={{
-        height: 120,
+        height: 150,
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        border: "5px solid black",
+        alignItems: "flex-start",
       }}
       my={10}
-      component={Paper}
       elevation={3}
       square
     >
       <Box
         sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-      >
+      > 
+        <Box component = {"h2"}
+          sx={{ marginRight: 1 }}
+        >Order summary</Box>
+      </Box>
+      <Box
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 3 }}
+      > 
         <Box
           component={"h3"}
-          sx={{ marginRight: 1 }}
-        >{`Subtotal (${quantity} items):`}</Box>
+          sx={{ marginRight: 2}}
+        >Subtotal: </Box>
         <h3>
           <NumberFormat
             value={total / 100}
@@ -45,6 +50,7 @@ export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
           />
         </h3>
       </Box>
+      
       {isLoggedIn ? (
         <Button
           variant="contained"
@@ -60,7 +66,7 @@ export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
           // }
         >
           <Link to={`/shipping`} style={{ color: "black" }}>
-            <h3>Proceed to Checkout</h3>
+            <h3>Checkout</h3>
           </Link>
         </Button>
       ) : (
