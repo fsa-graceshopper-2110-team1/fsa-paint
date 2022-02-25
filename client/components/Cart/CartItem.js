@@ -51,7 +51,7 @@ export const CartItem = (props) => {
                 xs={12}
                 sm={12}
               >
-                <Box component={"h3"}> {name} </Box>
+                <Box component={"h3"} sx={{marginTop:4}}> {name} </Box>
               </Box>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Box sx={{ display: "flex" }} alignItems="center">
