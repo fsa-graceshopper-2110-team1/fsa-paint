@@ -9,6 +9,7 @@ import { CartItem } from "./CartItem";
 import { CartTotal } from "./CartTotal";
 import Paper from "@mui/material/Paper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {EmptyCart} from "./EmptyCart"
 
 const theme = createTheme({
   palette: {
@@ -16,6 +17,9 @@ const theme = createTheme({
       light: "#FFFFFF",
       main: "#EDF2FB",
     },
+    typography:{
+      fontFamily:"Raleway"
+    }
   },
 });
 
@@ -74,16 +78,19 @@ export const CartPage = () => {
   );
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Grid container sx={{minHeight:"100vh"}}>
-          <Grid item xs={12} sm={7} md={7}>
-            <Box component="h1" sx={{ marginLeft: 10 }}>
-              My Cart 
-            </Box>
-            {cartItems?.length === 0 || !cartItems ? (
-              <div>Your Cart is Empty</div>
+      <ThemeProvider theme={theme}>{
+          cartItems?.length === 0 || !cartItems ? (
+              <Grid container>
+                <Grid item xs={12} sm={12} md={12}>
+                  <EmptyCart/>
+                </Grid>
+              </Grid>
             ) : (
-              <>
+          <Grid container sx={{minHeight:"100vh"}}>
+          <Grid item xs={12} sm={12} md={7}>
+            <Box component="h1" sx={{ marginLeft: 3 }}>
+              My Cart ({quantity} {quantity>1?'items': 'item'})
+            </Box>
                 <Box>
                   {cart.map((product) => (
                     <CartItem
@@ -93,8 +100,6 @@ export const CartPage = () => {
                     />
                   ))}
                 </Box>
-              </>
-            )}
           </Grid>
           <Grid item xs={12} sm={5} md={4} xl={2} lg={3}>
             <CartTotal
@@ -105,7 +110,8 @@ export const CartPage = () => {
               userId={userCart?.userId}
             />
           </Grid>
-        </Grid>
+        </Grid> 
+        )}
       </ThemeProvider>
       <Outlet />
     </>

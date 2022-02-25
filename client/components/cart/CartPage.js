@@ -17,6 +17,9 @@ const theme = createTheme({
       light: "#FFFFFF",
       main: "#EDF2FB",
     },
+    typography:{
+      fontFamily:"Raleway"
+    }
   },
 });
 
@@ -78,7 +81,7 @@ export const CartPage = () => {
       <ThemeProvider theme={theme}>{
           cartItems?.length === 0 || !cartItems ? (
               <Grid container>
-                <Grid item>
+                <Grid item xs={12} sm={12} md={12}>
                   <EmptyCart/>
                 </Grid>
               </Grid>
