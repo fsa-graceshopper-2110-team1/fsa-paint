@@ -19,16 +19,11 @@ import Slider from "react-slick";
 import Paper from "@mui/material/Paper"
 import NumberFormat from "react-number-format";
 import KitchenImage from "./KitchenImage"
-//import GetStarted from "./GetStarted"
 
 export const Home = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const user = useSelector((state) => state.auth);
   const products = useSelector((state) => state.products);
-  let fp = products.filter((p) => p.category === 'Basic')
-
   const theme = createTheme({
     palette: {
       primary: {
@@ -43,7 +38,7 @@ export const Home = (props) => {
       fontFamily:"Raleway"
   }
   });
-
+  //Right arrow settings
   const NextArrow = ({ onClick }) => {
     return (
       <div className="go after" onClick={onClick}>
@@ -51,7 +46,7 @@ export const Home = (props) => {
       </div>
     );
   };
-
+  //Left arrow
   const PrevArrow = ({ onClick }) => {
     return (
       <div className="go last" onClick={onClick}>
@@ -59,7 +54,7 @@ export const Home = (props) => {
       </div>
     );
   };
-
+  //Carousel settings
   const settings = {
     infinite: false,
     lazyLoad: true,
@@ -116,9 +111,7 @@ export const Home = (props) => {
               <Box textAlign="center">
                 <Link to={`/browse`}>
                   <Button variant="outlined" color="primary" size="large">
-                    <Typography component="h1">
-                    Shop
-                    </Typography>
+                    <Typography component="h1"> Shop </Typography>
                   </Button>
                 </Link>
               </Box>
@@ -139,7 +132,6 @@ export const Home = (props) => {
                     >
                       <Link to={`/product/${product.id}`} key={product.id} >
                       <div className="paint_chip_box">
-                      
                         <Box 
                           component={Paper}
                           elevation={4}
@@ -151,7 +143,6 @@ export const Home = (props) => {
                             textAlign: "left",
                           }}
                         ></Box>
-                      
                       <p className="paint_chip_name">{product.name}</p>
                       <NumberFormat
                             className="paint_chip_number"
@@ -172,11 +163,7 @@ export const Home = (props) => {
         <Divider />
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
         <Grid container sx={{height: "auto"}}>
-          <Grid
-            item
-            xs={6}
-            sm={6}
-            md={7}
+          <Grid item xs={6} sm={6} md={7}
             sx={{
               backgroundImage:
                 "url(https://i.postimg.cc/xjs6dspb/spacejoy-KSfe2-Z4-REEM-unsplash.jpg)",
@@ -199,9 +186,7 @@ export const Home = (props) => {
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
         <Divider />
         <Grid container sx={{ height: "5vh", backgroundColor: "white" }} />
-          <Grid item xs={12}
-            sm={12}
-            md={12}
+          <Grid item xs={12} sm={12} md={12}
           >
             <KitchenImage/>          
         </Grid>
@@ -213,10 +198,8 @@ export const Home = (props) => {
           direction="row"
           spacing={2}
           className="get_started"
-          >
-          <Grid item xs={12}
-            sm={6}
-            md={3}
+        >
+          <Grid item xs={12} sm={6} md={3}
           >
             <ExternalLink href="https://www.dontwasteyourmoney.com/best-paint-brush-for-home/">
               <Card component={Paper}
@@ -236,9 +219,7 @@ export const Home = (props) => {
               </Card>
             </ExternalLink>
           </Grid>
-          <Grid item xs={12}
-            sm={6}
-            md={3}
+          <Grid item xs={12} sm={6} md={3}
           >
             <ExternalLink href="https://www.thespruce.com/how-to-tape-a-room-for-painting-4684538">
               <Card component={Paper}>
@@ -257,10 +238,7 @@ export const Home = (props) => {
               </Card>
             </ExternalLink>
           </Grid>
-          <Grid item xs={12}
-            sm={6}
-            md={3}
-          >
+          <Grid item xs={12} sm={6} md={3}>
             <ExternalLink href="https://www.thespruce.com/choosing-interior-paint-colors-4011484">
               <Card component={Paper}>
                 <CardMedia 
@@ -278,9 +256,7 @@ export const Home = (props) => {
               </Card>
             </ExternalLink>
           </Grid>
-          <Grid item xs={12}
-            sm={6}
-            md={3}
+          <Grid item xs={12} sm={6} md={3}
           >
             <ExternalLink href="https://www.hgtv.com/how-to/home-improvement/15-painting-tips-to-paint-like-a-pro">
               <Card component={Paper}>
@@ -305,30 +281,3 @@ export const Home = (props) => {
   );
 };
 export default Home;
-
-
-/*
-<Box
-                        component={"h4"}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <Typography color="secondary" size="large">
-                          <b>{product.name}</b>
-                        </Typography>
-                        
-                        <Typography color="secondary" sx={{marginTop: 0.4}}>
-                          <NumberFormat
-                            value={product.price / 100}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </Typography>
-                      </Box>
-*/

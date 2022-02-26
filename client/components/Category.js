@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -17,13 +16,16 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+//initially sorts by name
 let sortby = 'name'
 
 export const Category = () => {
   const { category } = useParams();
+  //Grabs all products that are active and part of the category the user has chosen
   const products = useSelector((state) => state.products).filter(
     (p) => p.category.toLowerCase() === category && p.status
   );
+  //Allows user to sortby name
   const sortName = function (a, b) {
     let nameA = a.name.toUpperCase
     let nameB = b.name.toUpperCase
@@ -35,9 +37,11 @@ export const Category = () => {
     }
     return 0;
   };
+  //allows user to sortby price
   const sortPrice = function (a, b) {
     return b.price - a.price;
   };
+  //Logic to determine which photo to show, the photo correspons to the chosen category
   let photo =
     "https://i.postimg.cc/Gp5w0k8W/andrew-neel-DLD5-Lvn-Fbl-U-unsplash.jpg";
   switch (category) {
@@ -72,6 +76,7 @@ export const Category = () => {
       photo = "https://i.postimg.cc/DZsRx3TG/Green.png";
       break;
   }
+  //Drop down menu
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -88,6 +93,7 @@ export const Category = () => {
     setAnchorEl(null);
     sortby = "price";
   };
+  //Modifying mui components
   const theme = createTheme({
     palette: {
       primary: {

@@ -25,7 +25,7 @@ export const Browse = () => {
       return 0;
     });
   const categories = [...new Set(products.map((product) => product.category))];
-
+  //Right arrow for carousel
   const NextArrow = ({ onClick }) => {
     return (
       <div className="arrow next" onClick={onClick}>
@@ -33,7 +33,7 @@ export const Browse = () => {
       </div>
     );
   };
-
+  //Left Arrow for carousel
   const PrevArrow = ({ onClick }) => {
     return (
       <div className="arrow prev" onClick={onClick}>
@@ -41,7 +41,7 @@ export const Browse = () => {
       </div>
     );
   };
-
+  //Settings for carousel
   const settings = {
     infinite: false,
     lazyLoad: true,
@@ -84,7 +84,7 @@ export const Browse = () => {
       },
     ],
   };
-
+  //Mui theme settings
   const theme = createTheme({
     palette: {
       primary: {
@@ -179,24 +179,3 @@ export const Browse = () => {
 };
 
 export default Browse;
-
-/*
-{categories.map((cat) => {
-        return (
-          <div key={cat}>
-            <h3>
-              <Link to={`/browse/${cat.toLowerCase()}`}>The {cat}s</Link>
-            </h3>
-            {products
-              .filter((p) => p.category === cat)
-              .map((product) => (
-                <Link to={`/product/${product.id}`} key={product.id}>
-                  <div style={{ backgroundColor: product.hexCode }}>
-                    {product.name}{" "}
-                  </div>
-                </Link>
-              ))}
-          </div>
-        );
-      })}
-*/
