@@ -94,6 +94,7 @@ export const createCart = (userId) => {
 export const addToCart = (cartId, productId, quantity) => {
   return async (dispatch) => {
     let cartItems = [];
+    //if cart item -1, it's a local cart
     if (cartId === -1) {
       const localCart = JSON.parse(localStorage.getItem("cart"));
       cartItems = new Array(quantity).fill("").map((ci) => {

@@ -88,9 +88,8 @@ const App = () => {
           <Route path="browse/:category" element={<Category />} />
           <Route path="browse" element={<Browse />} />
           <Route path="product/:productId" element={<Product />} />
-          <Route path="orders" element={<MyOrders />} />
-          <Route path="success" element={<Success />}/>
-          <Route path="*" element={<PageNotFound/>}/>
+          <Route path="success" element={<Success />} />
+          <Route path="*" element={<PageNotFound />} />
           <Route path="cart" element={<CartPage />}>
             <Route
               path="login"
@@ -99,6 +98,7 @@ const App = () => {
               }
             />
           </Route>
+          <Route path="orders" element={<MyOrders />} />
           <Route
             path="my-account"
             element={
@@ -148,7 +148,7 @@ const App = () => {
             }
           />
         </Routes>
-        <Footer/>
+        <Footer />
       </BrowserRouter>
     </div>
   );

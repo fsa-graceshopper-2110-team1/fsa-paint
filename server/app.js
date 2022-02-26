@@ -28,17 +28,6 @@ app.get("/", (req, res) =>
 
 //stripe api checkout
 app.post("/create-checkout-session", createCheckoutSession);
-// app.get('/success/success', async (req, res,next) => {
-//   try{
-//       const session = await stripeAPI.checkout.sessions.retrieve(
-//           req.query.session_id
-//         );
-//         const customer = await stripeAPI.customers.retrieve(session.customer);
-//         res.send({ session: session, customer: customer });
-//   }catch(ex){
-//       next(ex)
-//   }
-// });
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, "..", "public")));
 

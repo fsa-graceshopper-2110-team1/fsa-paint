@@ -78,7 +78,7 @@ export const CartPage = () => {
       <ThemeProvider theme={theme}>
         {cartItems?.length === 0 || !cartItems ? (
           <Grid container>
-            <Grid item xs={12} sm={12} md={12}>
+            <Grid item xs={12} sm={12} md={12} sx={{ minHeight: "80vh" }}>
               <EmptyCart />
             </Grid>
           </Grid>
@@ -98,7 +98,15 @@ export const CartPage = () => {
                 ))}
               </Box>
             </Grid>
-            <Grid item xs={12} sm={5} md={4} xl={2} lg={3} sx={{marginLeft:6}}>
+            <Grid
+              item
+              xs={12}
+              sm={5}
+              md={4}
+              xl={2}
+              lg={3}
+              sx={{ marginLeft: 6 }}
+            >
               <CartTotal
                 total={total}
                 quantity={quantity}
