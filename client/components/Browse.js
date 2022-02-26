@@ -2,14 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import Slider from "react-slick";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
 import Paper from "@mui/material/Paper";
 
 export const Browse = () => {
@@ -96,7 +94,6 @@ export const Browse = () => {
       },
     },
   });
-  // component={Paper} elevation={6}
   return (
     <ThemeProvider theme={theme}>
       <div>

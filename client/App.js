@@ -21,7 +21,7 @@ import Product from "./components/ProductPage/Product";
 import { CartPage } from "./components/Cart/CartPage";
 import Navbar from "./components/Navbar";
 import { LoginModal } from "./components/Auth/LoginModal";
-import { NavbarTwo } from "./components/NavbarTwo";
+import { NavbarTwo } from "./components/NavBar/NavbarTwo";
 import { MyAccount } from "./components/MyAccount";
 import { FlashMessage } from "./components/FlashMessage";
 import AdminHub from "./components/Admin/AdminHub";

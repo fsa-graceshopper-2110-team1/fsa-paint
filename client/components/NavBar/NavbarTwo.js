@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../store";
-
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import Avatar from "@mui/material/Avatar";
 import MenuItem from "@mui/material/MenuItem";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -17,12 +14,15 @@ import Logout from "@mui/icons-material/Logout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { LoginModal } from "./Auth/LoginModal";
+import { LoginModal } from "../Auth/LoginModal";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import MoreIcon from '@mui/icons-material/MoreVert';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
+import MoreIcon from "@mui/icons-material/MoreVert";
+import { MobileCart } from "./MobileCart";
+import { MobileBrowse } from "./MobileBrowse";
+import { UserDropdown } from "./UserDropdown";
+import { LogoutUser } from "./LogoutUser";
+import { CategoryList } from "./CategoryList";
 
 const theme = createTheme({
   palette: {
@@ -46,8 +46,6 @@ const theme = createTheme({
 });
 
 export const NavbarTwo = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   //CART ITEM COUNT
   const cart = useSelector((state) => state.cart);
@@ -120,110 +118,18 @@ export const NavbarTwo = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <Link to="cart">
-            <Box component="div" sx={{display:"flex" }}>
-            <Badge sx={{marginRight:4}}badgeContent={cart?.cartItems?.length} color="error">
-              <ShoppingCartIcon style={{ color: 'black' }}/>
-            </Badge>
-            <Typography
-            sx={{
-              fontFamily: "raleway",
-              color: "black",
-              marginLeft: 0.5,
-            }}
-          >
-            Cart
-          </Typography>
-          </Box>
-        </Link>
+        <MobileCart cart={cart ? cart : null} />
       </MenuItem>
       <Divider />
-      <Link to="browse">
-        <MenuItem>
-            <ColorLensIcon style={{ color: 'black',height: '30px', width: '30px',marginRight:1 }}/>
-          <Typography
-            sx={{
-              fontFamily: "raleway",
-              color: "black",
-              marginLeft: 1,
-              marginBottom:1
-            }}
-          >
-            Browse All
-          </Typography>
-        </MenuItem>
-      </Link>
+      <MenuItem>
+        <MobileBrowse />
+      </MenuItem>
       <Divider />
       {user.firstName ? (
         <div>
-          <Link to="my-account">
-            <MenuItem>
-              <Avatar sx={{ height: '30px', width: '30px',marginRight:1 }}/>
-              <Typography
-                sx={{
-                  fontFamily: "raleway",
-                  marginLeft: 0.5,
-                  color: "black",
-                }}
-              >
-                My account
-              </Typography>
-            </MenuItem>
-          </Link>
-          <Link to="orders">
-            <MenuItem>
-              <Avatar sx={{ height: '30px', width: '30px',marginRight:1 }}/>
-              <Typography
-                sx={{
-                  fontFamily: "raleway",
-                  marginLeft: 0.5,
-                  color: "black",
-                }}
-              >
-                My orders
-              </Typography>
-            </MenuItem>
-          </Link>
-          {user.isAdmin ? (
-            <MenuItem
-              onClick={() => {
-                navigate("/admin-hub");
-              }}
-            >
-              <ListItemIcon>
-                <AdminPanelSettingsIcon fontSize="large" />
-              </ListItemIcon>
-              <Typography
-                sx={{
-                  fontFamily: "raleway",
-                  marginLeft: 0.5,
-                  color: "black",
-                }}
-              >
-                Admin Hub
-              </Typography>
-            </MenuItem>
-          ) : null}
+          <UserDropdown user={user} />
           <Divider />
-          <MenuItem
-            onClick={() => {
-              dispatch(logout());
-              navigate("/home");
-            }}
-          >
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            <Typography
-              sx={{
-                fontFamily: "raleway",
-                marginLeft: 0.5,
-                color: "black",
-              }}
-            >
-              Logout
-            </Typography>
-          </MenuItem>
+          <LogoutUser/>
         </div>
       ) : (
         <MenuItem>
@@ -344,29 +250,7 @@ export const NavbarTwo = () => {
                   </MenuItem>
                 </Link>
                 <Divider />
-                <div>
-                  {categories.map((cat) => {
-                    return (
-                      <Link
-                        to={`/browse/${cat.toLowerCase()}`}
-                        key={cat}
-                        color="secondary"
-                      >
-                        <MenuItem>
-                          <Typography
-                            sx={{
-                              fontFamily: "raleway",
-                              marginLeft: 0.5,
-                              color: "black",
-                            }}
-                          >
-                            {cat}s
-                          </Typography>
-                        </MenuItem>
-                      </Link>
-                    );
-                  })}
-                </div>
+                <CategoryList categories={categories}/>
               </Menu>
               <Box sx={{ flexGrow: 1 }} />
               <Box
@@ -442,74 +326,9 @@ export const NavbarTwo = () => {
                       transformOrigin={{ horizontal: "right", vertical: "top" }}
                       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                     >
-                      <Link to="my-account">
-                        <MenuItem>
-                          <Avatar />
-                          <Typography
-                            sx={{
-                              fontFamily: "raleway",
-                              marginLeft: 0.5,
-                              color: "black",
-                            }}
-                          >
-                            My account
-                          </Typography>
-                        </MenuItem>
-                      </Link>
-                      <Link to="orders">
-                        <MenuItem>
-                          <Avatar />
-                          <Typography
-                            sx={{
-                              fontFamily: "raleway",
-                              marginLeft: 0.5,
-                              color: "black",
-                            }}
-                          >
-                            My orders
-                          </Typography>
-                        </MenuItem>
-                      </Link>
-                      {user.isAdmin ? (
-                        <MenuItem
-                          onClick={() => {
-                            navigate("/admin-hub");
-                          }}
-                        >
-                          <ListItemIcon>
-                            <AdminPanelSettingsIcon fontSize="large" />
-                          </ListItemIcon>
-                          <Typography
-                            sx={{
-                              fontFamily: "raleway",
-                              marginLeft: 0.5,
-                              color: "black",
-                            }}
-                          >
-                            Admin Hub
-                          </Typography>
-                        </MenuItem>
-                      ) : null}
+                      <UserDropdown user={user} />
                       <Divider />
-                      <MenuItem
-                        onClick={() => {
-                          dispatch(logout());
-                          navigate("/home");
-                        }}
-                      >
-                        <ListItemIcon>
-                          <Logout fontSize="small" />
-                        </ListItemIcon>
-                        <Typography
-                          sx={{
-                            fontFamily: "raleway",
-                            marginLeft: 0.5,
-                            color: "black",
-                          }}
-                        >
-                          Logout
-                        </Typography>
-                      </MenuItem>
+                      <LogoutUser/>
                     </Menu>
                   </>
                 ) : (
@@ -557,3 +376,4 @@ export const NavbarTwo = () => {
     </div>
   );
 };
+
