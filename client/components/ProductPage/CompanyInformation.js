@@ -1,19 +1,9 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
-import NumberFormat from "react-number-format";
-import { useParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
 import ImagesearchRollerOutlinedIcon from "@mui/icons-material/ImagesearchRollerOutlined";
 import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
 import LandscapeIcon from "@mui/icons-material/Landscape";
-import IconButton from "@mui/material/IconButton";
 
 export default function ProductReviews() {
 

@@ -8,18 +8,13 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import ImagesearchRollerOutlinedIcon from "@mui/icons-material/ImagesearchRollerOutlined";
-import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
-import LandscapeIcon from "@mui/icons-material/Landscape";
 import IconButton from "@mui/material/IconButton";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 import ProductReviews from "./ProductReviews";
 import CompanyInformation from "./CompanyInformation";
 
@@ -93,7 +88,7 @@ export const Product = () => {
                   }
                 }}
               >
-                <RemoveCircleIcon fontSize="medium" />
+                <RemoveIcon fontSize="medium" />
               </IconButton>
               {count}
               <IconButton
@@ -102,7 +97,7 @@ export const Product = () => {
                   setCount(count + 1);
                 }}
               >
-                <AddCircleIcon fontSize="medium" />
+                <AddIcon fontSize="medium" />
               </IconButton>
             </Box>
             <Button

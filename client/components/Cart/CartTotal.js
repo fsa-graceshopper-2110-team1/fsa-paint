@@ -1,14 +1,9 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import NumberFormat from "react-number-format";
-import Typography from "@mui/material/Typography";
-import { LoginModal } from "../Auth/LoginModal";
-import { createOrder } from "../../store";
 
 export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
   const dispatch = useDispatch();
