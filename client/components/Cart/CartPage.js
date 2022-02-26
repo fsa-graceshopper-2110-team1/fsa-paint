@@ -3,11 +3,8 @@ import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import { CartItem } from "./CartItem";
 import { CartTotal } from "./CartTotal";
-import Paper from "@mui/material/Paper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { EmptyCart } from "./EmptyCart";
 
