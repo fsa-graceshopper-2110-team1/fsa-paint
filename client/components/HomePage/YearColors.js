@@ -5,6 +5,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import { ExternalLink } from 'react-external-link';
 
+//Allows user to see paint details by hovering over paint chip
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
   height: 350,

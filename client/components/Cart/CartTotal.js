@@ -12,7 +12,6 @@ import { createOrder } from "../../store";
 
 export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
   const dispatch = useDispatch();
-
   return (
     <Box
       sx={{
@@ -49,8 +48,7 @@ export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
             fixedDecimalScale={true}
           />
         </h3>
-      </Box>
-      
+      </Box> 
       {isLoggedIn ? (
         <Link to={`/shipping`} style={{ color: "black" }}>
         <Button
@@ -63,10 +61,7 @@ export const CartTotal = ({ total, quantity, isLoggedIn, cartId, userId }) => {
             minHeight: "45px",
           }}
           disabled={quantity === 0}
-          // onClick={()=> dispatch(createOrder(cartId, userId))
-          // }
-        >
-          
+        >          
             <h3>Checkout</h3>
           </Button>
         </Link>
